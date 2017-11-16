@@ -1,6 +1,8 @@
 import { BrowserWindow, Tray } from 'electron';
 import * as path from 'path';
 
+import { isDev } from './helpers';
+
 const assetsDirectory = path.join(__dirname, '../assets');
 
 let tray: Tray;
@@ -49,6 +51,9 @@ export function createWindow(config: Electron.BrowserWindowConstructorOptions = 
   window = new BrowserWindow(config);
 
   window.loadURL(`file://${path.join(__dirname, 'index.html')}`);
+  if (isDev()) {
+    window.webContents.openDevTools({ mode: 'detach' });
+  }
 
   window.on('blur', () => {
     if (!window.webContents.isDevToolsOpened()) {
