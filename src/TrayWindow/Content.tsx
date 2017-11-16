@@ -3,6 +3,13 @@ import * as React from 'react';
 import { IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../airly';
 import { formatDateTo24Time } from '../helpers';
 
+import Measurement from './Measurement';
+
+const formatters = {
+  toFixed2: (val: number) => val.toFixed(2),
+  div1kToFixed2: (val: number) => (val / 1000).toFixed(2),
+};
+
 interface ITrayContentProps {
   currentMeasurements?: IAirlyCurrentMeasurement;
   nearestStation?: IArilyNearestSensorMeasurement;
@@ -15,40 +22,51 @@ const TrayContent = ({ currentMeasurements, nearestStation, lastUpdate }: ITrayC
       <div className="window-content">
         <div className="pane">
           <div className="measurement-pane">
-            <div className="measurement">
-              <div className="reading">{currentMeasurements.airQualityIndex.toFixed(2)}</div>
-              <div className="description">AQI</div>
-            </div>
-            <div className="measurement">
-              <div className="reading">{currentMeasurements.pollutionLevel}</div>
-              <div className="description">Pollution level</div>
-            </div>
-            <div className="measurement">
-              <div className="reading">{currentMeasurements.pm1.toFixed(2)} μg/m<sup>3</sup></div>
-              <div className="description">PM1</div>
-            </div>
-            <div className="measurement">
-              <div className="reading">{currentMeasurements.pm25.toFixed(2)} μg/m<sup>3</sup></div>
-              <div className="description">PM2.5</div>
-            </div>
-            <div className="measurement">
-              <div className="reading">{currentMeasurements.pm10.toFixed(2)} μg/m<sup>3</sup></div>
-              <div className="description">PM10</div>
-            </div>
-            <div className="measurement">
-              <div className="reading">
-                {currentMeasurements.temperature.toFixed(2)} <sup>&deg;</sup>C
-              </div>
-              <div className="description">Temperature</div>
-            </div>
-            <div className="measurement">
-              <div className="reading">{(currentMeasurements.pressure / 1000).toFixed(2)} hPa</div>
-              <div className="description">Preassure</div>
-            </div>
-            <div className="measurement">
-              <div className="reading">{currentMeasurements.humidity.toFixed(2)} %</div>
-              <div className="description">Humidity</div>
-            </div>
+            <Measurement
+              description="AQI"
+              reading={currentMeasurements.airQualityIndex}
+              formatter={formatters.toFixed2}
+            />
+            <Measurement
+              description="Pollution level"
+              reading={currentMeasurements.pollutionLevel}
+            />
+            <Measurement
+              description="PM1"
+              unit={['μg/m<sup>3</sup>']}
+              reading={currentMeasurements.pm1}
+              formatter={formatters.toFixed2}
+            />
+            <Measurement
+              description="PM2.5"
+              unit="μg/m<sup>3</sup>"
+              reading={currentMeasurements.pm25}
+              formatter={formatters.toFixed2}
+            />
+            <Measurement
+              description="PM10"
+              unit="μg/m<sup>3</sup>"
+              reading={currentMeasurements.pm10}
+              formatter={formatters.toFixed2}
+            />
+            <Measurement
+              description="Temperature"
+              unit="<sup>&deg;</sup>C"
+              reading={currentMeasurements.temperature}
+              formatter={formatters.toFixed2}
+            />
+            <Measurement
+              description="Preassure"
+              unit="hPa"
+              reading={currentMeasurements.temperature}
+              formatter={formatters.div1kToFixed2}
+            />
+            <Measurement
+              description="Humidity"
+              unit="%"
+              reading={currentMeasurements.humidity}
+              formatter={formatters.toFixed2}
+            />
           </div>
 
           <div className="summary small">

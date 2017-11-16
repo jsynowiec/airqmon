@@ -1,9 +1,11 @@
 import Content from './Content';
-import Header from './Header';
 import Footer from './Footer';
+import Header from './Header';
+import Measurement from './Measurement';
 
 export {
-  Header,
   Content,
   Footer,
+  Header,
+  Measurement,
 };
