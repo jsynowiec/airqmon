@@ -1,4 +1,4 @@
-# <img src="https://user-images.githubusercontent.com/1029142/32918568-117f7356-cb23-11e7-8c31-47e2ebc07fbe.png" width="60px" align="center" alt="Airqmon icon"> Airqmon
+# <img src="https://user-images.githubusercontent.com/1029142/32918679-7336704a-cb23-11e7-92b2-d8a7f2588055.png" width="60px" align="center" alt="Airqmon icon"> Airqmon
 
 Air quality taskbar widget displaying live information from the nearest [Airly](https://airly.eu/en/) sensor station.
 
