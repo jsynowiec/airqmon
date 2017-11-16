@@ -1,3 +1,5 @@
+export const AIRLY_API_URL = 'https://airapi.airly.eu';
+
 export interface IAirlyCurrentMeasurement {
   airQualityIndex: number;
   pm1: number;

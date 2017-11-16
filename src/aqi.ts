@@ -25,3 +25,9 @@ export const AQI_INDEX = [
     label: 'Very High',
   },
 ];
+
+export function humanize(aqi: number): string {
+  return AQI_INDEX.find((elem) => {
+    return aqi >= elem.min && aqi < elem.max;
+  }).label;
+}
