@@ -33,7 +33,7 @@ const TrayContent = ({ currentMeasurements, nearestStation, lastUpdate }: ITrayC
             />
             <Measurement
               description="PM1"
-              unit={['μg/m<sup>3</sup>']}
+              unit="μg/m<sup>3</sup>"
               reading={currentMeasurements.pm1}
               formatter={formatters.toFixed2}
             />
