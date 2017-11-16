@@ -18,7 +18,7 @@ app.dock.hide();
 app.on('ready', () => {
   tray = createTray();
 
-  createWindow({
+  const window = createWindow({
     width: 300,
     height: 350,
     show: false,
@@ -31,6 +31,8 @@ app.on('ready', () => {
       backgroundThrottling: false,
     },
   });
+
+  window.setVisibleOnAllWorkspaces(true);
 });
 
 // Quit the app when the window is closed
