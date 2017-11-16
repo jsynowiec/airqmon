@@ -29,6 +29,7 @@
   "devDependencies": {
     "@types/react": "^16.0.16",
     "@types/react-dom": "^16.0.2",
+    "devtron": "^1.4.0",
     "electron": "^1.7.9",
     "electron-connect": "^0.6.2",
     "electron-packager": "^9.1.0",
