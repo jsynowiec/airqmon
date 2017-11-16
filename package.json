@@ -27,6 +27,8 @@
   },
   "homepage": "https://github.com/jsynowiec/airqmon",
   "devDependencies": {
+    "@types/react": "^16.0.16",
+    "@types/react-dom": "^16.0.2",
     "electron": "^1.7.9",
     "electron-connect": "^0.6.2",
     "electron-packager": "^9.1.0",
@@ -42,5 +44,11 @@
     "tslint-loader": "^3.5.3",
     "tslint-react": "^3.2.0",
     "typescript": "^2.5.3"
+  },
+  "dependencies": {
+    "axios": "^0.17.1",
+    "photon": "git+https://github.com/connors/photon.git#v0.1.2-alpha",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
   }
 }
