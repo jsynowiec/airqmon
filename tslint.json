@@ -1,0 +1,13 @@
+{
+  "extends": ["tslint-config-airbnb", "tslint-react"],
+  "rules": {
+    "quotemark": [true, "single", "jsx-double"],
+    "interface-name": [true, "always-prefix"],
+    "import-name": [false],
+    "variable-name": {
+      "options": [
+        "allow-pascal-case"
+      ]
+    }
+  }
+}
