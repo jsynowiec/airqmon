@@ -57,9 +57,9 @@ const TrayContent = ({ currentMeasurements, nearestStation }: ITrayContentProps)
               formatter={formatters.toFixed2}
             />
             <Measurement
-              description="Preassure"
+              description="Pressure"
               unit="hPa"
-              reading={currentMeasurements.temperature}
+              reading={currentMeasurements.pressure}
               formatter={formatters.divBy100ToFixed2}
             />
             <Measurement
