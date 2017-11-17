@@ -2,7 +2,7 @@ import { app, ipcMain, shell } from 'electron';
 import { createTray, createWindow, showWindow, closeWindow } from './window';
 
 import { IAirlyCurrentMeasurement } from './airly';
-import { humanize } from './caqi';
+import { getCAQIMeta } from './caqi';
 
 const keys = require('../keys.json');
 
@@ -20,7 +20,7 @@ app.on('ready', () => {
 
   const window = createWindow({
     width: 300,
-    height: 400,
+    height: 420,
     show: false,
     frame: false,
     fullscreenable: false,
@@ -46,7 +46,11 @@ ipcMain.on('show-window', () => {
 
 ipcMain.on('airq-data-update', (_, currentMeasurement: IAirlyCurrentMeasurement) => {
   tray.setTitle(currentMeasurement.airQualityIndex.toFixed(0));
-  tray.setToolTip(`Air pollution is ${humanize(currentMeasurement.airQualityIndex).toLowerCase()}`);
+
+  const airQualityLabel = getCAQIMeta(currentMeasurement.airQualityIndex).labels.airQuality;
+  tray.setToolTip(
+    `Air quality is ${airQualityLabel.toLowerCase()}`,
+  );
 });
 
 ipcMain.on('open-ext-browser', (_, arg) => {

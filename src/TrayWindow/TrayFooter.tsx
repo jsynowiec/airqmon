@@ -21,7 +21,7 @@ class TrayFooter extends React.Component<ITrayFooterProps> {
 
   render() {
     const lastUpdate = this.props.lastUpdateDate
-      ? `, last update ${formatDateTo24Time(this.props.lastUpdateDate)}`
+      ? `, last update at ${formatDateTo24Time(this.props.lastUpdateDate)}`
       : null;
 
     return (
