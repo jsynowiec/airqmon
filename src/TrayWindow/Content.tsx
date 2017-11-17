@@ -4,7 +4,7 @@ import { IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../air
 
 import Measurement from './Measurement';
 
-import { humanize } from '../aqi';
+import { humanize } from '../caqi';
 
 const formatters = {
   toFixed2: (val: number) => val.toFixed(2),
@@ -24,7 +24,7 @@ const TrayContent = ({ currentMeasurements, nearestStation }: ITrayContentProps)
 
           <div className="measurement-pane">
             <Measurement
-              description="AQI"
+              description="CAQI"
               reading={currentMeasurements.airQualityIndex}
               formatter={formatters.toFixed2}
             />

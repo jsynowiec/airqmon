@@ -2,7 +2,7 @@ import { app, ipcMain, shell } from 'electron';
 import { createTray, createWindow, showWindow, closeWindow } from './window';
 
 import { IAirlyCurrentMeasurement } from './airly';
-import { humanize } from './aqi';
+import { humanize } from './caqi';
 
 const keys = require('../keys.json');
 

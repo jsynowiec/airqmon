@@ -1,4 +1,4 @@
-export const AQI_INDEX = [
+export const CAQI_INDEX = [
   {
     values: {
       min: 0,
@@ -37,8 +37,8 @@ export const AQI_INDEX = [
   },
 ];
 
-export function humanize(aqi: number): string {
-  return AQI_INDEX.find((elem) => {
-    return aqi >= elem.values.min && aqi < elem.values.max;
+export function humanize(val: number): string {
+  return CAQI_INDEX.find((elem) => {
+    return val >= elem.values.min && val < elem.values.max;
   }).label;
 }
