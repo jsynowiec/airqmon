@@ -158,9 +158,9 @@ class App extends React.Component<IAppProps, IAppState> {
           <Content
             currentMeasurements={this.state.currentMeasurements}
             nearestStation={this.state.nearestStation}
-            lastUpdate={this.state.lastUpdate}
           />
           <Footer
+            lastUpdate={this.state.lastUpdate}
             isAutoRefreshActive={this.state.autoRefresh}
             onQuitClick={this.handleQuitClick}
             onRefreshClick={this.handleRefreshClick}

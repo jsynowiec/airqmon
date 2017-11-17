@@ -20,7 +20,7 @@ app.on('ready', () => {
 
   const window = createWindow({
     width: 300,
-    height: 350,
+    height: 400,
     show: false,
     frame: false,
     fullscreenable: false,

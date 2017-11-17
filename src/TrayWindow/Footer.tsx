@@ -1,6 +1,8 @@
 import { ipcRenderer } from 'electron';
 import * as React from 'react';
 
+import { formatDateTo24Time } from '../helpers';
+
 interface ITrayFooterProps {
   lastUpdate?: Date;
   isAutoRefreshActive: Boolean;
@@ -29,6 +31,7 @@ class TrayFooter extends React.Component<ITrayFooterProps> {
           >
           Airly
           </a>
+          {this.props.lastUpdate ? `, last update ${formatDateTo24Time(this.props.lastUpdate)}` : ''}
         </div>
         <div className="toolbar-actions pull-right">
           <div className="btn-group">
