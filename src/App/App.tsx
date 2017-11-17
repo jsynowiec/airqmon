@@ -28,7 +28,7 @@ interface IAppState {
   currentMeasurements?: IAirlyCurrentMeasurement;
 }
 
-const REFRESH_DELAY = 120000; // 2 minutes
+const REFRESH_DELAY = 300000; // 5 minutes
 
 let refreshTimer: NodeJS.Timer;
 
