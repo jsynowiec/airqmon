@@ -1,11 +1,5 @@
-import Content from './Content';
-import Footer from './Footer';
-import Header from './Header';
-import Measurement from './Measurement';
+import TrayWindow from './TrayWindow';
 
 export {
-  Content,
-  Footer,
-  Header,
-  Measurement,
+  TrayWindow,
 };

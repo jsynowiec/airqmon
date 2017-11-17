@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { getLocation } from '../helpers';
 
-import { Content, Header, Footer } from '../TrayWindow';
+import { TrayWindow } from '../TrayWindow';
 
 import {
   AIRLY_API_URL,
@@ -20,8 +20,8 @@ interface IAppState {
   tokens: {
     airly: string;
   };
-  autoRefresh: Boolean;
-  lastUpdate?: Date;
+  isAutoRefreshEnabled: Boolean;
+  lastUpdateDate?: Date;
   latitude?: number;
   longitude?: number;
   nearestStation?: IArilyNearestSensorMeasurement;
@@ -37,7 +37,7 @@ class App extends React.Component<IAppProps, IAppState> {
     super(props);
 
     this.state = {
-      autoRefresh: true,
+      isAutoRefreshEnabled: true,
       tokens: {
         airly: this.props.airlyToken,
       },
@@ -111,7 +111,7 @@ class App extends React.Component<IAppProps, IAppState> {
         this.setState(
           {
             currentMeasurements: value.data.currentMeasurements,
-            lastUpdate: new Date(),
+            lastUpdateDate: new Date(),
           },
           () => {
             ipcRenderer.send('airq-data-update', this.state.currentMeasurements);
@@ -121,13 +121,13 @@ class App extends React.Component<IAppProps, IAppState> {
     }).catch(() => {
       this.setState({
         currentMeasurements: null,
-        lastUpdate: null,
+        lastUpdateDate: null,
       });
     });
   }
 
   toggleRefreshTimer() {
-    if (this.state.autoRefresh) {
+    if (this.state.isAutoRefreshEnabled) {
       refreshTimer = setInterval(
         () => {
           this.refreshData();
@@ -140,7 +140,7 @@ class App extends React.Component<IAppProps, IAppState> {
   }
 
   handleRefreshClick() {
-    this.setState({ autoRefresh: !this.state.autoRefresh }, () => {
+    this.setState({ isAutoRefreshEnabled: !this.state.isAutoRefreshEnabled }, () => {
       this.toggleRefreshTimer();
     });
   }
@@ -153,19 +153,14 @@ class App extends React.Component<IAppProps, IAppState> {
     return (
       <div>
         <div className="header-arrow" />
-        <div className="window">
-          <Header />
-          <Content
-            currentMeasurements={this.state.currentMeasurements}
-            nearestStation={this.state.nearestStation}
-          />
-          <Footer
-            lastUpdate={this.state.lastUpdate}
-            isAutoRefreshActive={this.state.autoRefresh}
-            onQuitClick={this.handleQuitClick}
-            onRefreshClick={this.handleRefreshClick}
-          />
-        </div>
+        <TrayWindow
+          currentMeasurements={this.state.currentMeasurements}
+          nearestStation={this.state.nearestStation}
+          lastUpdateDate={this.state.lastUpdateDate}
+          isAutoRefreshEnabled={this.state.isAutoRefreshEnabled}
+          onRefreshClickHandler={this.handleRefreshClick}
+          onQuitClickHandler={this.handleQuitClick}
+        />
       </div>
     );
   }
