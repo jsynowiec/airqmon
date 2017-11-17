@@ -3,7 +3,7 @@
 A menu bar app that displays live air quality informations from the nearest [Airly](https://airly.eu/en/) sensor station.
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/1029142/32922867-afcb62b6-cb34-11e7-8fe0-24e1c412a60e.png" width="341px" align="center" alt="Airqmon icon" />
+  <img src="https://user-images.githubusercontent.com/1029142/32953451-85eff1d8-cbb0-11e7-958e-3d785fa775c1.png" width="382px" align="center" alt="Airqmon icon" />
 </p>
 
 ## License
