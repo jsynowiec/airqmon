@@ -4,8 +4,8 @@ import * as React from 'react';
 import { formatDateTo24Time } from '../helpers';
 
 interface ITrayFooterProps {
-  lastUpdate?: Date;
-  isAutoRefreshActive: Boolean;
+  lastUpdateDate?: Date;
+  isAutoRefreshEnabled: Boolean;
   onRefreshClick: () => void;
   onQuitClick: () => void;
 }
@@ -20,6 +20,10 @@ class TrayFooter extends React.Component<ITrayFooterProps> {
   }
 
   render() {
+    const lastUpdate = this.props.lastUpdateDate
+      ? `, last update ${formatDateTo24Time(this.props.lastUpdateDate)}`
+      : null;
+
     return (
       <footer className="toolbar toolbar-footer">
         <div className="footer-text">
@@ -31,12 +35,12 @@ class TrayFooter extends React.Component<ITrayFooterProps> {
           >
           Airly
           </a>
-          {this.props.lastUpdate ? `, last update ${formatDateTo24Time(this.props.lastUpdate)}` : ''}
+          {lastUpdate}
         </div>
         <div className="toolbar-actions pull-right">
           <div className="btn-group">
             <button
-              className={'btn btn-default' + (this.props.isAutoRefreshActive ? ' active' : '')}
+              className={'btn btn-default' + (this.props.isAutoRefreshEnabled ? ' active' : '')}
               onClick={this.props.onRefreshClick}
             >
               <span className="icon icon-arrows-ccw" title="Auto refresh" />
