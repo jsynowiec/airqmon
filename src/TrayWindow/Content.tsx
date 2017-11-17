@@ -7,7 +7,7 @@ import Measurement from './Measurement';
 
 const formatters = {
   toFixed2: (val: number) => val.toFixed(2),
-  div1kToFixed2: (val: number) => (val / 1000).toFixed(2),
+  divBy100ToFixed2: (val: number) => (val / 100).toFixed(2),
 };
 
 interface ITrayContentProps {
@@ -59,7 +59,7 @@ const TrayContent = ({ currentMeasurements, nearestStation, lastUpdate }: ITrayC
               description="Preassure"
               unit="hPa"
               reading={currentMeasurements.temperature}
-              formatter={formatters.div1kToFixed2}
+              formatter={formatters.divBy100ToFixed2}
             />
             <Measurement
               description="Humidity"
