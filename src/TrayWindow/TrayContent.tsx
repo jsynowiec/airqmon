@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import Loader from './Loader';
 import { IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../airly';
 import MeasurementPane from './MeasurementPane';
 import { getCAQIMeta } from '../caqi';
@@ -7,9 +8,24 @@ import { getCAQIMeta } from '../caqi';
 interface ITrayContentProps {
   currentMeasurements?: IAirlyCurrentMeasurement;
   nearestStation?: IArilyNearestSensorMeasurement;
+  connectionStatus: Boolean;
 }
 
-const TrayContent = ({ currentMeasurements, nearestStation }: ITrayContentProps) => {
+const TrayContent = ({
+  currentMeasurements,
+  nearestStation,
+  connectionStatus,
+}: ITrayContentProps) => {
+  if (!connectionStatus) {
+    return (
+      <div className="window-content">
+        <div className="pane">
+          <div className="summary">You're offline&hellip;</div>
+        </div>
+      </div>
+    );
+}
+
   if (currentMeasurements) {
     const airQualityMeta = getCAQIMeta(currentMeasurements.airQualityIndex);
 

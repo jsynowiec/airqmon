@@ -16,16 +16,23 @@ interface IAppProps {
   airlyToken: string;
 }
 
-interface IAppState {
+interface IBaseAppState {
   tokens: {
     airly: string;
   };
-  isAutoRefreshEnabled: Boolean;
+}
+
+interface IDataAppState {
+  connectionStatus: Boolean;
   lastUpdateDate?: Date;
   latitude?: number;
   longitude?: number;
   nearestStation?: IArilyNearestSensorMeasurement;
   currentMeasurements?: IAirlyCurrentMeasurement;
+}
+
+interface IAppState extends IBaseAppState, IDataAppState {
+  isAutoRefreshEnabled: Boolean;
 }
 
 const REFRESH_DELAY = 300000; // 5 minutes
@@ -38,17 +45,47 @@ class App extends React.Component<IAppProps, IAppState> {
 
     this.state = {
       isAutoRefreshEnabled: true,
+      connectionStatus: false,
       tokens: {
         airly: this.props.airlyToken,
       },
     };
 
+    this.init = this.init.bind(this);
+    this.enableRefreshTimer = this.enableRefreshTimer.bind(this);
     this.refreshData = this.refreshData.bind(this);
     this.handleRefreshClick = this.handleRefreshClick.bind(this);
     this.handleQuitClick = this.handleQuitClick.bind(this);
   }
 
   componentDidMount() {
+    ipcRenderer.on('online-status-changed', (_, status) => {
+      let newState: IDataAppState = {
+        connectionStatus: status === 'online',
+      };
+
+      if (status === 'offline') {
+        newState = {
+          ...newState,
+          lastUpdateDate: null,
+          currentMeasurements: null,
+          nearestStation: null,
+        };
+      }
+
+      this.setState(newState, () => {
+        if (status === 'offline') {
+          if (refreshTimer) {
+            clearInterval(refreshTimer);
+          }
+        } else {
+          this.init();
+        }
+      });
+    });
+  }
+
+  init() {
     getLocation().then((position) => {
       this.setState(
         {
@@ -58,7 +95,9 @@ class App extends React.Component<IAppProps, IAppState> {
         () => {
           this.findNearestStation().then(() => {
             this.refreshData();
-            this.toggleRefreshTimer();
+            if (this.state.isAutoRefreshEnabled) {
+              this.enableRefreshTimer();
+            }
           });
         },
       );
@@ -126,22 +165,22 @@ class App extends React.Component<IAppProps, IAppState> {
     });
   }
 
-  toggleRefreshTimer() {
-    if (this.state.isAutoRefreshEnabled) {
-      refreshTimer = setInterval(
-        () => {
-          this.refreshData();
-        },
-        REFRESH_DELAY,
-      );
-    } else {
-      clearInterval(refreshTimer);
-    }
+  enableRefreshTimer() {
+    refreshTimer = setInterval(
+      () => {
+        this.refreshData();
+      },
+      REFRESH_DELAY,
+    );
   }
 
   handleRefreshClick() {
     this.setState({ isAutoRefreshEnabled: !this.state.isAutoRefreshEnabled }, () => {
-      this.toggleRefreshTimer();
+      if (this.state.isAutoRefreshEnabled) {
+        this.enableRefreshTimer();
+      } else {
+        clearInterval(refreshTimer);
+      }
     });
   }
 
@@ -154,6 +193,7 @@ class App extends React.Component<IAppProps, IAppState> {
       <div>
         <div className="header-arrow" />
         <TrayWindow
+          connectionStatus={this.state.connectionStatus}
           currentMeasurements={this.state.currentMeasurements}
           nearestStation={this.state.nearestStation}
           lastUpdateDate={this.state.lastUpdateDate}

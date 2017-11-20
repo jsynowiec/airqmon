@@ -31,8 +31,16 @@ app.on('ready', () => {
       backgroundThrottling: false,
     },
   });
-
   window.setVisibleOnAllWorkspaces(true);
+
+  ipcMain.on('online-status-changed', (_, status) => {
+    window.webContents.send('online-status-changed', status);
+
+    if (status === 'offline') {
+      tray.setTitle('');
+      tray.setToolTip('');
+    }
+  });
 });
 
 // Quit the app when the window is closed

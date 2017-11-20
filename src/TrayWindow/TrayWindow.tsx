@@ -10,6 +10,7 @@ interface ITrayWindowProps {
   currentMeasurements?: IAirlyCurrentMeasurement;
   nearestStation?: IArilyNearestSensorMeasurement;
   lastUpdateDate?: Date;
+  connectionStatus: Boolean;
   isAutoRefreshEnabled: Boolean;
   onQuitClickHandler: () => void;
   onRefreshClickHandler: () => void;
@@ -20,6 +21,7 @@ const TrayWindow = ({
   nearestStation,
   lastUpdateDate,
   isAutoRefreshEnabled,
+  connectionStatus,
   onQuitClickHandler,
   onRefreshClickHandler,
 }: ITrayWindowProps) => {
@@ -27,6 +29,7 @@ const TrayWindow = ({
     <div className="window">
       <Header />
       <Content
+        connectionStatus={connectionStatus}
         currentMeasurements={currentMeasurements}
         nearestStation={nearestStation}
       />
