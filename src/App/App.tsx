@@ -49,9 +49,6 @@ class App extends React.Component<IAppProps, IAppState> {
       },
     };
 
-    this.init = this.init.bind(this);
-    this.enableRefreshTimer = this.enableRefreshTimer.bind(this);
-    this.refreshData = this.refreshData.bind(this);
     this.handleRefreshClick = this.handleRefreshClick.bind(this);
     this.handleQuitClick = this.handleQuitClick.bind(this);
   }
