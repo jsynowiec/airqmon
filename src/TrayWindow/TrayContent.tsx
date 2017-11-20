@@ -24,7 +24,7 @@ const TrayContent = ({
         </div>
       </div>
     );
-}
+  }
 
   if (currentMeasurements) {
     const airQualityMeta = getCAQIMeta(currentMeasurements.airQualityIndex);
@@ -57,7 +57,7 @@ const TrayContent = ({
   return (
     <div className="window-content">
       <div className="pane">
-        <div className="summary">Loading&hellip;</div>
+        <Loader />
       </div>
     </div>
   );
