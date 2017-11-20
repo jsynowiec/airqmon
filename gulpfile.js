@@ -65,6 +65,10 @@ gulp.task('electron:package', () => {
     name: 'Airqmon',
     appCategoryType: 'public.app-category.weather',
     dir: './',
+    ignore: [
+      'src'
+    ],
+    asar: true,
     icon: './assets/airqmon.icns',
     overwrite: true,
     out: './out',
@@ -78,4 +82,4 @@ gulp.task('build:prod', gulpSequence('clean', ['build:scripts', 'build:html:prod
 gulp.task('start', gulpSequence('watch', 'electron:start'));
 gulp.task('package', gulpSequence('build:prod', 'electron:package'));
 
-gulp.task('default', ['package']);
+gulp.task('default', ['start']);
