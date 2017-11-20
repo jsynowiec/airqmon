@@ -93,7 +93,18 @@ class App extends React.Component<IAppProps, IAppState> {
           longitude: position.coords.longitude,
         },
         () => {
-          this.findNearestStation().then(() => {
+          const oldStation = this.state.nearestStation;
+
+          this.findNearestStation().then((station: IArilyNearestSensorMeasurement) => {
+            if (oldStation) {
+              if (oldStation.id !== station.id) {
+                new Notification('Location changed', {
+                  // tslint:disable-next-line:max-line-length
+                  body: `Found a new nearest sensor station located at ${this.state.nearestStation.address.locality}, ${this.state.nearestStation.address.route}.`,
+                });
+              }
+            }
+
             this.refreshData();
             if (this.state.isAutoRefreshEnabled) {
               this.enableRefreshTimer();
@@ -124,7 +135,7 @@ class App extends React.Component<IAppProps, IAppState> {
               nearestStation: value.data,
             },
             () => {
-              resolve();
+              resolve(value.data);
             },
           );
         }
