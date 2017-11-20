@@ -2,7 +2,7 @@ import { ipcRenderer } from 'electron';
 import * as React from 'react';
 import axios from 'axios';
 
-import { getLocation } from '../helpers';
+import { getLocation } from '../geolocation';
 import { TrayWindow } from '../TrayWindow';
 import {
   AIRLY_API_URL,

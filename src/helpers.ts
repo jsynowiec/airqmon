@@ -16,9 +16,3 @@ export function formatDateTo24Time(date: Date) {
 
   return `${withLeadingZero(hours)}:${withLeadingZero(minutes)}`;
 }
-
-export function getLocation(): Promise<Position> {
-  return new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(resolve, reject);
-  });
-}
