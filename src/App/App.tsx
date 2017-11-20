@@ -177,6 +177,10 @@ class App extends React.Component<IAppProps, IAppState> {
   }
 
   enableRefreshTimer() {
+    if (refreshTimer) {
+      clearInterval(refreshTimer);
+    }
+
     refreshTimer = setInterval(
       () => {
         this.refreshData();
