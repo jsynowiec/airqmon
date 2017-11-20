@@ -62,6 +62,8 @@ gulp.task('electron:start', () => {
 
 gulp.task('electron:package', () => {
   return electronPackager({
+    name: 'Airqmon',
+    appCategoryType: 'public.app-category.weather',
     dir: './',
     icon: './assets/icons/mac/icon.icns',
     overwrite: true,
