@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import { IAirlyCurrentMeasurement } from '../airly';
-
 import { MeasurementValue } from './Measurements/MeasurementValue';
 import { Unit } from './Measurements/MeasurementReadingUnit';
 
