@@ -12,6 +12,18 @@ A menu bar app that displays live air quality informations from the nearest [Air
   <img src="https://user-images.githubusercontent.com/1029142/33020102-3a72e41e-cdfd-11e7-84cd-abb6bbfb8c2d.png" width="378px" align="center" alt="Airqmon window with measurement details" />
 </p>
 
+## Installation
+
+Download the [latest release](https://github.com/jsynowiec/airqmon/latest), unpack and drag to your Application folder.
+
+### Update
+
+Simply overwrite previous application with a newer one.
+
+## Setup
+
+Currently there is no configuration. This application uses geolocation to find out nearest sensor station.
+
 ## License
 
 Copyright 2017 Jakub Synowiec
