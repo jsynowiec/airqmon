@@ -100,7 +100,7 @@ class App extends React.Component<IAppProps, IAppState> {
               if (oldStation.id !== station.id) {
                 new Notification('Location changed', {
                   // tslint:disable-next-line:max-line-length
-                  body: `Found a new nearest sensor station located at ${this.state.nearestStation.address.locality}, ${this.state.nearestStation.address.route}.`,
+                  body: `Found a new nearest sensor station ${(this.state.nearestStation.distance / 1000).toFixed(2)} away located at ${this.state.nearestStation.address.locality}, ${this.state.nearestStation.address.route}.`,
                 });
               }
             }
