@@ -1,6 +1,7 @@
 // tslint:disable:max-line-length
 const CAQI_INDEX = [
   {
+    index: 0,
     values: {
       min: 0,
       max: 25,
@@ -12,6 +13,7 @@ const CAQI_INDEX = [
     description: 'Air quality is considered satisfactory, and air pollution poses little or no risk.',
   },
   {
+    index: 1,
     values: {
       min: 25,
       max: 50,
@@ -23,6 +25,7 @@ const CAQI_INDEX = [
     description: 'Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution.',
   },
   {
+    index: 2,
     values: {
       min: 50,
       max: 75,
@@ -34,6 +37,7 @@ const CAQI_INDEX = [
     description: 'Members of sensitive groups may experience health effects. The general public is not likely to be affected.',
   },
   {
+    index: 3,
     values: {
       min: 75,
       max: 100,
@@ -45,6 +49,7 @@ const CAQI_INDEX = [
     description: 'Health alert: everyone may experience more serious health effects.',
   },
   {
+    index: 4,
     values: {
       min: 100,
       max: Number.MAX_VALUE,

@@ -9,6 +9,7 @@ import {
   IAirlyCurrentMeasurement,
   IArilyNearestSensorMeasurement,
 } from '../airly';
+import { getCAQIMeta } from '../caqi';
 
 interface IAppProps {
   airlyToken: string;
@@ -153,6 +154,18 @@ class App extends React.Component<IAppProps, IAppState> {
       },
     }).then((value) => {
       if (value.status === 200) {
+        if (this.state.currentMeasurements) {
+          const oldCAQIMeta = getCAQIMeta(this.state.currentMeasurements.airQualityIndex);
+          const newCAQIMeta = getCAQIMeta(value.data.currentMeasurements.airQualityIndex);
+
+          if (oldCAQIMeta.index !== newCAQIMeta.index) {
+            new Notification('Air quality changed', {
+              // tslint:disable-next-line:max-line-length
+              body: `Air quality changed from ${oldCAQIMeta.labels.airQuality.toLowerCase()} to ${newCAQIMeta.labels.airQuality.toLowerCase()}. Pollution is now ${newCAQIMeta.labels.pollution.toLowerCase()}.`,
+            });
+          }
+        }
+
         this.setState(
           {
             currentMeasurements: value.data.currentMeasurements,
