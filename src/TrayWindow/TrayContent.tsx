@@ -49,9 +49,9 @@ class TrayContent extends React.Component<ITrayContentProps> {
               </strong>.
             </div>
 
-            <MeasurementPane measurement={this.props.currentMeasurements} />
-
             <div className="summary small">{airQualityMeta.description}</div>
+
+            <MeasurementPane measurement={this.props.currentMeasurements} />
 
             <div className="summary small">
               Distance to station {(station.distance / 1000).toFixed(2)} km<br/>
