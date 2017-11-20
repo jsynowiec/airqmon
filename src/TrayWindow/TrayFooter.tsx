@@ -29,7 +29,6 @@ class TrayFooter extends React.Component<ITrayFooterProps> {
         <div className="footer-text">
           Powered by&nbsp;
           <a
-            className="footer-link"
             href="#"
             onClick={this.handleExtLinkClick.bind(this, 'https://developer.airly.eu')}
           >
