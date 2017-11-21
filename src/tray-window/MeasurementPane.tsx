@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import { IAirlyCurrentMeasurement } from '../airly';
-import { MeasurementValue } from './Measurements/MeasurementValue';
-import { Unit } from './Measurements/MeasurementReadingUnit';
+import { Measurement } from './measurement/Measurement';
+import { Unit } from './measurement/MeasurementReadingUnit';
 
 const formatters: { [key: string]: (val: string|number) => string } = {
   toFixed2: (val: number) => val.toFixed(2),
@@ -16,46 +16,46 @@ interface IMeasurementPaneProps {
 const MeasurementPane = ({ measurement }: IMeasurementPaneProps) => {
   return (
     <div className="measurement-pane">
-      <MeasurementValue
+      <Measurement
         description="CAQI"
         reading={measurement.airQualityIndex}
         formatter={formatters.toFixed2}
       />
-      <MeasurementValue
+      <Measurement
         description="Pollution level"
         reading={measurement.pollutionLevel}
       />
-      <MeasurementValue
+      <Measurement
         description="PM1"
         unit={Unit.PM}
         reading={measurement.pm1}
         formatter={formatters.toFixed2}
       />
-      <MeasurementValue
+      <Measurement
         description="PM2.5"
         unit={Unit.PM}
         reading={measurement.pm25}
         formatter={formatters.toFixed2}
       />
-      <MeasurementValue
+      <Measurement
         description="PM10"
         unit={Unit.PM}
         reading={measurement.pm10}
         formatter={formatters.toFixed2}
       />
-      <MeasurementValue
+      <Measurement
         description="Temperature"
         unit={Unit.TEMP_C}
         reading={measurement.temperature}
         formatter={formatters.toFixed2}
       />
-      <MeasurementValue
+      <Measurement
         description="Pressure"
         unit={Unit.PRESSURE_PA}
         reading={measurement.pressure}
         formatter={formatters.divBy100ToFixed2}
       />
-      <MeasurementValue
+      <Measurement
         description="Humidity"
         unit={Unit.PERCENT}
         reading={measurement.humidity}

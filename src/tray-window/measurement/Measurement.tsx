@@ -6,7 +6,7 @@ export interface IMeasurementProps extends IMeasurementReadingProps {
   description: string;
 }
 
-export const MeasurementValue = ({ description, unit, reading, formatter }: IMeasurementProps) => {
+export const Measurement = ({ description, unit, reading, formatter }: IMeasurementProps) => {
   return (
     <div className="measurement">
       <MeasurementReading
