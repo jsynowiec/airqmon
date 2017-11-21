@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import { getLocation } from '../geolocation';
 import { TrayWindow } from '../tray-window';
+import updateChecker from '../update-checker';
 
 import {
   AIRLY_API_URL,
@@ -20,6 +21,10 @@ interface IAppProps {
 interface IBaseAppState {
   tokens: {
     airly: string;
+  };
+  appUpdate?: {
+    version: string;
+    url: string;
   };
 }
 
@@ -80,6 +85,17 @@ class App extends React.Component<IAppProps, IAppState> {
           this.init();
         }
       });
+    });
+
+    updateChecker.on('update-available', (version, url) => {
+      this.setState({
+        appUpdate: {
+          version,
+          url,
+        },
+      } as IAppState);
+
+      this.notifyAboutAvailableUpdate(version, url);
     });
   }
 
@@ -197,6 +213,14 @@ class App extends React.Component<IAppProps, IAppState> {
       },
       REFRESH_DELAY,
     );
+  }
+
+  notifyAboutAvailableUpdate(version, url) {
+    new Notification('Update available', {
+      body: `Version ${version} is available to download.`,
+    }).addEventListener('click', () => {
+      ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
+    });
   }
 
   handleRefreshClick() {
