@@ -1,8 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
-import * as semver from 'semver';
-
+import { ipcRenderer } from 'electron';
 import { EventEmitter } from 'events';
-import { setTimeout } from 'timers';
+import * as semver from 'semver';
+import { setTimeout, clearTimeout } from 'timers';
+
+import IPC_EVENTS from './ipc-events';
 
 const CHECK_INTERVAL = 2 * 60 * 60 * 1000; // 2 hours
 const GITHUB_BASE_URL = 'https://api.github.com';
@@ -56,6 +58,14 @@ class UpdateChecker extends EventEmitter implements IUpdateChecker {
     super();
 
     this.scheduleCheck(10 * 1000);
+
+    ipcRenderer.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status) => {
+      if (status === 'offline') {
+        clearTimeout(this.checkTimer);
+      } else {
+        this.scheduleCheck(10 * 1000);
+      }
+    });
   }
 
   private getRetryBackoff() {
