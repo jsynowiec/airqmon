@@ -1,7 +1,7 @@
 {
   "name": "airqmon",
   "description": "A menu bar app that displays live air quality informations from the nearest Airly sensor station.",
-  "version": "0.0.1-4",
+  "version": "0.0.1-5",
   "main": "build/main.js",
   "engines": {
     "node": ">=8.9.0"
