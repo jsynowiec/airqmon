@@ -14,7 +14,7 @@ A menu bar app that displays live air quality informations from the nearest [Air
 
 ## Installation
 
-Download the [latest release](https://github.com/jsynowiec/airqmon/latest), unpack and drag to your Application folder.
+Download the [latest release](https://github.com/jsynowiec/airqmon/releases/latest), unpack and drag to your Application folder.
 
 ### Update
 
