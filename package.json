@@ -25,6 +25,7 @@
   "devDependencies": {
     "@types/react": "^16.0.25",
     "@types/react-dom": "^16.0.2",
+    "@types/semver": "^5.4.0",
     "devtron": "^1.4.0",
     "electron": "^1.8.1",
     "electron-connect": "^0.6.2",
@@ -46,6 +47,7 @@
     "axios": "^0.17.1",
     "photon": "git+https://github.com/connors/photon.git#v0.1.2-alpha",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "semver": "^5.4.1"
   }
 }
