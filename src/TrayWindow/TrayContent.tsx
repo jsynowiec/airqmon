@@ -5,6 +5,7 @@ import Loader from './Loader';
 import { IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../airly';
 import MeasurementPane from './MeasurementPane';
 import { getCAQIMeta } from '../caqi';
+import IPC_EVENTS from '../ipc-events';
 
 interface ITrayContentProps {
   currentMeasurements?: IAirlyCurrentMeasurement;
@@ -18,7 +19,7 @@ class TrayContent extends React.Component<ITrayContentProps> {
   }
 
   handleExtLinkClick(url) {
-    ipcRenderer.send('open-ext-browser', url);
+    ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
   }
 
   render() {

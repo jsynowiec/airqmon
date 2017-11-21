@@ -2,6 +2,7 @@ import { ipcRenderer } from 'electron';
 import * as React from 'react';
 
 import { formatDateTo24Time } from '../helpers';
+import IPC_EVENTS from '../ipc-events';
 
 interface ITrayFooterProps {
   lastUpdateDate?: Date;
@@ -16,7 +17,7 @@ class TrayFooter extends React.Component<ITrayFooterProps> {
   }
 
   handleExtLinkClick(url) {
-    ipcRenderer.send('open-ext-browser', url);
+    ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
   }
 
   render() {

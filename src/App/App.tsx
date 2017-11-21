@@ -10,6 +10,7 @@ import {
   IArilyNearestSensorMeasurement,
 } from '../airly';
 import { getCAQIMeta } from '../caqi';
+import IPC_EVENTS from '../ipc-events';
 
 interface IAppProps {
   airlyToken: string;
@@ -55,7 +56,7 @@ class App extends React.Component<IAppProps, IAppState> {
   }
 
   componentDidMount() {
-    ipcRenderer.on('online-status-changed', (_, status) => {
+    ipcRenderer.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status) => {
       let newState: IDataAppState = {
         connectionStatus: status === 'online',
       };
@@ -172,7 +173,7 @@ class App extends React.Component<IAppProps, IAppState> {
             lastUpdateDate: new Date(),
           },
           () => {
-            ipcRenderer.send('airq-data-update', this.state.currentMeasurements);
+            ipcRenderer.send(IPC_EVENTS.AIR_Q_DATA_UPDATED, this.state.currentMeasurements);
           },
         );
       }
@@ -208,7 +209,7 @@ class App extends React.Component<IAppProps, IAppState> {
   }
 
   handleQuitClick() {
-    ipcRenderer.send('close-window');
+    ipcRenderer.send(IPC_EVENTS.CLOSE_WINDOW);
   }
 
   render() {

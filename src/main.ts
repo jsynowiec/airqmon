@@ -41,7 +41,7 @@ app.on('window-all-closed', () => {
   app.quit();
 });
 
-ipcMain.on('show-window', () => {
+ipcMain.on(IPC_EVENTS.SHOW_WINDOW, () => {
   showWindow();
 });
 
@@ -54,7 +54,7 @@ ipcMain.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status) => {
   }
 });
 
-ipcMain.on('airq-data-update', (_, currentMeasurement: IAirlyCurrentMeasurement) => {
+ipcMain.on(IPC_EVENTS.AIR_Q_DATA_UPDATED, (_, currentMeasurement: IAirlyCurrentMeasurement) => {
   tray.setTitle(currentMeasurement.airQualityIndex.toFixed(0));
 
   const airQualityLabel = getCAQIMeta(currentMeasurement.airQualityIndex).labels.airQuality;
@@ -63,10 +63,10 @@ ipcMain.on('airq-data-update', (_, currentMeasurement: IAirlyCurrentMeasurement)
   );
 });
 
-ipcMain.on('open-ext-browser', (_, arg) => {
+ipcMain.on(IPC_EVENTS.OPEN_BROWSER_FOR_URL, (_, arg) => {
   shell.openExternal(arg);
 });
 
-ipcMain.on('close-window', () => {
+ipcMain.on(IPC_EVENTS.CLOSE_WINDOW, () => {
   closeWindow();
 });
