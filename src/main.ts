@@ -3,10 +3,12 @@ import { createTray, createWindow, showWindow, closeWindow } from './window';
 
 import { IAirlyCurrentMeasurement } from './airly';
 import { getCAQIMeta } from './caqi';
+import IPC_EVENTS from './ipc-events';
 
 const keys = require('../keys.json');
 
 let tray: Electron.Tray;
+let window: Electron.BrowserWindow;
 
 if (keys.google) {
   process.env.GOOGLE_API_KEY = keys.google;
@@ -18,7 +20,7 @@ app.dock.hide();
 app.on('ready', () => {
   tray = createTray();
 
-  const window = createWindow({
+  window = createWindow({
     width: 300,
     height: 420,
     show: false,
@@ -32,15 +34,6 @@ app.on('ready', () => {
     },
   });
   window.setVisibleOnAllWorkspaces(true);
-
-  ipcMain.on('online-status-changed', (_, status) => {
-    window.webContents.send('online-status-changed', status);
-
-    if (status === 'offline') {
-      tray.setTitle('');
-      tray.setToolTip('');
-    }
-  });
 });
 
 // Quit the app when the window is closed
@@ -50,6 +43,15 @@ app.on('window-all-closed', () => {
 
 ipcMain.on('show-window', () => {
   showWindow();
+});
+
+ipcMain.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status) => {
+  window.webContents.send(IPC_EVENTS.CONN_STATUS_CHANGED, status);
+
+  if (status === 'offline') {
+    tray.setTitle('');
+    tray.setToolTip('');
+  }
 });
 
 ipcMain.on('airq-data-update', (_, currentMeasurement: IAirlyCurrentMeasurement) => {

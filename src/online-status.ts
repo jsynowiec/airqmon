@@ -1,7 +1,9 @@
 import { ipcRenderer } from 'electron';
 
+import IPC_EVENTS from './ipc-events';
+
 function updateOnlineStatus() {
-  ipcRenderer.send('online-status-changed', navigator.onLine ? 'online' : 'offline');
+  ipcRenderer.send(IPC_EVENTS.CONN_STATUS_CHANGED, navigator.onLine ? 'online' : 'offline');
 }
 
 window.addEventListener('online', updateOnlineStatus);
