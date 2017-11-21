@@ -1,5 +1,5 @@
 import { app, ipcMain, shell } from 'electron';
-import { createTray, createWindow, showWindow, closeWindow } from './window';
+import { createTray, createWindow, closeWindow } from './window';
 
 import { IAirlyCurrentMeasurement } from './airly';
 import { getCAQIMeta } from './caqi';
@@ -39,10 +39,6 @@ app.on('ready', () => {
 // Quit the app when the window is closed
 app.on('window-all-closed', () => {
   app.quit();
-});
-
-ipcMain.on(IPC_EVENTS.SHOW_WINDOW, () => {
-  showWindow();
 });
 
 ipcMain.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status) => {
