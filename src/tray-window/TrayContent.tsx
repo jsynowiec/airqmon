@@ -26,8 +26,11 @@ class TrayContent extends React.Component<ITrayContentProps> {
     if (!this.props.connectionStatus) {
       return (
         <div className="window-content">
-          <div className="pane">
-            <div className="summary">You're offline&hellip;</div>
+          <div className="pane centered-content">
+            <div className="summary">
+              <strong>There is no Internet connection</strong><br/>
+              Your computer is offline.
+            </div>
           </div>
         </div>
       );
@@ -72,7 +75,7 @@ class TrayContent extends React.Component<ITrayContentProps> {
 
     return (
       <div className="window-content">
-        <div className="pane">
+        <div className="pane centered-content">
           <Loader />
         </div>
       </div>
