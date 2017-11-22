@@ -43,7 +43,7 @@ interface IAppState extends IBaseAppState, IDataAppState {
 
 const REFRESH_DELAY = 300000; // 5 minutes
 
-let refreshTimer: NodeJS.Timer;
+let refreshTimer: NodeJS.Timer = null;
 
 class App extends React.Component<IAppProps, IAppState> {
   constructor(props: IAppProps) {

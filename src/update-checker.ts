@@ -100,7 +100,7 @@ class UpdateChecker extends EventEmitter implements IUpdateChecker {
             this.updateAvailable = true;
             this.updateUrl = assets.find((asset) => {
               return asset.content_type === 'application/zip' && asset.name === `${name}-mac.zip`;
-            }).browser_download_url || null;
+            }).browser_download_url;
 
             this.emit('update-available', ...[
               version,

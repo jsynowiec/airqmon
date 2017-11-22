@@ -1,4 +1,4 @@
-export function isDev() {
+export function isDev(): boolean {
   if ('ELECTRON_IS_DEV' in process.env) {
     return parseInt(process.env.ELECTRON_IS_DEV, 10) === 1;
   }
@@ -6,11 +6,11 @@ export function isDev() {
   return process.defaultApp || /node_modules[\\/]electron[\\/]/.test(process.execPath);
 }
 
-export function withLeadingZero(val: number):string {
+export function withLeadingZero(val: number): string {
   return `${val < 10 ? '0' : ''}${val}`;
 }
 
-export function formatDateTo24Time(date: Date) {
+export function formatDateTo24Time(date: Date): string {
   const hours = date.getHours();
   const minutes = date.getMinutes();
 

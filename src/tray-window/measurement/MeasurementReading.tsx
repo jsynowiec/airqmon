@@ -3,16 +3,16 @@ import * as React from 'react';
 import { MeasurementReadingUnit, IMeasurementReadingUnitProps } from './MeasurementReadingUnit';
 
 export interface IMeasurementReadingProps extends IMeasurementReadingUnitProps {
-  reading: number|string;
+  reading?: number|string;
   formatter?: (val: number|string) => string;
 }
 
 export const MeasurementReading = ({
-  reading,
+  reading = null,
   formatter = null,
   unit = null,
 }: IMeasurementReadingProps) => {
-  const content = reading ? formatter ? formatter(reading) : reading : '-';
+  const content = reading !== null ? formatter ? formatter(reading) : reading : '-';
 
   return (
     <div className="reading">

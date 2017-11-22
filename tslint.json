@@ -8,6 +8,11 @@
       "options": [
         "allow-pascal-case"
       ]
-    }
+    },
+    "strict-boolean-expressions": [
+      true,
+      "allow-null-union",
+      "allow-undefined-union"
+    ]
   }
 }
