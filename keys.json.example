@@ -1,4 +1,5 @@
 {
   "airly": "<your Airly token>",
-  "google": "<your Google APIs token>"
+  "google": "<your Google APIs token>",
+  "rollbar": "<your Rollbar token>"
 }

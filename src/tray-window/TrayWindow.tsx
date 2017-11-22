@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../airly';
+import ErrorBoundary from '../ErrorBoundary';
 import Header from './TrayHeader';
 import Content from './TrayContent';
 import Footer from './TrayFooter';
@@ -27,11 +28,13 @@ const TrayWindow = ({
   return (
     <div className="window">
       <Header />
-      <Content
-        connectionStatus={connectionStatus}
-        currentMeasurements={currentMeasurements}
-        nearestStation={nearestStation}
-      />
+      <ErrorBoundary>
+        <Content
+          connectionStatus={connectionStatus}
+          currentMeasurements={currentMeasurements}
+          nearestStation={nearestStation}
+        />
+      </ErrorBoundary>
       <Footer
         lastUpdateDate={lastUpdateDate}
         isAutoRefreshEnabled={isAutoRefreshEnabled}

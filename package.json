@@ -48,6 +48,7 @@
     "photon": "git+https://github.com/connors/photon.git#v0.1.2-alpha",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
+    "rollbar": "^2.3.1",
     "semver": "^5.4.1"
   }
 }
