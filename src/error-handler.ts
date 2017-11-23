@@ -1,7 +1,5 @@
 import * as Rollbar from 'rollbar';
 
-import { isDev } from './helpers';
-
 const keys = require('../keys.json');
 
 const errorHandler = new Rollbar({
@@ -11,7 +9,6 @@ const errorHandler = new Rollbar({
   captureUnhandledRejections: false,
   payload: {
     code_version: require('../package.json').version,
-    environment: isDev() ? 'development' : 'production',
   },
 });
 

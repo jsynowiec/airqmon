@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { isDev } from './helpers';
 import errorHandler from './error-handler';
 
 interface IErrorBoundaryState {
@@ -15,7 +16,11 @@ class ErrorBoundary extends React.Component<{}, IErrorBoundaryState> {
 
   componentDidCatch(error) {
     this.setState({ hasError: true });
-    errorHandler.error(error);
+    if (!isDev()) {
+      errorHandler.error(error);
+    } else {
+      console.error(error);
+    }
   }
 
   render() {
