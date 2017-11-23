@@ -247,6 +247,7 @@ class App extends React.Component<IAppProps, IAppState> {
           nearestStation={this.state.nearestStation}
           lastUpdateDate={this.state.lastUpdateDate}
           isAutoRefreshEnabled={this.state.isAutoRefreshEnabled}
+          availableAppUpdate={this.state.appUpdate}
           onRefreshClickHandler={this.handleRefreshClick}
           onQuitClickHandler={this.handleQuitClick}
         />

@@ -2,26 +2,28 @@ import * as React from 'react';
 
 import { IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../airly';
 import ErrorBoundary from '../ErrorBoundary';
-import Header from './TrayHeader';
 import Content from './TrayContent';
 import Footer from './TrayFooter';
+import Header from './TrayHeader';
 
 interface ITrayWindowProps {
-  currentMeasurements?: IAirlyCurrentMeasurement;
-  nearestStation?: IArilyNearestSensorMeasurement;
-  lastUpdateDate?: Date;
+  availableAppUpdate?: { version: string, url: string };
   connectionStatus: Boolean;
+  currentMeasurements?: IAirlyCurrentMeasurement;
   isAutoRefreshEnabled: Boolean;
+  lastUpdateDate?: Date;
+  nearestStation?: IArilyNearestSensorMeasurement;
   onQuitClickHandler: () => void;
   onRefreshClickHandler: () => void;
 }
 
 const TrayWindow = ({
-  currentMeasurements,
-  nearestStation,
-  lastUpdateDate,
-  isAutoRefreshEnabled,
+  availableAppUpdate,
   connectionStatus,
+  currentMeasurements,
+  isAutoRefreshEnabled,
+  lastUpdateDate,
+  nearestStation,
   onQuitClickHandler,
   onRefreshClickHandler,
 }: ITrayWindowProps) => {
@@ -30,6 +32,7 @@ const TrayWindow = ({
       <Header />
       <ErrorBoundary>
         <Content
+          availableAppUpdate={availableAppUpdate}
           connectionStatus={connectionStatus}
           currentMeasurements={currentMeasurements}
           nearestStation={nearestStation}

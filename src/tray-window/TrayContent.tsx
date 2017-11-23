@@ -8,6 +8,7 @@ import { getCAQIMeta } from '../caqi';
 import IPC_EVENTS from '../ipc-events';
 
 interface ITrayContentProps {
+  availableAppUpdate?: { version: string, url: string};
   currentMeasurements?: IAirlyCurrentMeasurement;
   nearestStation?: IArilyNearestSensorMeasurement;
   connectionStatus: Boolean;
@@ -42,9 +43,23 @@ class TrayContent extends React.Component<ITrayContentProps> {
       // tslint:disable-next-line:max-line-length
       const stationUrl = `https://map.airly.eu/en/#latitude=${station.location.latitude}&longitude=${station.location.longitude}&id=${station.id}`;
 
+      const updateLabel = this.props.availableAppUpdate ? (
+        <div className="summary small available-update">
+          <a
+            className="link"
+            href="#"
+            onClick={this.handleExtLinkClick.bind(this, this.props.availableAppUpdate.url)}
+          >
+            <strong>Heads up!</strong> A new version is available for download.
+          </a>
+        </div>
+      ) : null;
+
       return (
         <div className="window-content">
           <div className="pane">
+
+            {updateLabel}
 
             <div className="summary">
               Air quality is&nbsp;
