@@ -80,13 +80,7 @@ class TrayContent extends React.Component<ITrayContentProps> {
       );
     }
 
-    return (
-      <div className="window-content">
-        <div className="pane centered-content">
-          <Loader />
-        </div>
-      </div>
-    );
+    return <Loader />;
   }
 }
 
