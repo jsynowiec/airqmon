@@ -1,13 +1,8 @@
 import * as React from 'react';
 
 import { IAirlyCurrentMeasurement } from '../airly';
-import { Measurement } from './measurement/Measurement';
+import { formatters, Measurement } from './measurement/Measurement';
 import { Unit } from './measurement/MeasurementReadingUnit';
-
-const formatters: { [key: string]: (val: string|number) => string } = {
-  toFixed2: (val: number) => val.toFixed(2),
-  divBy100ToFixed2: (val: number) => (val / 100).toFixed(2),
-};
 
 interface IMeasurementPaneProps {
   measurement?: IAirlyCurrentMeasurement;
