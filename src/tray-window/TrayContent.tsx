@@ -4,6 +4,7 @@ import { ipcRenderer } from 'electron';
 import Loader from './Loader';
 import Offline from './Offline';
 import UpdateAlert from './UpdateAlert';
+import StationInfo from './StationInfo';
 import { IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../airly';
 import MeasurementPane from './MeasurementPane';
 import { getCAQIMeta } from '../caqi';
@@ -59,16 +60,10 @@ class TrayContent extends React.Component<ITrayContentProps> {
 
             <MeasurementPane measurement={this.props.currentMeasurements} />
 
-            <div className="summary small">
-              Distance to station {(station.distance / 1000).toFixed(2)} km<br/>
-              <a
-                className="link"
-                href="#"
-                onClick={this.handleExtLinkClick.bind(this, stationUrl)}
-              >
-              {`${station.address.locality}, ${station.address.route}`}
-              </a>
-            </div>
+            <StationInfo
+              station={station}
+              onClickHandler={this.handleExtLinkClick.bind(this, stationUrl)}
+            />
 
           </div>
         </div>
