@@ -5,9 +5,9 @@ import Loader from './Loader';
 import Offline from './Offline';
 import UpdateAlert from './UpdateAlert';
 import StationInfo from './StationInfo';
+import AirQualityInfo from './AirQualityInfo';
 import { IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../airly';
 import MeasurementPane from './MeasurementPane';
-import { getCAQIMeta } from '../caqi';
 import IPC_EVENTS from '../ipc-events';
 
 interface ITrayContentProps {
@@ -32,7 +32,6 @@ class TrayContent extends React.Component<ITrayContentProps> {
     }
 
     if (this.props.currentMeasurements) {
-      const airQualityMeta = getCAQIMeta(this.props.currentMeasurements.airQualityIndex);
       const station = this.props.nearestStation;
       // tslint:disable-next-line:max-line-length
       const stationUrl = `https://map.airly.eu/en/#latitude=${station.location.latitude}&longitude=${station.location.longitude}&id=${station.id}`;
@@ -46,20 +45,13 @@ class TrayContent extends React.Component<ITrayContentProps> {
       return (
         <div className="window-content">
           <div className="pane">
-
             {updateAlert}
-
-            <div className="summary">
-              Air quality is&nbsp;
-              <strong>
-                {airQualityMeta.labels.airQuality.toLowerCase()}
-              </strong>.
-            </div>
-
-            <div className="summary small">{airQualityMeta.description}</div>
-
-            <MeasurementPane measurement={this.props.currentMeasurements} />
-
+            <AirQualityInfo
+              airQualityIndex={this.props.currentMeasurements.airQualityIndex}
+            />
+            <MeasurementPane
+              measurement={this.props.currentMeasurements}
+            />
             <StationInfo
               station={station}
               onClickHandler={this.handleExtLinkClick.bind(this, stationUrl)}
