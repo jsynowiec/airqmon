@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ipcRenderer } from 'electron';
 
 import Loader from './Loader';
+import Offline from './Offline';
 import { IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../airly';
 import MeasurementPane from './MeasurementPane';
 import { getCAQIMeta } from '../caqi';
@@ -24,17 +25,8 @@ class TrayContent extends React.Component<ITrayContentProps> {
   }
 
   render() {
-    if (!this.props.connectionStatus) {
-      return (
-        <div className="window-content">
-          <div className="pane centered-content">
-            <div className="summary">
-              <strong>There is no Internet connection</strong><br/>
-              Your computer is offline.
-            </div>
-          </div>
-        </div>
-      );
+    if (this.props.connectionStatus === false) {
+      return <Offline />;
     }
 
     if (this.props.currentMeasurements) {
