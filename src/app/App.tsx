@@ -2,6 +2,7 @@ import { ipcRenderer } from 'electron';
 import * as React from 'react';
 import axios from 'axios';
 
+import visitor from '../analytics';
 import { getLocation } from '../geolocation';
 import { TrayWindow } from '../tray-window';
 import updateChecker from '../update-checker';
@@ -176,10 +177,17 @@ class App extends React.Component<IAppProps, IAppState> {
           const oldCAQIMeta = getCAQIMeta(this.state.currentMeasurements.airQualityIndex);
           const newCAQIMeta = getCAQIMeta(value.data.currentMeasurements.airQualityIndex);
 
+          // tslint:disable-next-line:max-line-length
+          const label = `Air quality changed from ${oldCAQIMeta.labels.airQuality.toLowerCase()} to ${newCAQIMeta.labels.airQuality.toLowerCase()}. Pollution is now ${newCAQIMeta.labels.pollution.toLowerCase()}.`
+
           if (oldCAQIMeta.index !== newCAQIMeta.index) {
+            visitor.event(
+              'Air quality',
+              'Air quality changed.',
+              label).send();
+
             new Notification('Air quality changed', {
-              // tslint:disable-next-line:max-line-length
-              body: `Air quality changed from ${oldCAQIMeta.labels.airQuality.toLowerCase()} to ${newCAQIMeta.labels.airQuality.toLowerCase()}. Pollution is now ${newCAQIMeta.labels.pollution.toLowerCase()}.`,
+              body: label,
             });
           }
         }
@@ -219,6 +227,8 @@ class App extends React.Component<IAppProps, IAppState> {
     new Notification('Update available', {
       body: `Version ${version} is available to download.`,
     }).addEventListener('click', () => {
+      visitor.event('App updates', 'Clicked on notification body.').send();
+
       ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
     });
   }

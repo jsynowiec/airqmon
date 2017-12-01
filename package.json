@@ -50,6 +50,7 @@
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "rollbar": "^2.3.1",
-    "semver": "^5.4.1"
+    "semver": "^5.4.1",
+    "universal-analytics": "^0.4.16"
   }
 }

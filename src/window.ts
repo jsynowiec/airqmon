@@ -1,6 +1,7 @@
 import { BrowserWindow, Tray } from 'electron';
 import * as path from 'path';
 
+import viewer from './analytics';
 import { isDev } from './helpers';
 
 const assetsDirectory = path.join(__dirname, '../assets');
@@ -41,8 +42,16 @@ export function closeWindow() {
 export function createTray() {
   tray = new Tray(path.join(assetsDirectory, 'menu_iconTemplate.png'));
 
-  tray.on('right-click', toggleWindow);
-  tray.on('click', toggleWindow);
+  tray.on('right-click', () => {
+    viewer.event('Tray icon clicks', 'User right-clicked the tray icon.').send();
+
+    toggleWindow();
+  });
+  tray.on('click', () => {
+    viewer.event('Tray icon clicks', 'User clicked the tray icon.').send();
+
+    toggleWindow();
+  });
 
   return tray;
 }
