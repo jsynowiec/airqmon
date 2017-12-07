@@ -28,12 +28,15 @@ class ErrorBoundary extends React.Component<{}, IErrorBoundaryState> {
 
     if (this.state.hasError) {
       content = (
-        <div className="error-message">
-          <strong>
-            <span className="icon icon-alert" /> Uh oh...
-          </strong>
-          <br />
-          Looks like something went wrong. Please try restarting the app.
+        <div className="centered-content">
+          <div className="error-message">
+            <div className="error-message__header">
+              <span className="icon icon-alert" /> Uh oh...
+            </div>
+            <div className="error-message_description">
+              Looks like something went wrong. Please try restarting the app.
+            </div>
+          </div>
         </div>
       );
     }

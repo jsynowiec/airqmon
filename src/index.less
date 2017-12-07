@@ -1,7 +1,6 @@
 @import "variables";
 @import "common";
 @import "tray-window/index";
-@import "ErrorBoundary";
 
 .header-arrow {
   position: absolute;
@@ -36,4 +35,13 @@
 .window, .toolbar-header {
   border-top-left-radius: @window-border-radius;
   border-top-right-radius: @window-border-radius;
+}
+
+.error-message {
+  .summary;
+
+  &__header {
+    color: @text-color-error;
+    font-weight: 500;
+  }
 }
