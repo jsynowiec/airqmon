@@ -58,6 +58,9 @@
     "universal-analytics": "^0.4.16"
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx}": ["prettier --write", "git add"]
+    "src/**/*.{ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
