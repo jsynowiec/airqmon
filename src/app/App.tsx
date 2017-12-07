@@ -43,6 +43,8 @@ const REFRESH_DELAY = 300000; // 5 minutes
 let refreshTimer: NodeJS.Timer = null;
 
 class App extends React.Component<IAppProps, IAppState> {
+  private lastUsedStationId?: number = null;
+
   constructor(props: IAppProps) {
     super(props);
 
@@ -104,21 +106,19 @@ class App extends React.Component<IAppProps, IAppState> {
           longitude: position.coords.longitude,
         },
         () => {
-          const oldStation = this.state.nearestStation;
-
           this.findNearestStation().then((station: IArilyNearestSensorMeasurement) => {
-            if (oldStation) {
-              if (oldStation.id !== station.id) {
+            if (this.lastUsedStationId !== null) {
+              if (this.lastUsedStationId !== station.id) {
                 new Notification('Location changed', {
                   // tslint:disable-next-line:max-line-length
-                  body: `Found a new nearest sensor station ${(
-                    this.state.nearestStation.distance / 1000
-                  ).toFixed(2)} away located at ${this.state.nearestStation.address.locality}, ${
-                    this.state.nearestStation.address.route
-                  }.`,
+                  body: `Found a new nearest sensor station ${(station.distance / 1000).toFixed(
+                    2,
+                  )} away located at ${station.address.locality}, ${station.address.route}.`,
                 });
               }
             }
+
+            this.lastUsedStationId = station.id;
 
             this.refreshData();
             if (this.state.isAutoRefreshEnabled) {
