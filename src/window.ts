@@ -1,4 +1,8 @@
-import { BrowserWindow, Tray } from 'electron';
+import {
+  BrowserWindow,
+  screen,
+  Tray,
+} from 'electron';
 import * as path from 'path';
 
 import viewer from './analytics';
@@ -12,10 +16,16 @@ let window: BrowserWindow;
 export function getWindowPosition(): { x: number, y: number } {
   const windowBounds = window.getBounds();
   const trayBounds = tray.getBounds();
+  const activeDisplay = screen.getDisplayMatching(trayBounds);
+  let yOffset = 0;
+
+  if (activeDisplay.bounds.y < 0) {
+    yOffset = activeDisplay.bounds.y;
+  }
 
   return {
     x: Math.round(trayBounds.x + (trayBounds.width / 2) - (windowBounds.width / 2)),
-    y: Math.round(trayBounds.y + trayBounds.height + 4),
+    y: Math.round(yOffset + trayBounds.height + 4),
   };
 }
 
