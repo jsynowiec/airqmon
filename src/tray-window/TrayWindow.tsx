@@ -28,7 +28,7 @@ const TrayWindow = ({
   onRefreshClickHandler,
 }: ITrayWindowProps) => {
   return (
-    <div className="window">
+    <>
       <Header />
       <ErrorBoundary>
         <Content
@@ -44,7 +44,7 @@ const TrayWindow = ({
         onQuitClick={onQuitClickHandler}
         onRefreshClick={onRefreshClickHandler}
       />
-    </div>
+    </>
   );
 };
 

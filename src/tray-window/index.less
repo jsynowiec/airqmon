@@ -1,5 +1,65 @@
-@import "TrayContent";
-@import "TrayFooter";
-@import "TrayHeader";
 @import "Loader";
 @import "measurement/index";
+
+a.link {
+  cursor: pointer;
+  font-weight: 400;
+  color: @text-color;
+  text-decoration: none;
+
+  span {
+    cursor: pointer;
+  }
+}
+
+.air-quality {
+  &__summary, &__description{
+    .summary;
+  }
+
+  &__description {
+    font-size: @font-size - 2pt;
+  }
+}
+
+.offline-info {
+  .summary;
+
+  &__header {
+    font-size: @font-size;
+    font-weight: 500;
+  }
+}
+
+.available-update {
+  .summary;
+  font-size: @font-size - 2pt;
+
+  margin-top: 0px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  background-color: #dff0d8;
+
+  a {
+    font-weight: 300;
+  }
+}
+
+.measurement-pane {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.station-info {
+  .summary;
+  font-size: @font-size - 2pt;
+}
+
+.toolbar-footer__footer-text {
+  margin-top: 10px;
+  padding-left: 10px;
+  font-size: @font-size - 4px;
+  font-weight: 300;
+  float: left;
+}

@@ -1,25 +1,30 @@
-@import "../../variables";
-
 .measurement {
   flex-basis: 50%;
   flex-direction: row;
-
   margin-top: 8px;
 
-  .reading, .description {
+  &__reading, &__description {
     text-align: center;
+    font-weight: 300;
   }
 
-  .reading {
+  &__reading {
     font-size: @font-size + 3pt;
-    font-weight: 300;
     color: @text-color;
   }
 
-  .description {
+  &__unit {
+    display: inline;
+
+    &::before {
+      content: '';
+      white-space: pre;
+    }
+  }
+
+  &__description {
     text-transform: uppercase;
     color: #666;
     font-size: @font-size - 2pt;
-    font-weight: 300;
   }
 }

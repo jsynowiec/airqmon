@@ -247,19 +247,21 @@ class App extends React.Component<IAppProps, IAppState> {
 
   render() {
     return (
-      <div>
+      <>
         <div className="header-arrow" />
-        <TrayWindow
-          connectionStatus={this.state.connectionStatus}
-          currentMeasurements={this.state.currentMeasurements}
-          nearestStation={this.state.nearestStation}
-          lastUpdateDate={this.state.lastUpdateDate}
-          isAutoRefreshEnabled={this.state.isAutoRefreshEnabled}
-          availableAppUpdate={this.state.appUpdate}
-          onRefreshClickHandler={this.handleRefreshClick}
-          onQuitClickHandler={this.handleQuitClick}
-        />
-      </div>
+        <div className="window">
+          <TrayWindow
+            connectionStatus={this.state.connectionStatus}
+            currentMeasurements={this.state.currentMeasurements}
+            nearestStation={this.state.nearestStation}
+            lastUpdateDate={this.state.lastUpdateDate}
+            isAutoRefreshEnabled={this.state.isAutoRefreshEnabled}
+            availableAppUpdate={this.state.appUpdate}
+            onRefreshClickHandler={this.handleRefreshClick}
+            onQuitClickHandler={this.handleQuitClick}
+          />
+        </div>
+      </>
     );
   }
 }

@@ -15,9 +15,11 @@ export const MeasurementReading = ({
   const content = reading !== null ? (formatter ? formatter(reading) : reading) : '-';
 
   return (
-    <div className="reading">
-      <span className="value">{content}</span>
-      <MeasurementReadingUnit unit={unit} />
-    </div>
+    <>
+      <div className="measurement__reading">
+        {content}
+        <MeasurementReadingUnit unit={unit} />
+      </div>
+    </>
   );
 };

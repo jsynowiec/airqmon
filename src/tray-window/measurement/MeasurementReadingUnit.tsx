@@ -14,14 +14,14 @@ export interface IMeasurementReadingUnitProps {
 export const MeasurementReadingUnit = ({ unit = null }: IMeasurementReadingUnitProps) => {
   let content = {
     [Unit.PM]: (
-      <span>
+      <>
         μg/m<sup>3</sup>
-      </span>
+      </>
     ),
     [Unit.TEMP_C]: (
-      <span>
+      <>
         <sup>&deg;</sup>C
-      </span>
+      </>
     ),
     [Unit.PRESSURE_PA]: 'hPA',
     [Unit.PERCENT]: '%',
@@ -31,5 +31,5 @@ export const MeasurementReadingUnit = ({ unit = null }: IMeasurementReadingUnitP
     content = null;
   }
 
-  return unit !== null ? <span className="unit"> {content}</span> : null;
+  return unit !== null ? <div className="measurement__unit"> {content}</div> : null;
 };

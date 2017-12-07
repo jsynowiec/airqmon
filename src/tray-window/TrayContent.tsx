@@ -45,17 +45,15 @@ class TrayContent extends React.Component<ITrayContentProps> {
       ) : null;
 
       return (
-        <div className="window-content">
-          <div className="pane">
-            {updateAlert}
-            <AirQualityInfo airQualityIndex={this.props.currentMeasurements.airQualityIndex} />
-            <MeasurementPane measurement={this.props.currentMeasurements} />
-            <StationInfo
-              station={station}
-              onClickHandler={this.handleExtLinkClick.bind(this, stationUrl)}
-            />
-          </div>
-        </div>
+        <>
+          {updateAlert}
+          <AirQualityInfo airQualityIndex={this.props.currentMeasurements.airQualityIndex} />
+          <MeasurementPane measurement={this.props.currentMeasurements} />
+          <StationInfo
+            station={station}
+            onClickHandler={this.handleExtLinkClick.bind(this, stationUrl)}
+          />
+        </>
       );
     }
 

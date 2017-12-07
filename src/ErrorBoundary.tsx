@@ -24,23 +24,25 @@ class ErrorBoundary extends React.Component<{}, IErrorBoundaryState> {
   }
 
   render() {
+    let content = this.props.children;
+
     if (this.state.hasError) {
-      return (
-        <div className="window-content">
-          <div className="pane centered-content">
-            <div className="summary error-message">
-              <strong>
-                <span className="icon icon-alert" /> Uh oh...
-              </strong>
-              <br />
-              Looks like something went wrong. Please try restarting the app.
-            </div>
-          </div>
+      content = (
+        <div className="error-message">
+          <strong>
+            <span className="icon icon-alert" /> Uh oh...
+          </strong>
+          <br />
+          Looks like something went wrong. Please try restarting the app.
         </div>
       );
     }
 
-    return this.props.children;
+    return (
+      <div className="window-content">
+        <div className="pane">{content}</div>
+      </div>
+    );
   }
 }
 

@@ -6,13 +6,13 @@ const AirQualityInfo = ({ airQualityIndex }) => {
   const airQualityMeta = getCAQIMeta(airQualityIndex);
 
   return (
-    <div>
-      <div className="summary">
+    <>
+      <div className="air-quality__summary">
         Air quality is&nbsp;
         <strong>{airQualityMeta.labels.airQuality.toLowerCase()}</strong>.
       </div>
-      <div className="summary small">{airQualityMeta.description}</div>
-    </div>
+      <div className="air-quality__description">{airQualityMeta.description}</div>
+    </>
   );
 };
 

@@ -2,17 +2,15 @@ import * as React from 'react';
 
 const Loader = () => {
   return (
-    <div className="window-content">
-      <div className="pane centered-content">
-        <div>
-          <div className="summary">Fetching data&hellip;</div>
-          <div className="spinner">
-            <div className="rect1" />
-            <div className="rect2" />
-            <div className="rect3" />
-            <div className="rect4" />
-            <div className="rect5" />
-          </div>
+    <div className="centered-content">
+      <div className="loader">
+        <div className="loader__summary">Fetching data&hellip;</div>
+        <div className="loader__spinner">
+          <div className="loader__spinner__r1" />
+          <div className="loader__spinner__r2" />
+          <div className="loader__spinner__r3" />
+          <div className="loader__spinner__r4" />
+          <div className="loader__spinner__r5" />
         </div>
       </div>
     </div>
