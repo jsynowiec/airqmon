@@ -40,10 +40,9 @@ interface IAppState extends IBaseAppState, IDataAppState {
 
 const REFRESH_DELAY = 300000; // 5 minutes
 
-let refreshTimer: NodeJS.Timer = null;
-
 class App extends React.Component<IAppProps, IAppState> {
   private lastUsedStationId?: number = null;
+  private refreshTimer: NodeJS.Timer = null;
 
   constructor(props: IAppProps) {
     super(props);
@@ -77,8 +76,8 @@ class App extends React.Component<IAppProps, IAppState> {
 
       this.setState(newState, () => {
         if (status === 'offline') {
-          if (refreshTimer) {
-            clearInterval(refreshTimer);
+          if (this.refreshTimer) {
+            clearInterval(this.refreshTimer);
           }
         } else {
           this.init();
@@ -212,11 +211,11 @@ class App extends React.Component<IAppProps, IAppState> {
   }
 
   enableRefreshTimer() {
-    if (refreshTimer) {
-      clearInterval(refreshTimer);
+    if (this.refreshTimer) {
+      clearInterval(this.refreshTimer);
     }
 
-    refreshTimer = setInterval(() => {
+    this.refreshTimer = setInterval(() => {
       this.refreshData();
     }, REFRESH_DELAY);
   }
@@ -236,7 +235,7 @@ class App extends React.Component<IAppProps, IAppState> {
       if (this.state.isAutoRefreshEnabled) {
         this.enableRefreshTimer();
       } else {
-        clearInterval(refreshTimer);
+        clearInterval(this.refreshTimer);
       }
     });
   }
