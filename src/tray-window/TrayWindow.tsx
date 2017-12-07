@@ -7,7 +7,7 @@ import Footer from './TrayFooter';
 import Header from './TrayHeader';
 
 interface ITrayWindowProps {
-  availableAppUpdate?: { version: string, url: string };
+  availableAppUpdate?: { version: string; url: string };
   connectionStatus: Boolean;
   currentMeasurements?: IAirlyCurrentMeasurement;
   isAutoRefreshEnabled: Boolean;

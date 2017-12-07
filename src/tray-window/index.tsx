@@ -1,5 +1,3 @@
 import TrayWindow from './TrayWindow';
 
-export {
-  TrayWindow,
-};
+export { TrayWindow };

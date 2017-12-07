@@ -1,8 +1,4 @@
-import {
-  BrowserWindow,
-  screen,
-  Tray,
-} from 'electron';
+import { BrowserWindow, screen, Tray } from 'electron';
 import * as path from 'path';
 
 import viewer from './analytics';
@@ -13,7 +9,7 @@ const assetsDirectory = path.join(__dirname, '../assets');
 let tray: Tray;
 let window: BrowserWindow;
 
-export function getWindowPosition(): { x: number, y: number } {
+export function getWindowPosition(): { x: number; y: number } {
   const windowBounds = window.getBounds();
   const trayBounds = tray.getBounds();
   const activeDisplay = screen.getDisplayMatching(trayBounds);
@@ -24,7 +20,7 @@ export function getWindowPosition(): { x: number, y: number } {
   }
 
   return {
-    x: Math.round(trayBounds.x + (trayBounds.width / 2) - (windowBounds.width / 2)),
+    x: Math.round(trayBounds.x + trayBounds.width / 2 - windowBounds.width / 2),
     y: Math.round(yOffset + trayBounds.height + 4),
   };
 }

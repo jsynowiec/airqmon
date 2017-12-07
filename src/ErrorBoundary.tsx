@@ -29,7 +29,10 @@ class ErrorBoundary extends React.Component<{}, IErrorBoundaryState> {
         <div className="window-content">
           <div className="pane centered-content">
             <div className="summary error-message">
-              <strong><span className="icon icon-alert" /> Uh oh...</strong><br/>
+              <strong>
+                <span className="icon icon-alert" /> Uh oh...
+              </strong>
+              <br />
               Looks like something went wrong. Please try restarting the app.
             </div>
           </div>

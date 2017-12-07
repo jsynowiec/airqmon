@@ -5,7 +5,8 @@ const Offline = () => {
     <div className="window-content">
       <div className="pane centered-content">
         <div className="summary">
-          <strong>There is no Internet connection</strong><br/>
+          <strong>There is no Internet connection</strong>
+          <br />
           Your computer is offline.
         </div>
       </div>

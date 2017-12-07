@@ -31,14 +31,10 @@ interface IUpdateChecker extends EventEmitter {
   /**
    * Emitted when there is an available update.
    */
-  on(event: 'update-available', listener: (version: string,
-                                           url: string) => void): this;
-  once(event: 'update-available', listener: (version: string,
-                                             url: string) => void): this;
-  addListener(event: 'update-available', listener: (version: string,
-                                                    url: string) => void): this;
-  removeListener(event: 'update-available', listener: (version: string,
-                                                       url: string) => void): this;
+  on(event: 'update-available', listener: (version: string, url: string) => void): this;
+  once(event: 'update-available', listener: (version: string, url: string) => void): this;
+  addListener(event: 'update-available', listener: (version: string, url: string) => void): this;
+  removeListener(event: 'update-available', listener: (version: string, url: string) => void): this;
   /**
    * Asks the server whether there is an update.
    */
@@ -84,41 +80,40 @@ class UpdateChecker extends EventEmitter implements IUpdateChecker {
   checkForUpdates() {
     axios({
       url: `${GITHUB_BASE_URL}/repos/${GITHUB_REPO}/releases`,
-    }).then((result: AxiosResponse<IGitHubRelease[]>) => {
-      if (result.status === 200) {
-        const availableUpdates = result.data
-          .filter(elem => semver.gt(elem.tag_name, currentVer))
-          .sort((r1, r2) => semver.compare(r1.tag_name, r2.tag_name));
+    })
+      .then((result: AxiosResponse<IGitHubRelease[]>) => {
+        if (result.status === 200) {
+          const availableUpdates = result.data
+            .filter((elem) => semver.gt(elem.tag_name, currentVer))
+            .sort((r1, r2) => semver.compare(r1.tag_name, r2.tag_name));
 
-        if (availableUpdates.length > 0) {
-          const { tag_name: version, assets } = availableUpdates[0];
+          if (availableUpdates.length > 0) {
+            const { tag_name: version, assets } = availableUpdates[0];
 
-          // Notify only about newer updates
-          if (semver.gt(version, this.latestKnownVersion)) {
-            this.latestKnownVersion = version;
+            // Notify only about newer updates
+            if (semver.gt(version, this.latestKnownVersion)) {
+              this.latestKnownVersion = version;
 
-            this.updateAvailable = true;
-            this.updateUrl = assets.find((asset) => {
-              return asset.content_type === 'application/zip' && asset.name === `${name}-mac.zip`;
-            }).browser_download_url;
+              this.updateAvailable = true;
+              this.updateUrl = assets.find((asset) => {
+                return asset.content_type === 'application/zip' && asset.name === `${name}-mac.zip`;
+              }).browser_download_url;
 
-            this.emit('update-available', ...[
-              version,
-              this.updateUrl,
-            ]);
+              this.emit('update-available', ...[version, this.updateUrl]);
+            }
           }
-        }
 
-        this.retries = 0;
-        this.scheduleCheck();
-      } else {
+          this.retries = 0;
+          this.scheduleCheck();
+        } else {
+          this.retryWithBackoff();
+        }
+      })
+      .catch((error) => {
+        console.log(error.message);
+        // Check again with backoff on subsequent retries
         this.retryWithBackoff();
-      }
-    }).catch((error) => {
-      console.log(error.message);
-      // Check again with backoff on subsequent retries
-      this.retryWithBackoff();
-    });
+      });
   }
 }
 

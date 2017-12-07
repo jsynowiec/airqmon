@@ -10,7 +10,8 @@ const CAQI_INDEX = [
       pollution: 'Very low',
       airQuality: 'Excellent',
     },
-    description: 'Air quality is considered satisfactory, and air pollution poses little or no risk.',
+    description:
+      'Air quality is considered satisfactory, and air pollution poses little or no risk.',
   },
   {
     index: 1,
@@ -22,7 +23,8 @@ const CAQI_INDEX = [
       pollution: 'Low',
       airQuality: 'Good',
     },
-    description: 'Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution.',
+    description:
+      'Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution.',
   },
   {
     index: 2,
@@ -34,7 +36,8 @@ const CAQI_INDEX = [
       pollution: 'Medium',
       airQuality: 'Moderate',
     },
-    description: 'Members of sensitive groups may experience health effects. The general public is not likely to be affected.',
+    description:
+      'Members of sensitive groups may experience health effects. The general public is not likely to be affected.',
   },
   {
     index: 3,
@@ -58,7 +61,8 @@ const CAQI_INDEX = [
       pollution: 'Very high',
       airQuality: 'Hazardous',
     },
-    description: 'Health warnings of emergency conditions. The entire population is more likely to be affected.',
+    description:
+      'Health warnings of emergency conditions. The entire population is more likely to be affected.',
   },
 ];
 

@@ -7,11 +7,7 @@ interface IUpdateAlertProps {
 const UpdateAlert = ({ onClickHandler }: IUpdateAlertProps) => {
   return (
     <div className="summary small available-update">
-      <a
-        className="link"
-        href="#"
-        onClick={onClickHandler}
-      >
+      <a className="link" href="#" onClick={onClickHandler}>
         <strong>Heads up!</strong> A new version is available for download.
       </a>
     </div>

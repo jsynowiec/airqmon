@@ -7,11 +7,7 @@ import { getLocation } from '../geolocation';
 import { TrayWindow } from '../tray-window';
 import updateChecker from '../update-checker';
 
-import {
-  AIRLY_API_URL,
-  IAirlyCurrentMeasurement,
-  IArilyNearestSensorMeasurement,
-} from '../airly';
+import { AIRLY_API_URL, IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../airly';
 import { getCAQIMeta } from '../caqi';
 import IPC_EVENTS from '../ipc-events';
 
@@ -115,7 +111,11 @@ class App extends React.Component<IAppProps, IAppState> {
               if (oldStation.id !== station.id) {
                 new Notification('Location changed', {
                   // tslint:disable-next-line:max-line-length
-                  body: `Found a new nearest sensor station ${(this.state.nearestStation.distance / 1000).toFixed(2)} away located at ${this.state.nearestStation.address.locality}, ${this.state.nearestStation.address.route}.`,
+                  body: `Found a new nearest sensor station ${(
+                    this.state.nearestStation.distance / 1000
+                  ).toFixed(2)} away located at ${this.state.nearestStation.address.locality}, ${
+                    this.state.nearestStation.address.route
+                  }.`,
                 });
               }
             }
@@ -143,20 +143,22 @@ class App extends React.Component<IAppProps, IAppState> {
           latitude: this.state.latitude,
           longitude: this.state.longitude,
         },
-      }).then((value) => {
-        if (value.status === 200) {
-          this.setState(
-            {
-              nearestStation: value.data,
-            },
-            () => {
-              resolve(value.data);
-            },
-          );
-        }
-      }).catch((reason) => {
-        reject(reason);
-      });
+      })
+        .then((value) => {
+          if (value.status === 200) {
+            this.setState(
+              {
+                nearestStation: value.data,
+              },
+              () => {
+                resolve(value.data);
+              },
+            );
+          }
+        })
+        .catch((reason) => {
+          reject(reason);
+        });
     });
   }
 
@@ -171,43 +173,42 @@ class App extends React.Component<IAppProps, IAppState> {
       params: {
         sensorId: this.state.nearestStation.id,
       },
-    }).then((value) => {
-      if (value.status === 200) {
-        if (this.state.currentMeasurements) {
-          const oldCAQIMeta = getCAQIMeta(this.state.currentMeasurements.airQualityIndex);
-          const newCAQIMeta = getCAQIMeta(value.data.currentMeasurements.airQualityIndex);
+    })
+      .then((value) => {
+        if (value.status === 200) {
+          if (this.state.currentMeasurements) {
+            const oldCAQIMeta = getCAQIMeta(this.state.currentMeasurements.airQualityIndex);
+            const newCAQIMeta = getCAQIMeta(value.data.currentMeasurements.airQualityIndex);
 
-          // tslint:disable-next-line:max-line-length
-          const label = `Air quality changed from ${oldCAQIMeta.labels.airQuality.toLowerCase()} to ${newCAQIMeta.labels.airQuality.toLowerCase()}. Pollution is now ${newCAQIMeta.labels.pollution.toLowerCase()}.`
+            // tslint:disable-next-line:max-line-length
+            const label = `Air quality changed from ${oldCAQIMeta.labels.airQuality.toLowerCase()} to ${newCAQIMeta.labels.airQuality.toLowerCase()}. Pollution is now ${newCAQIMeta.labels.pollution.toLowerCase()}.`;
 
-          if (oldCAQIMeta.index !== newCAQIMeta.index) {
-            visitor.event(
-              'Air quality',
-              'Air quality changed.',
-              label).send();
+            if (oldCAQIMeta.index !== newCAQIMeta.index) {
+              visitor.event('Air quality', 'Air quality changed.', label).send();
 
-            new Notification('Air quality changed', {
-              body: label,
-            });
+              new Notification('Air quality changed', {
+                body: label,
+              });
+            }
           }
-        }
 
-        this.setState(
-          {
-            currentMeasurements: value.data.currentMeasurements,
-            lastUpdateDate: new Date(),
-          },
-          () => {
-            ipcRenderer.send(IPC_EVENTS.AIR_Q_DATA_UPDATED, this.state.currentMeasurements);
-          },
-        );
-      }
-    }).catch(() => {
-      this.setState({
-        currentMeasurements: null,
-        lastUpdateDate: null,
+          this.setState(
+            {
+              currentMeasurements: value.data.currentMeasurements,
+              lastUpdateDate: new Date(),
+            },
+            () => {
+              ipcRenderer.send(IPC_EVENTS.AIR_Q_DATA_UPDATED, this.state.currentMeasurements);
+            },
+          );
+        }
+      })
+      .catch(() => {
+        this.setState({
+          currentMeasurements: null,
+          lastUpdateDate: null,
+        });
       });
-    });
   }
 
   enableRefreshTimer() {
@@ -215,12 +216,9 @@ class App extends React.Component<IAppProps, IAppState> {
       clearInterval(refreshTimer);
     }
 
-    refreshTimer = setInterval(
-      () => {
-        this.refreshData();
-      },
-      REFRESH_DELAY,
-    );
+    refreshTimer = setInterval(() => {
+      this.refreshData();
+    }, REFRESH_DELAY);
   }
 
   notifyAboutAvailableUpdate(version, url) {

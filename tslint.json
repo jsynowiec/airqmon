@@ -1,7 +1,10 @@
 {
-  "extends": ["tslint-config-airbnb", "tslint-react"],
+  "extends": [
+    "tslint-eslint-rules",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
   "rules": {
-    "quotemark": [true, "single", "jsx-double"],
     "interface-name": [true, "always-prefix"],
     "import-name": [false],
     "variable-name": {

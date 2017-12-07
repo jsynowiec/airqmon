@@ -13,8 +13,16 @@ export interface IMeasurementReadingUnitProps {
 
 export const MeasurementReadingUnit = ({ unit = null }: IMeasurementReadingUnitProps) => {
   let content = {
-    [Unit.PM]: <span>μg/m<sup>3</sup></span>,
-    [Unit.TEMP_C]: <span><sup>&deg;</sup>C</span>,
+    [Unit.PM]: (
+      <span>
+        μg/m<sup>3</sup>
+      </span>
+    ),
+    [Unit.TEMP_C]: (
+      <span>
+        <sup>&deg;</sup>C
+      </span>
+    ),
     [Unit.PRESSURE_PA]: 'hPA',
     [Unit.PERCENT]: '%',
   }[unit];

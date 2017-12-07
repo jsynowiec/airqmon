@@ -11,7 +11,7 @@ import MeasurementPane from './MeasurementPane';
 import IPC_EVENTS from '../ipc-events';
 
 interface ITrayContentProps {
-  availableAppUpdate?: { version: string, url: string};
+  availableAppUpdate?: { version: string; url: string };
   currentMeasurements?: IAirlyCurrentMeasurement;
   nearestStation?: IArilyNearestSensorMeasurement;
   connectionStatus: Boolean;
@@ -34,7 +34,9 @@ class TrayContent extends React.Component<ITrayContentProps> {
     if (this.props.currentMeasurements) {
       const station = this.props.nearestStation;
       // tslint:disable-next-line:max-line-length
-      const stationUrl = `https://map.airly.eu/en/#latitude=${station.location.latitude}&longitude=${station.location.longitude}&id=${station.id}`;
+      const stationUrl = `https://map.airly.eu/en/#latitude=${
+        station.location.latitude
+      }&longitude=${station.location.longitude}&id=${station.id}`;
 
       const updateAlert = this.props.availableAppUpdate ? (
         <UpdateAlert
@@ -46,17 +48,12 @@ class TrayContent extends React.Component<ITrayContentProps> {
         <div className="window-content">
           <div className="pane">
             {updateAlert}
-            <AirQualityInfo
-              airQualityIndex={this.props.currentMeasurements.airQualityIndex}
-            />
-            <MeasurementPane
-              measurement={this.props.currentMeasurements}
-            />
+            <AirQualityInfo airQualityIndex={this.props.currentMeasurements.airQualityIndex} />
+            <MeasurementPane measurement={this.props.currentMeasurements} />
             <StationInfo
               station={station}
               onClickHandler={this.handleExtLinkClick.bind(this, stationUrl)}
             />
-
           </div>
         </div>
       );

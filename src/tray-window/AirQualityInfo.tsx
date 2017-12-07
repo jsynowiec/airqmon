@@ -9,9 +9,7 @@ const AirQualityInfo = ({ airQualityIndex }) => {
     <div>
       <div className="summary">
         Air quality is&nbsp;
-        <strong>
-          {airQualityMeta.labels.airQuality.toLowerCase()}
-        </strong>.
+        <strong>{airQualityMeta.labels.airQuality.toLowerCase()}</strong>.
       </div>
       <div className="summary small">{airQualityMeta.description}</div>
     </div>
