@@ -79,7 +79,7 @@ gulp.task('electron:package', () => {
     appCategoryType: 'public.app-category.weather',
     dir: './',
     ignore: [
-      'src'
+      '^/src',
     ],
     asar: true,
     icon: './assets/airqmon.icns',
