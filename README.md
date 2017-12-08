@@ -28,6 +28,18 @@ Simply overwrite previous application with a newer one.
 
 Currently there is no configuration. This application uses geolocation to find out nearest sensor station.
 
+## FAQ
+
+### macOS doesn't allow me to start the app
+
+Since macOS Sierra, if you try to open an app that is not registered with Apple by an identified developer you get a warning dialog. Airqmon is not signed nor was submitted to Apple for review.
+
+To override your security settings and open the app:
+1. In the Finder, locate the app you want to open.
+2. Control-click the app icon, then choose Open from the shortcut menu.
+
+Read more: [PH25088](https://support.apple.com/kb/PH25088?locale=en_US)
+
 ## License
 
 Copyright 2017 Jakub Synowiec
