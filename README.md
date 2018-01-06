@@ -9,7 +9,7 @@ A menu bar app that displays live air quality informations from the nearest [Air
 **Note:** This app is still in the work-in-progress-full-of-bugs state. No "stable" release, no docs, guides, etc. Moreover, [Airly][airly] sensor stations are probably only located in Poland (but I have plans to later add support for different APIs and data providers).
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/1029142/33099907-d8edf8fc-cf12-11e7-814d-1df4ef140f9a.png" width="342px" align="center" alt="Airqmon window with measurement details" />
+  <img src="https://user-images.githubusercontent.com/1029142/34644991-ea2fcb00-f342-11e7-9700-c43505f3eca2.png" width="342px" align="center" alt="Airqmon window with measurement details" />
 </p>
 
 <p align="center">
