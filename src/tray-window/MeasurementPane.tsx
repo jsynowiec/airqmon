@@ -12,12 +12,6 @@ const MeasurementPane = ({ measurement }: IMeasurementPaneProps) => {
   return (
     <div className="measurement-pane">
       <Measurement
-        description="CAQI"
-        reading={measurement.airQualityIndex}
-        formatter={formatters.significant}
-      />
-      <Measurement description="Pollution level" reading={measurement.pollutionLevel} />
-      <Measurement
         description="PM1"
         unit={Unit.PM}
         reading={measurement.pm1}

@@ -13,11 +13,53 @@ a.link {
 }
 
 .air-quality {
-  &__summary, &__description{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &__caqi, &__label, &__summary, &__description {
     .summary;
   }
 
+  &__label, &__description {
+    text-align: right;
+  }
+
+  &__label {
+    .quality {
+      &-0 {
+        color: #6bc926;
+      }
+      &-1 {
+        color: #d1cf1e;
+      }
+      &-2 {
+        color: #efbb0f;
+      }
+      &-3 {
+        color: #ef7120;
+      }
+      &-4 {
+        color: #ef2a36;
+      }
+    }
+  }
+
+  &__caqi {
+    flex: 1;
+
+    .measurement__reading, .measurement__description {
+      text-align: left;
+    }
+  }
+
+  &__summary {
+    flex: 4;
+    flex-direction: column;
+  }
+
   &__description {
+    margin-top: 0;
     font-size: @font-size - 2pt;
   }
 }
@@ -49,6 +91,7 @@ a.link {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  margin-top: 16px;
 }
 
 .station-info {
