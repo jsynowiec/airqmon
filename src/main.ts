@@ -3,12 +3,15 @@ import { createTray, createWindow, closeWindow } from './window';
 
 import { IAirlyCurrentMeasurement } from './airly';
 import { getCAQIMeta } from './caqi';
+import { isDev } from './helpers';
 import IPC_EVENTS from './ipc-events';
 
 const keys = require('../keys.json');
 
 let tray: Electron.Tray;
 let window: Electron.BrowserWindow;
+
+process.env.NODE_ENV = isDev() ? 'development' : 'production';
 
 if (keys.google) {
   process.env.GOOGLE_API_KEY = keys.google;
