@@ -13,6 +13,16 @@
     color: @text-color;
   }
 
+  &__norm {
+    font-size: @font-size - 3pt;
+    vertical-align: super;
+
+    &::before {
+      content: ' ';
+      white-space: pre;
+    }
+  }
+
   &__unit {
     display: inline;
 

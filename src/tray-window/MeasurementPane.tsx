@@ -21,12 +21,14 @@ const MeasurementPane = ({ measurement }: IMeasurementPaneProps) => {
         description="PM2.5"
         unit={Unit.PM}
         reading={measurement.pm25}
+        norm={25}
         formatter={formatters.significant}
       />
       <Measurement
         description="PM10"
         unit={Unit.PM}
         reading={measurement.pm10}
+        norm={50}
         formatter={formatters.significant}
       />
       <Measurement
