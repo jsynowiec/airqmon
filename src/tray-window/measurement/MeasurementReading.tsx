@@ -12,12 +12,10 @@ export const MeasurementReading = ({
   formatter = null,
   unit = null,
 }: IMeasurementReadingProps) => {
-  const content = reading !== null ? (formatter ? formatter(reading) : reading) : '-';
-
   return (
     <>
       <div className="measurement__reading">
-        {content}
+        {formatter ? formatter(reading) : reading}
         <MeasurementReadingUnit unit={unit} />
       </div>
     </>

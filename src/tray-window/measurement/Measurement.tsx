@@ -12,10 +12,12 @@ export interface IMeasurementProps extends IMeasurementReadingProps {
 }
 
 export const Measurement = ({ description, unit, reading, formatter }: IMeasurementProps) => {
-  return (
+  const content = (
     <div className="measurement">
       <MeasurementReading reading={reading} unit={unit} formatter={formatter} />
       <div className="measurement__description">{description}</div>
     </div>
   );
+
+  return reading !== null && reading !== undefined ? content : null;
 };
