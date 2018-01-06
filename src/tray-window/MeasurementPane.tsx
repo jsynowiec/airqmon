@@ -13,8 +13,8 @@ const MeasurementPane = ({ measurement }: IMeasurementPaneProps) => {
     <div className="measurement-pane">
       <Measurement
         description="CAQI"
-        reading={measurement.airQualityIndex < 100 ? measurement.airQualityIndex : '>100'}
-        formatter={measurement.airQualityIndex < 100 && formatters.toFixed2}
+        reading={measurement.airQualityIndex}
+        formatter={formatters.toFixed2}
       />
       <Measurement description="Pollution level" reading={measurement.pollutionLevel} />
       <Measurement
