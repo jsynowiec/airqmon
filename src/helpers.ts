@@ -16,3 +16,7 @@ export function formatDateTo24Time(date: Date): string {
 
   return `${withLeadingZero(hours)}:${withLeadingZero(minutes)}`;
 }
+
+export function isEmptyObject(obj: Object): Boolean {
+  return Object.keys(obj).length === 0 && obj.constructor === Object;
+}

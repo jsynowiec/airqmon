@@ -9,6 +9,7 @@ import updateChecker from '../update-checker';
 
 import { AIRLY_API_URL, IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../airly';
 import { getCAQIMeta } from '../caqi';
+import { isEmptyObject } from '../helpers';
 import IPC_EVENTS from '../ipc-events';
 
 interface IAppProps {
@@ -175,9 +176,21 @@ class App extends React.Component<IAppProps, IAppState> {
     })
       .then((value) => {
         if (value.status === 200) {
+          let measurements = value.data.currentMeasurements;
+          // some stations don't have current measurements so we need to get latest historical
+          if (isEmptyObject(measurements)) {
+            measurements = value.data.history.reduceRight((acc, el) => {
+              if (acc === null && isEmptyObject(el.measurements) === false) {
+                acc = el.measurements;
+              }
+
+              return acc;
+            }, null);
+          }
+
           if (this.state.currentMeasurements) {
             const oldCAQIMeta = getCAQIMeta(this.state.currentMeasurements.airQualityIndex);
-            const newCAQIMeta = getCAQIMeta(value.data.currentMeasurements.airQualityIndex);
+            const newCAQIMeta = getCAQIMeta(measurements.airQualityIndex);
 
             // tslint:disable-next-line:max-line-length
             const label = `Air quality changed from ${oldCAQIMeta.labels.airQuality.toLowerCase()} to ${newCAQIMeta.labels.airQuality.toLowerCase()}. Pollution is now ${newCAQIMeta.labels.pollution.toLowerCase()}.`;
@@ -193,7 +206,7 @@ class App extends React.Component<IAppProps, IAppState> {
 
           this.setState(
             {
-              currentMeasurements: value.data.currentMeasurements,
+              currentMeasurements: measurements,
               lastUpdateDate: new Date(),
             },
             () => {
