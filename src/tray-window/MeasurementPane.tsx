@@ -14,26 +14,26 @@ const MeasurementPane = ({ measurement }: IMeasurementPaneProps) => {
       <Measurement
         description="CAQI"
         reading={measurement.airQualityIndex}
-        formatter={formatters.toFixed2}
+        formatter={formatters.significant}
       />
       <Measurement description="Pollution level" reading={measurement.pollutionLevel} />
       <Measurement
         description="PM1"
         unit={Unit.PM}
         reading={measurement.pm1}
-        formatter={formatters.toFixed2}
+        formatter={formatters.significant}
       />
       <Measurement
         description="PM2.5"
         unit={Unit.PM}
         reading={measurement.pm25}
-        formatter={formatters.toFixed2}
+        formatter={formatters.significant}
       />
       <Measurement
         description="PM10"
         unit={Unit.PM}
         reading={measurement.pm10}
-        formatter={formatters.toFixed2}
+        formatter={formatters.significant}
       />
       <Measurement
         description="Temperature"

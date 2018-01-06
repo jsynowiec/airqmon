@@ -3,6 +3,7 @@ import * as React from 'react';
 import { MeasurementReading, IMeasurementReadingProps } from './MeasurementReading';
 
 export const formatters: { [key: string]: (val: string | number) => string } = {
+  significant: (val: number) => Math.round(val).toFixed(0),
   toFixed2: (val: number) => val.toFixed(2),
   divBy100ToFixed2: (val: number) => (val / 100).toFixed(2),
 };
