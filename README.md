@@ -1,4 +1,8 @@
-# <img src="https://user-images.githubusercontent.com/1029142/32918679-7336704a-cb23-11e7-92b2-d8a7f2588055.png" width="60px" align="center" alt="Airqmon icon" /> Airqmon [![GitHub release][badge-github-release]][airqmon-latest-release] [![GitHub release][badge-github-pre-release]][airqmon-latest-release]
+# <img src="https://user-images.githubusercontent.com/1029142/32918679-7336704a-cb23-11e7-92b2-d8a7f2588055.png" width="60px" align="center" alt="Airqmon icon" /> Airqmon
+
+[![GitHub release][badge-github-release]][airqmon-latest-release]
+[![GitHub release][badge-github-pre-release]][airqmon-latest-release]
+[![Downloads total][badge-downloads-total]][airqmon-latest-release]
 
 [![David][badge-david-deps]][david]
 [![License][badge-license]][license]
