@@ -6,7 +6,11 @@
 
 A menu bar app that displays live air quality informations from the nearest [Airly][airly] sensor station. It also notifies you when the air quality changes or when a new station that is closer to your current location was found.
 
-**Note:** This app is still in the work-in-progress-full-of-bugs state. No "stable" release, no docs, guides, etc. Moreover, [Airly][airly] sensor stations are probably only located in Poland (but I have plans to later add support for different APIs and data providers).
+**Note:** This app is still in the work-in-progress state. No stable release, no docs, guides, etc.
+
+<p align="center">
+  <img width="140" alt="screen shot 2018-01-07 at 19 09 45" src="https://user-images.githubusercontent.com/1029142/34652449-7721515a-f3de-11e7-82e0-3af878ff3d58.png">
+</p>
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/1029142/34644991-ea2fcb00-f342-11e7-9700-c43505f3eca2.png" width="342px" align="center" alt="Airqmon window with measurement details" />
@@ -18,11 +22,11 @@ A menu bar app that displays live air quality informations from the nearest [Air
 
 ## Installation
 
-Download the [latest release][airqmon-latest-release], unpack and drag to your Applications folder.
+Download the [latest release][airqmon-latest-release], unzip and drag to your `Applications` folder.
 
 ### Update
 
-Simply overwrite previous application with a newer one.
+Simply overwrite previous application in your `Applications` folder with a newer version of Airqmon.
 
 ## Setup
 
@@ -39,6 +43,10 @@ To override your security settings and open the app:
 2. Control-click the app icon, then choose Open from the shortcut menu.
 
 Read more: [PH25088](https://support.apple.com/kb/PH25088?locale=en_US)
+
+### There is no data or displayed station is very far away
+
+[Airly][airly] sensor stations are probably located only in Poland (but I plan to add support for different APIs and data providers at some point).
 
 ## License
 
