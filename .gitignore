@@ -3,5 +3,5 @@ npm-debug.log
 yarn-error.log
 build
 out
-.vscode
+.vscode/settings.json
 keys.json

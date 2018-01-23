@@ -3,8 +3,10 @@
     "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
+    "rootDir": "./src",
+    "outDir": "build",
+    "jsx": "react",
     "allowSyntheticDefaultImports": true,
-    "jsx": "preserve",
     "allowJs": true,
     "alwaysStrict": true,
     "sourceMap": true,
@@ -15,7 +17,8 @@
     "noUnusedParameters": true,
     "noImplicitAny": false,
     "noImplicitThis": false,
-    "strictNullChecks": false
+    "strictNullChecks": false,
+    "declaration": false
   },
   "include": [
     "src/**/*"

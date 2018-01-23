@@ -8,11 +8,10 @@ const gulpSequence = require('gulp-sequence');
 const less = require('gulp-less');
 const rimraf = promisify(require('rimraf'));
 const ts = require('gulp-typescript');
+const sourcemaps = require('gulp-sourcemaps');
 const gulpTslint = require('gulp-tslint');
 const tslint = require('tslint');
 const useref = require('gulp-useref');
-
-const tsProject = ts.createProject('tsconfig.release.json');
 
 gulp.task('clean', (cb) => {
   return Promise.all([
@@ -34,29 +33,42 @@ gulp.task('tslint', () => {
 });
 
 gulp.task('build:scripts', () => {
+  const tsProject = ts.createProject('tsconfig.json');
   const tsResult = gulp.src(['src/**/*.{ts,tsx}', '!**/*.d.ts'])
     .pipe(cache('scripts'))
+    .pipe(sourcemaps.init())
     .pipe(tsProject());
 
-  return tsResult.js.pipe(gulp.dest('build'));
+  return tsResult.js
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('build'));
+});
+
+gulp.task('build:scripts:release', () => {
+  const tsProject = ts.createProject('tsconfig.release.json');
+  const tsResult = gulp.src(['src/**/*.{ts,tsx}', '!**/*.d.ts'])
+    .pipe(tsProject());
+
+  return tsResult.js
+    .pipe(gulp.dest('build'));
 });
 
 gulp.task('build:html', () => {
   return gulp.src('src/index.html')
     .pipe(cache('html'))
-    .pipe(gulp.dest('build'))
+    .pipe(gulp.dest('build'));
 });
 
-gulp.task('build:html:prod', () => {
+gulp.task('build:html:release', () => {
   return gulp.src('src/index.html')
     .pipe(useref())
-    .pipe(gulp.dest('build'))
+    .pipe(gulp.dest('build'));
 });
 
 gulp.task('build:styles', () => {
   return gulp.src('src/index.less')
     .pipe(less())
-    .pipe(gulp.dest('build'))
+    .pipe(gulp.dest('build'));
 });
 
 gulp.task('watch', ['build'], () => {
@@ -92,8 +104,11 @@ gulp.task('electron:package', () => {
 });
 
 gulp.task('build', gulpSequence('clean', ['build:scripts', 'build:html', 'build:styles']));
-gulp.task('build:prod', gulpSequence('clean', ['build:scripts', 'build:html:prod', 'build:styles']));
+gulp.task('build:release', gulpSequence(
+  'clean',
+  ['build:scripts:release', 'build:html:release', 'build:styles']
+));
 gulp.task('start', gulpSequence('watch', 'electron:start'));
-gulp.task('package', gulpSequence('build:prod', 'electron:package'));
+gulp.task('package', gulpSequence('build:release', 'electron:package'));
 
 gulp.task('default', ['start']);
