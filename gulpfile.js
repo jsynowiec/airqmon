@@ -84,6 +84,7 @@ gulp.task('electron:package', () => {
     asar: true,
     icon: './assets/airqmon.icns',
     overwrite: true,
+    packageManager: 'yarn',
     out: './out',
     arch: 'x64',
     platform: 'darwin',
