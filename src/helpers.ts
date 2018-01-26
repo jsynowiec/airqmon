@@ -7,7 +7,7 @@ export function isDev(): boolean {
 }
 
 export function withLeadingZero(val: number): string {
-  return `${val < 10 ? '0' : ''}${val}`;
+  return `${val >= 0 && val < 10 ? '0' : ''}${val}`; // don't care about negative values
 }
 
 export function formatDateTo24Time(date: Date): string {
