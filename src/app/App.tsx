@@ -189,8 +189,10 @@ class App extends React.Component<IAppProps, IAppState> {
           }
 
           if (this.state.currentMeasurements) {
-            const oldCAQIMeta = getCAQIMeta(this.state.currentMeasurements.airQualityIndex);
-            const newCAQIMeta = getCAQIMeta(measurements.airQualityIndex);
+            const oldCAQIMeta = getCAQIMeta(
+              Math.round(this.state.currentMeasurements.airQualityIndex),
+            );
+            const newCAQIMeta = getCAQIMeta(Math.round(measurements.airQualityIndex));
 
             // tslint:disable-next-line:max-line-length
             const label = `Air quality changed from ${oldCAQIMeta.labels.airQuality.toLowerCase()} to ${newCAQIMeta.labels.airQuality.toLowerCase()}. Pollution is now ${newCAQIMeta.labels.pollution.toLowerCase()}.`;

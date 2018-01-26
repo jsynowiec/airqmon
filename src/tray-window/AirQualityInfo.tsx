@@ -4,7 +4,7 @@ import { formatters, Measurement } from './measurement/Measurement';
 import { getCAQIMeta } from '../caqi';
 
 const AirQualityInfo = ({ airQualityIndex }) => {
-  const airQualityMeta = getCAQIMeta(airQualityIndex);
+  const airQualityMeta = getCAQIMeta(Math.round(airQualityIndex));
 
   return (
     <div className="air-quality">

@@ -56,7 +56,8 @@ ipcMain.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status) => {
 ipcMain.on(IPC_EVENTS.AIR_Q_DATA_UPDATED, (_, currentMeasurement: IAirlyCurrentMeasurement) => {
   tray.setTitle(currentMeasurement.airQualityIndex.toFixed(0));
 
-  const airQualityLabel = getCAQIMeta(currentMeasurement.airQualityIndex).labels.airQuality;
+  const airQualityLabel = getCAQIMeta(Math.round(currentMeasurement.airQualityIndex)).labels
+    .airQuality;
   tray.setToolTip(`Air quality is ${airQualityLabel.toLowerCase()}`);
 });
 
