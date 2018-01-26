@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MeasurementReadingUnit renders proper unit for Unit.PERCENT 1`] = `" %"`;
+
+exports[`MeasurementReadingUnit renders proper unit for Unit.PM 1`] = `" μg/m3"`;
+
+exports[`MeasurementReadingUnit renders proper unit for Unit.PRESSURE_PA 1`] = `" hPA"`;
+
+exports[`MeasurementReadingUnit renders proper unit for Unit.TEMP_C 1`] = `" °C"`;

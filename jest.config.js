@@ -1,5 +1,6 @@
 module.exports = {
   testEnvironment: 'node',
+  setupTestFrameworkScriptFile: '<rootDir>/setupTests.js',
   transform: {
     '.(ts|tsx)': '<rootDir>/preprocessor.js'
   },

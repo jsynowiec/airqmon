@@ -27,9 +27,5 @@ export const MeasurementReadingUnit = ({ unit = null }: IMeasurementReadingUnitP
     [Unit.PERCENT]: '%',
   }[unit];
 
-  if (content === undefined) {
-    content = null;
-  }
-
   return unit !== null ? <div className="measurement__unit"> {content}</div> : null;
 };
