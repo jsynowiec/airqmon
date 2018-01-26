@@ -1,5 +1,19 @@
 // tslint:disable:max-line-length
-const CAQI_INDEX = [
+
+interface ICAQIMetadata {
+  index: number;
+  values: {
+    min: number;
+    max: number;
+  };
+  labels: {
+    pollution: string;
+    airQuality: string;
+  };
+  description: string;
+}
+
+const CAQI_INDEX: ICAQIMetadata[] = [
   {
     index: 0,
     values: {
@@ -66,7 +80,7 @@ const CAQI_INDEX = [
   },
 ];
 
-export function getCAQIMeta(val: number) {
+export function getCAQIMeta(val: number): ICAQIMetadata {
   return CAQI_INDEX.find((elem) => {
     return val >= elem.values.min && val <= elem.values.max;
   });
