@@ -68,6 +68,6 @@ const CAQI_INDEX = [
 
 export function getCAQIMeta(val: number) {
   return CAQI_INDEX.find((elem) => {
-    return val >= elem.values.min && val < elem.values.max;
+    return val >= elem.values.min && val <= elem.values.max;
   });
 }
