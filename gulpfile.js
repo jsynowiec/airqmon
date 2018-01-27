@@ -40,7 +40,7 @@ gulp.task('build:scripts', () => {
     .pipe(tsProject());
 
   return tsResult.js
-    .pipe(sourcemaps.write())
+    .pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: '../src' }))
     .pipe(gulp.dest('build'));
 });
 
