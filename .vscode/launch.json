@@ -13,24 +13,8 @@
           ],
           "windows": {
               "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
-          }
-      },
-      {
-          "name": "Electron: Renderer",
-          "type": "chrome",
-          "request": "attach",
-          "port": 9223,
-          "webRoot": "${workspaceRoot}",
-          "timeout": 30000
-      }
-  ],
-  "compounds": [
-      {
-          "name": "Electron: All",
-          "configurations": [
-              "Electron: Main",
-              "Electron: Renderer"
-          ]
+          },
+          "preLaunchTask": "build"
       }
   ]
 }

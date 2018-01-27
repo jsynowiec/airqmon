@@ -1,0 +1,13 @@
+{
+  "tasks": [
+    {
+      "label": "build",
+      "type": "gulp",
+      "task": "build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
