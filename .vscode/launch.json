@@ -7,8 +7,9 @@
           "name": "Electron: Main",
           "protocol": "inspector",
           "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+          "sourceMaps": true,
           "runtimeArgs": [
-              "--remote-debugging-port=9223",
+              "--enable-logging",
               "."
           ],
           "windows": {
