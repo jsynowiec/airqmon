@@ -1,6 +1,9 @@
 module.exports = {
   testEnvironment: 'node',
   setupTestFrameworkScriptFile: '<rootDir>/setupTests.js',
+  snapshotSerializers: [
+    'enzyme-to-json/serializer',
+  ],
   transform: {
     '.(ts|tsx)': '<rootDir>/preprocessor.js'
   },
