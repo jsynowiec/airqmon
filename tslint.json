@@ -9,7 +9,8 @@
     "import-name": [false],
     "variable-name": {
       "options": [
-        "allow-pascal-case"
+        "allow-pascal-case",
+        "allow-leading-underscore"
       ]
     },
     "strict-boolean-expressions": [

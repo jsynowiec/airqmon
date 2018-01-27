@@ -1,15 +1,14 @@
 import { app, ipcMain, shell } from 'electron';
-import { createTray, createWindow, closeWindow } from './window';
 
 import { IAirlyCurrentMeasurement } from './airly';
 import { getCAQIMeta } from './caqi';
 import { isDev } from './helpers';
 import IPC_EVENTS from './ipc-events';
+import TrayWindowManager from './tray-window-manager';
 
 const keys = require('../keys.json');
 
-let tray: Electron.Tray;
-let window: Electron.BrowserWindow;
+let trayWindowManager: TrayWindowManager;
 
 process.env.NODE_ENV = isDev() ? 'development' : 'production';
 
@@ -21,9 +20,7 @@ if (keys.google) {
 app.dock.hide();
 
 app.on('ready', () => {
-  tray = createTray();
-
-  window = createWindow({
+  trayWindowManager = new TrayWindowManager({
     width: 300,
     height: 420,
     show: false,
@@ -36,7 +33,6 @@ app.on('ready', () => {
       backgroundThrottling: false,
     },
   });
-  window.setVisibleOnAllWorkspaces(true);
 });
 
 // Quit the app when the window is closed
@@ -45,20 +41,21 @@ app.on('window-all-closed', () => {
 });
 
 ipcMain.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status) => {
-  window.webContents.send(IPC_EVENTS.CONN_STATUS_CHANGED, status);
+  trayWindowManager.ipcSend(IPC_EVENTS.CONN_STATUS_CHANGED, status);
 
   if (status === 'offline') {
-    tray.setTitle('');
-    tray.setToolTip('');
+    trayWindowManager.clearTray();
   }
 });
 
 ipcMain.on(IPC_EVENTS.AIR_Q_DATA_UPDATED, (_, currentMeasurement: IAirlyCurrentMeasurement) => {
-  tray.setTitle(currentMeasurement.airQualityIndex.toFixed(0));
-
   const airQualityLabel = getCAQIMeta(Math.round(currentMeasurement.airQualityIndex)).labels
     .airQuality;
-  tray.setToolTip(`Air quality is ${airQualityLabel.toLowerCase()}`);
+
+  trayWindowManager.updateTray({
+    title: currentMeasurement.airQualityIndex.toFixed(0),
+    tooltip: `Air quality is ${airQualityLabel.toLowerCase()}`,
+  });
 });
 
 ipcMain.on(IPC_EVENTS.OPEN_BROWSER_FOR_URL, (_, arg) => {
@@ -66,5 +63,5 @@ ipcMain.on(IPC_EVENTS.OPEN_BROWSER_FOR_URL, (_, arg) => {
 });
 
 ipcMain.on(IPC_EVENTS.CLOSE_WINDOW, () => {
-  closeWindow();
+  trayWindowManager.closeWindow();
 });
