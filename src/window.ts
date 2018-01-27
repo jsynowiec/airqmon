@@ -9,7 +9,13 @@ const assetsDirectory = path.join(__dirname, '../assets');
 let tray: Tray;
 let window: BrowserWindow;
 
-export function getWindowPosition(): { x: number; y: number } {
+export function getWindowPosition({
+  tray,
+  window,
+}: {
+  tray: Tray;
+  window: BrowserWindow;
+}): { x: number; y: number } {
   const windowBounds = window.getBounds();
   const trayBounds = tray.getBounds();
   const activeDisplay = screen.getDisplayMatching(trayBounds);
@@ -25,10 +31,13 @@ export function getWindowPosition(): { x: number; y: number } {
   };
 }
 
-export function showWindow() {
-  const position = getWindowPosition();
-
+export function setWindowPosition(window: BrowserWindow): void {
+  const position = getWindowPosition({ tray, window });
   window.setPosition(position.x, position.y, false);
+}
+
+export function showWindow(window: BrowserWindow): void {
+  setWindowPosition(window);
   window.show();
   window.focus();
 }
@@ -37,7 +46,7 @@ export function toggleWindow() {
   if (window.isVisible()) {
     window.hide();
   } else {
-    showWindow();
+    showWindow(window);
   }
 }
 
@@ -64,8 +73,10 @@ export function createTray() {
 
 export function createWindow(config: Electron.BrowserWindowConstructorOptions = {}) {
   window = new BrowserWindow(config);
+  setWindowPosition(window);
 
   window.loadURL(`file://${path.join(__dirname, 'index.html')}`);
+
   if (isDev()) {
     window.webContents.openDevTools({ mode: 'detach' });
   }
