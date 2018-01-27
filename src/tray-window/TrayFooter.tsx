@@ -11,49 +11,48 @@ interface ITrayFooterProps {
   onQuitClick: () => void;
 }
 
-class TrayFooter extends React.Component<ITrayFooterProps> {
-  constructor(props: ITrayFooterProps) {
-    super(props);
-  }
-
-  handleExtLinkClick(url) {
+const TrayFooter = ({
+  lastUpdateDate,
+  isAutoRefreshEnabled,
+  onRefreshClick,
+  onQuitClick,
+}: ITrayFooterProps) => {
+  function handleExtLinkClick(url) {
     ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
   }
 
-  render() {
-    const lastUpdate = this.props.lastUpdateDate
-      ? `, last update at ${formatDateTo24Time(this.props.lastUpdateDate)}`
-      : null;
+  const lastUpdate = lastUpdateDate
+    ? `, last update at ${formatDateTo24Time(lastUpdateDate)}`
+    : null;
 
-    return (
-      <footer className="toolbar toolbar-footer">
-        <div className="toolbar-footer__footer-text">
-          Powered by&nbsp;
-          <a
-            className="link"
-            href="#"
-            onClick={this.handleExtLinkClick.bind(this, 'https://developer.airly.eu')}
+  return (
+    <footer className="toolbar toolbar-footer">
+      <div className="toolbar-footer__footer-text">
+        Powered by&nbsp;
+        <a
+          className="link"
+          href="#"
+          onClick={handleExtLinkClick.bind(this, 'https://developer.airly.eu')}
+        >
+          Airly
+        </a>
+        {lastUpdate}
+      </div>
+      <div className="toolbar-actions pull-right">
+        <div className="btn-group">
+          <button
+            className={'btn btn-default' + (isAutoRefreshEnabled ? ' active' : '')}
+            onClick={onRefreshClick}
           >
-            Airly
-          </a>
-          {lastUpdate}
+            <span className="icon icon-arrows-ccw" title="Auto refresh" />
+          </button>
+          <button className="btn btn-default" onClick={onQuitClick}>
+            <span className="icon icon-cancel" title="Quit" />
+          </button>
         </div>
-        <div className="toolbar-actions pull-right">
-          <div className="btn-group">
-            <button
-              className={'btn btn-default' + (this.props.isAutoRefreshEnabled ? ' active' : '')}
-              onClick={this.props.onRefreshClick}
-            >
-              <span className="icon icon-arrows-ccw" title="Auto refresh" />
-            </button>
-            <button className="btn btn-default" onClick={this.props.onQuitClick}>
-              <span className="icon icon-cancel" title="Quit" />
-            </button>
-          </div>
-        </div>
-      </footer>
-    );
-  }
-}
+      </div>
+    </footer>
+  );
+};
 
 export default TrayFooter;
