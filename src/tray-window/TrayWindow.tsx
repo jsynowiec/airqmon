@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../airly';
-import ErrorBoundary from '../ErrorBoundary';
+import ErrorBoundary from './ErrorBoundary';
 import Content from './TrayContent';
 import Footer from './TrayFooter';
 import Header from './TrayHeader';

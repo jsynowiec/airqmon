@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { isDev } from './helpers';
-import errorHandler from './error-handler';
+import { isDev } from '../helpers';
+import errorHandler from '../error-handler';
 
 interface IErrorBoundaryState {
   hasError: boolean;
