@@ -6,7 +6,7 @@ import { isDev } from './helpers';
 
 const assetsDirectory = path.join(__dirname, '../assets');
 
-export default class TrayWindowManager {
+class TrayWindowManager {
   private _window: BrowserWindow;
   private _tray: Tray;
 
@@ -113,3 +113,5 @@ export default class TrayWindowManager {
     this.updateTray();
   }
 }
+
+export default TrayWindowManager;
