@@ -22,7 +22,7 @@ app.dock.hide();
 app.on('ready', () => {
   trayWindowManager = new TrayWindowManager({
     width: 300,
-    height: 420,
+    height: 500,
     show: false,
     frame: false,
     fullscreenable: false,

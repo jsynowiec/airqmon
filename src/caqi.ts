@@ -1,6 +1,6 @@
 // tslint:disable:max-line-length
 
-interface ICAQIMetadata {
+export interface ICAQIMetadata {
   index: number;
   values: {
     min: number;
@@ -13,12 +13,16 @@ interface ICAQIMetadata {
   description: string;
 }
 
+export const CAQI_MIN_VAL = 0;
+export const CAQI_MAX_VAL = 100;
+export const CAQI_STEP = 25;
+
 const CAQI_INDEX: ICAQIMetadata[] = [
   {
     index: 0,
     values: {
-      min: 0,
-      max: 25,
+      min: CAQI_MIN_VAL,
+      max: CAQI_MIN_VAL + CAQI_STEP,
     },
     labels: {
       pollution: 'Very low',
@@ -30,8 +34,8 @@ const CAQI_INDEX: ICAQIMetadata[] = [
   {
     index: 1,
     values: {
-      min: 25,
-      max: 50,
+      min: CAQI_MIN_VAL + CAQI_STEP,
+      max: CAQI_MIN_VAL + CAQI_STEP * 2,
     },
     labels: {
       pollution: 'Low',
@@ -43,8 +47,8 @@ const CAQI_INDEX: ICAQIMetadata[] = [
   {
     index: 2,
     values: {
-      min: 50,
-      max: 75,
+      min: CAQI_MIN_VAL + CAQI_STEP * 2,
+      max: CAQI_MIN_VAL + CAQI_STEP * 3,
     },
     labels: {
       pollution: 'Medium',
@@ -56,8 +60,8 @@ const CAQI_INDEX: ICAQIMetadata[] = [
   {
     index: 3,
     values: {
-      min: 75,
-      max: 100,
+      min: CAQI_MIN_VAL + CAQI_STEP * 3,
+      max: CAQI_MAX_VAL,
     },
     labels: {
       pollution: 'High',
@@ -68,7 +72,7 @@ const CAQI_INDEX: ICAQIMetadata[] = [
   {
     index: 4,
     values: {
-      min: 100,
+      min: CAQI_MAX_VAL,
       max: Number.MAX_VALUE,
     },
     labels: {
