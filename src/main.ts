@@ -62,6 +62,10 @@ ipcMain.on(IPC_EVENTS.OPEN_BROWSER_FOR_URL, (_, arg) => {
   shell.openExternal(arg);
 });
 
+ipcMain.on(IPC_EVENTS.SHOW_WINDOW, () => {
+  trayWindowManager.showWindow();
+});
+
 ipcMain.on(IPC_EVENTS.CLOSE_WINDOW, () => {
   trayWindowManager.closeWindow();
 });

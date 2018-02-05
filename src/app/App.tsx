@@ -200,9 +200,13 @@ class App extends React.Component<IAppProps, IAppState> {
             if (oldCAQIMeta.index !== newCAQIMeta.index) {
               visitor.event('Air quality', 'Air quality changed.', label).send();
 
-              new Notification('Air quality changed', {
+              const aqchangeNotif = new Notification('Air quality changed', {
                 body: label,
               });
+
+              aqchangeNotif.onclick = () => {
+                ipcRenderer.send(IPC_EVENTS.SHOW_WINDOW);
+              };
             }
           }
 
