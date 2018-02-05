@@ -107,6 +107,7 @@ class TrayWindowManager {
   } = {}): void {
     this._tray.setTitle(title);
     this._tray.setToolTip(tooltip);
+    this.setWindowPosition();
   }
 
   clearTray(): void {
