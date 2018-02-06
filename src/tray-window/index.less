@@ -1,5 +1,5 @@
-@import "Loader";
-@import "measurement/index";
+@import 'Loader';
+@import 'measurement/index';
 
 a.link {
   cursor: pointer;
@@ -16,11 +16,16 @@ a.link {
   display: flex;
   align-items: center;
 
-  &__label, &__summary, &__description, &__advisory {
+  &__label,
+  &__summary,
+  &__description,
+  &__advisory {
     .summary;
   }
 
-  &__label, &__description, &__advisory {
+  &__label,
+  &__description,
+  &__advisory {
     text-align: left;
   }
 
@@ -47,7 +52,8 @@ a.link {
     flex-direction: column;
   }
 
-  &__description, &__advisory {
+  &__description,
+  &__advisory {
     margin-top: @base-spacing / 2;
     font-size: @font-size - 2pt;
   }
@@ -120,7 +126,7 @@ a.link {
       font-weight: 400;
       border-radius: @window-border-radius;
       border: 1px solid @value-bar-border-color;
-      box-shadow: 2px 2px 8px 0px rgba(153,153,153,0.5);
+      box-shadow: 2px 2px 8px 0px rgba(153, 153, 153, 0.5);
     }
   }
 }

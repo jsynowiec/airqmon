@@ -68,7 +68,7 @@
     "universal-analytics": "^0.4.16"
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx}": [
+    "src/**/*.{ts,tsx,less}": [
       "prettier --write",
       "git add"
     ]
