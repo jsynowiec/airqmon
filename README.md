@@ -11,8 +11,6 @@
 
 A menu bar app that displays live air quality informations from the nearest [Airly][airly] sensor station. It also notifies you when the air quality changes or when a new station that is closer to your current location was found.
 
-**Note:** This app is still in the work-in-progress state. No stable release, no docs, guides, etc.
-
 <p align="center">
   <img width="140" alt="screen shot 2018-01-07 at 19 09 45" src="https://user-images.githubusercontent.com/1029142/34652449-7721515a-f3de-11e7-82e0-3af878ff3d58.png">
 </p>
