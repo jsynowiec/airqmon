@@ -4,7 +4,7 @@ const Loader = () => {
   return (
     <div className="centered-content">
       <div className="loader">
-        <div className="loader__summary">Fetching data&hellip;</div>
+        <div className="loader__summary">Loading data&hellip;</div>
         <div className="loader__spinner">
           <div className="loader__spinner__r1" />
           <div className="loader__spinner__r2" />
