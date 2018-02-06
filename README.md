@@ -18,7 +18,7 @@ A menu bar app that displays live air quality informations from the nearest [Air
 </p>
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/1029142/35832782-c9aa80fc-0ace-11e8-9a62-b45b29dbdee2.png" width="342px" align="center" alt="Airqmon window with measurement details" />
+  <img src="https://user-images.githubusercontent.com/1029142/35865209-35d07554-0b54-11e8-82f8-5958658973b2.png" width="342px" align="center" alt="Airqmon window with measurement details" />
 </p>
 
 <p align="center">
