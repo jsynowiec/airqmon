@@ -7,7 +7,7 @@ import UpdateAlert from './UpdateAlert';
 import StationInfo from './StationInfo';
 import AirQualityInfo from './air-quality/AirQualityInfo';
 import { IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../airly';
-import MeasurementPane from './MeasurementPane';
+import MeasurementPane from './measurement/MeasurementPane';
 import IPC_EVENTS from '../ipc-events';
 
 interface ITrayContentProps {

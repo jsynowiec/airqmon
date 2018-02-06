@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import { IAirlyCurrentMeasurement } from '../airly';
-import { formatters, Measurement } from './measurement/Measurement';
-import { Unit } from './measurement/MeasurementReadingUnit';
+import { IAirlyCurrentMeasurement } from '../../airly';
+import { formatters, Measurement } from './Measurement';
+import { Unit } from './MeasurementReadingUnit';
 
 interface IMeasurementPaneProps {
   measurement?: IAirlyCurrentMeasurement;
