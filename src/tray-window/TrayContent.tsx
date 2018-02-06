@@ -5,7 +5,7 @@ import Loader from './Loader';
 import Offline from './Offline';
 import UpdateAlert from './UpdateAlert';
 import StationInfo from './StationInfo';
-import AirQualityInfo from './AirQualityInfo';
+import AirQualityInfo from './air-quality/AirQualityInfo';
 import { IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../airly';
 import MeasurementPane from './MeasurementPane';
 import IPC_EVENTS from '../ipc-events';

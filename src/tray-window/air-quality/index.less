@@ -1,0 +1,118 @@
+.air-quality {
+  display: flex;
+  align-items: center;
+
+  &__label,
+  &__summary,
+  &__description,
+  &__advisory {
+    .summary;
+  }
+
+  &__label,
+  &__description,
+  &__advisory {
+    text-align: left;
+  }
+
+  .quality {
+    &-0 {
+      background-color: @caqi-1;
+    }
+    &-1 {
+      background-color: @caqi-2;
+    }
+    &-2 {
+      background-color: @caqi-3;
+    }
+    &-3 {
+      background-color: @caqi-4;
+    }
+    &-4 {
+      background-color: @caqi-5;
+    }
+  }
+
+  &__summary {
+    flex: 4;
+    flex-direction: column;
+  }
+
+  &__description,
+  &__advisory {
+    margin-top: @base-spacing / 2;
+    font-size: @font-size - 2pt;
+  }
+
+  &__advisory {
+    font-weight: 400;
+  }
+
+  @value-bar-border-color: #c2c0c2;
+
+  &__value-bar {
+    position: relative;
+    margin-top: @base-spacing;
+
+    &__values {
+      display: flex;
+      background-color: @value-bar-border-color;
+      border-radius: @window-border-radius;
+      color: #eaeaea;
+      font-size: @font-size - 2pt;
+
+      div {
+        flex: 1;
+        margin: 1px 0 1px 1px;
+        padding: 1px 6px;
+
+        &:first-child {
+          border-radius: @window-border-radius 0 0 @window-border-radius;
+          text-align: left;
+        }
+
+        &:last-child {
+          margin-right: 1px;
+          border-radius: 0 @window-border-radius @window-border-radius 0;
+          text-align: right;
+        }
+      }
+    }
+
+    &__description {
+      display: flex;
+      margin-top: @base-spacing / 2;
+      font-size: @font-size - 2pt;
+
+      div {
+        flex: 1;
+        text-align: center;
+
+        &:nth-child(1) {
+          text-align: left;
+          color: @caqi-1;
+        }
+
+        &:nth-child(2) {
+          color: @caqi-3;
+        }
+
+        &:nth-child(3) {
+          text-align: right;
+          color: @caqi-5;
+        }
+      }
+    }
+
+    &__overlay {
+      position: absolute;
+      width: 35px;
+      line-height: 2.25;
+      color: #eaeaea;
+      font-weight: 400;
+      border-radius: @window-border-radius;
+      border: 1px solid @value-bar-border-color;
+      box-shadow: 2px 2px 8px 0px rgba(153, 153, 153, 0.5);
+    }
+  }
+}

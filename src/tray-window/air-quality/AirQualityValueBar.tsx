@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { CAQI_MIN_VAL, CAQI_MAX_VAL, CAQI_INDEX, ICAQIMetadata, getCAQIMeta } from '../caqi';
+import { CAQI_MIN_VAL, CAQI_MAX_VAL, CAQI_INDEX, ICAQIMetadata, getCAQIMeta } from '../../caqi';
 
 interface IAirQualityValueBarProps {
   airQualityIndex: number;
