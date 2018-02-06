@@ -17,6 +17,7 @@ gulp.task('clean', (cb) => {
   return Promise.all([
     rimraf('out'),
     rimraf('build'),
+    rimraf('coverage'),
   ]);
 });
 
@@ -92,6 +93,8 @@ gulp.task('electron:package', () => {
     dir: './',
     ignore: [
       '^/src',
+      '^/__tests__',
+      '^/coverage',
     ],
     asar: true,
     icon: './assets/airqmon.icns',
