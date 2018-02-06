@@ -2,9 +2,9 @@ import * as React from 'react';
 
 import { IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../airly';
 import ErrorBoundary from './ErrorBoundary';
-import Content from './TrayContent';
-import Footer from './TrayFooter';
-import Header from './TrayHeader';
+import Content from './Content';
+import Footer from './Footer';
+import Header from './Header';
 
 interface ITrayWindowProps {
   availableAppUpdate?: { version: string; url: string };

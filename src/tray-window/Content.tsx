@@ -10,15 +10,15 @@ import { IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../air
 import MeasurementPane from './measurement/MeasurementPane';
 import IPC_EVENTS from '../ipc-events';
 
-interface ITrayContentProps {
+interface IContentProps {
   availableAppUpdate?: { version: string; url: string };
   currentMeasurements?: IAirlyCurrentMeasurement;
   nearestStation?: IArilyNearestSensorMeasurement;
   connectionStatus: Boolean;
 }
 
-class TrayContent extends React.Component<ITrayContentProps> {
-  constructor(props: ITrayContentProps) {
+class Content extends React.Component<IContentProps> {
+  constructor(props: IContentProps) {
     super(props);
   }
 
@@ -61,4 +61,4 @@ class TrayContent extends React.Component<ITrayContentProps> {
   }
 }
 
-export default TrayContent;
+export default Content;

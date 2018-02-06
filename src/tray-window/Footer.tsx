@@ -4,19 +4,19 @@ import * as React from 'react';
 import { formatDateTo24Time } from '../helpers';
 import IPC_EVENTS from '../ipc-events';
 
-interface ITrayFooterProps {
+interface IFooterProps {
   lastUpdateDate?: Date;
   isAutoRefreshEnabled: Boolean;
   onRefreshClick: () => void;
   onQuitClick: () => void;
 }
 
-const TrayFooter = ({
+const Footer = ({
   lastUpdateDate,
   isAutoRefreshEnabled,
   onRefreshClick,
   onQuitClick,
-}: ITrayFooterProps) => {
+}: IFooterProps) => {
   function handleExtLinkClick(url) {
     ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
   }
@@ -55,4 +55,4 @@ const TrayFooter = ({
   );
 };
 
-export default TrayFooter;
+export default Footer;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const TrayHeader = () => {
+const Header = () => {
   return (
     <header className="toolbar toolbar-header">
       <h1 className="title">Airqmon</h1>
@@ -8,4 +8,4 @@ const TrayHeader = () => {
   );
 };
 
-export default TrayHeader;
+export default Header;
