@@ -40,8 +40,8 @@ const MeasurementPane = ({ measurement }: IMeasurementPaneProps) => {
       <Measurement
         description="Pressure"
         unit={Unit.PRESSURE_PA}
-        reading={measurement.pressure}
-        formatter={formatters.divBy100ToFixed2}
+        reading={measurement.pressure / 100}
+        formatter={formatters.toFixed1}
       />
       <Measurement
         description="Humidity"
