@@ -11,8 +11,9 @@ const AirQualityInfo = ({ airQualityIndex }) => {
     <div className="air-quality">
       <div className="air-quality__summary">
         <div className="air-quality__label">Common Air Quality Index (CAQI)</div>
-        <AirQualityValueBar value={airQualityIndex} meta={airQualityMeta} />
-        <div className="air-quality__label">Advisory:</div>
+        <AirQualityValueBar airQualityIndex={airQualityIndex} />
+        <div className="air-quality__label">Advisory</div>
+        <div className="air-quality__advisory">{airQualityMeta.advisory}</div>
         <div className="air-quality__description">{airQualityMeta.description}</div>
       </div>
     </div>
