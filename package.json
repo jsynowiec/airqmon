@@ -27,15 +27,15 @@
   },
   "homepage": "https://github.com/jsynowiec/airqmon",
   "devDependencies": {
-    "@types/enzyme-adapter-react-16": "^1.0.1",
-    "@types/jest": "^22.1.0",
-    "@types/react": "^16.0.27",
-    "@types/react-dom": "^16.0.2",
-    "@types/semver": "^5.4.0",
-    "devtron": "^1.4.0",
-    "electron": "^1.7.11",
+    "@types/enzyme-adapter-react-16": "~1.0.1",
+    "@types/jest": "~22.1.1",
+    "@types/react": "~16.0.36",
+    "@types/react-dom": "~16.0.2",
+    "@types/semver": "~5.5.0",
+    "devtron": "~1.4.0",
+    "electron": "1.8.2",
     "electron-connect": "^0.6.2",
-    "electron-packager": "^10.1.0",
+    "electron-packager": "11.0.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.1",
@@ -56,16 +56,16 @@
     "tslint-config-prettier": "^1.6.0",
     "tslint-eslint-rules": "^4.1.1",
     "tslint-react": "^3.2.0",
-    "typescript": "^2.6.2"
+    "typescript": "~2.7.1"
   },
   "dependencies": {
-    "axios": "^0.17.1",
+    "axios": "~0.17.1",
     "photon": "https://github.com/connors/photon.git#v0.1.2-alpha",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "rollbar": "^2.3.2",
-    "semver": "^5.4.1",
-    "universal-analytics": "^0.4.16"
+    "react": "~16.2.0",
+    "react-dom": "~16.2.0",
+    "rollbar": "~2.3.8",
+    "semver": "~5.5.0",
+    "universal-analytics": "~0.4.16"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx,less}": [
