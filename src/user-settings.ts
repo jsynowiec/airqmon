@@ -1,18 +1,35 @@
 import Store from 'electron-store';
 
-export const userSettings = new Store({
+interface INotificationsEvents {
+  caqiChanged: boolean;
+  stationChanged: boolean;
+}
+
+interface IUserSettings {
+  launchAtLogin: boolean;
+  refreshMeasurements: boolean;
+  notifications: {
+    enabled: boolean;
+    events: INotificationsEvents;
+  };
+}
+
+export const userSettings = new Store<IUserSettings>({
   defaults: {
     launchAtLogin: false,
     refreshMeasurements: true,
     notifications: {
       enabled: true,
-      caqiChanged: true,
-      stationChanged: true,
+      events: {
+        caqiChanged: true,
+        stationChanged: true,
+      },
     },
   },
   name: 'user-settings',
 });
 
-export function shouldNotifyAbout(event: 'caqiChanged' | 'stationChanged'): boolean {
-  return userSettings.get('notifications.enabled') && userSettings.get(`notifications.${event}`);
+export function shouldNotifyAbout(event: keyof INotificationsEvents): boolean {
+  const notificationsSettings = userSettings.get('notifications');
+  return notificationsSettings.enabled && notificationsSettings.events[event];
 }
