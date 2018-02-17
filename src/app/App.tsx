@@ -28,7 +28,7 @@ interface IBaseAppState {
 }
 
 interface IDataAppState {
-  connectionStatus: Boolean;
+  connectionStatus: boolean;
   lastUpdateDate?: Date;
   latitude?: number;
   longitude?: number;
@@ -37,7 +37,7 @@ interface IDataAppState {
 }
 
 interface IAppState extends IBaseAppState, IDataAppState {
-  isAutoRefreshEnabled: Boolean;
+  isAutoRefreshEnabled: boolean;
 }
 
 const REFRESH_DELAY = 300000; // 5 minutes
