@@ -31,10 +31,6 @@
   version "0.22.7"
   resolved "https://registry.yarnpkg.com/@types/cheerio/-/cheerio-0.22.7.tgz#4a92eafedfb2b9f4437d3a4410006d81114c66ce"
 
-"@types/electron-store@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@types/electron-store/-/electron-store-1.2.0.tgz#c6c7134a3827d07560ce7296dead51e47e8c1c17"
-
 "@types/enzyme-adapter-react-16@~1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@types/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.0.1.tgz#cb93338ccf6cd1b8fdda91027c4ffe56583537b5"

@@ -27,7 +27,6 @@
   },
   "homepage": "https://github.com/jsynowiec/airqmon",
   "devDependencies": {
-    "@types/electron-store": "^1.2.0",
     "@types/enzyme-adapter-react-16": "~1.0.1",
     "@types/jest": "~22.1.1",
     "@types/react": "~16.0.36",
