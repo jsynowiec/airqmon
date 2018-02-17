@@ -44,7 +44,10 @@ const Footer = ({
             className={'btn btn-default' + (isAutoRefreshEnabled ? ' active' : '')}
             onClick={onRefreshClick}
           >
-            <span className="icon icon-arrows-ccw" title="Auto refresh" />
+            <span className="icon icon-arrows-ccw" title="Background fetch" />
+          </button>
+          <button className="btn btn-default">
+            <span className="icon icon-cog" title="Preferences" />
           </button>
           <button className="btn btn-default" onClick={onQuitClick}>
             <span className="icon icon-cancel" title="Quit" />
