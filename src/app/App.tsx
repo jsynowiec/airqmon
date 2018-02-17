@@ -11,6 +11,7 @@ import { AIRLY_API_URL, IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement
 import { getCAQIMeta } from '../caqi';
 import { isEmptyObject } from '../helpers';
 import IPC_EVENTS from '../ipc-events';
+import { shouldNotifyAbout } from '../user-settings';
 
 interface IAppProps {
   airlyToken: string;
@@ -109,12 +110,14 @@ class App extends React.Component<IAppProps, IAppState> {
           this.findNearestStation().then((station: IArilyNearestSensorMeasurement) => {
             if (this.lastUsedStationId !== null) {
               if (this.lastUsedStationId !== station.id) {
-                new Notification('Location changed', {
-                  // tslint:disable-next-line:max-line-length
-                  body: `Found a new nearest sensor station ${(station.distance / 1000).toFixed(
-                    2,
-                  )} away located at ${station.address.locality}, ${station.address.route}.`,
-                });
+                if (shouldNotifyAbout('stationChanged') === true) {
+                  new Notification('Location changed', {
+                    // tslint:disable-next-line:max-line-length
+                    body: `Found a new nearest sensor station ${(station.distance / 1000).toFixed(
+                      2,
+                    )} away located at ${station.address.locality}, ${station.address.route}.`,
+                  });
+                }
               }
             }
 
@@ -202,13 +205,15 @@ class App extends React.Component<IAppProps, IAppState> {
             if (oldCAQIMeta.index !== newCAQIMeta.index) {
               visitor.event('Air quality', 'Air quality changed.', label).send();
 
-              const aqchangeNotif = new Notification('Air quality changed', {
-                body: label,
-              });
+              if (shouldNotifyAbout('caqiChanged') === true) {
+                const aqchangeNotif = new Notification('Air quality changed', {
+                  body: label,
+                });
 
-              aqchangeNotif.onclick = () => {
-                ipcRenderer.send(IPC_EVENTS.SHOW_WINDOW);
-              };
+                aqchangeNotif.onclick = () => {
+                  ipcRenderer.send(IPC_EVENTS.SHOW_WINDOW);
+                };
+              }
             }
           }
 

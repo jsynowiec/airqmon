@@ -12,3 +12,7 @@ export const userSettings = new Store({
   },
   name: 'user-settings',
 });
+
+export function shouldNotifyAbout(event: 'caqiChanged' | 'stationChanged'): boolean {
+  return userSettings.get('notifications.enabled') && userSettings.get(`notifications.${event}`);
+}
