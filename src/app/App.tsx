@@ -11,7 +11,7 @@ import { AIRLY_API_URL, IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement
 import { getCAQIMeta } from '../caqi';
 import { isEmptyObject } from '../helpers';
 import IPC_EVENTS from '../ipc-events';
-import { shouldNotifyAbout } from '../user-settings';
+import { shouldNotifyAbout, userSettings } from '../user-settings';
 
 interface IAppProps {
   airlyToken: string;
@@ -50,7 +50,7 @@ class App extends React.Component<IAppProps, IAppState> {
     super(props);
 
     this.state = {
-      isAutoRefreshEnabled: true,
+      isAutoRefreshEnabled: userSettings.get('refreshMeasurements'),
       connectionStatus: false,
       tokens: {
         airly: this.props.airlyToken,
@@ -258,6 +258,8 @@ class App extends React.Component<IAppProps, IAppState> {
 
   handleRefreshClick() {
     this.setState({ isAutoRefreshEnabled: !this.state.isAutoRefreshEnabled }, () => {
+      userSettings.set('refreshMeasurements', this.state.isAutoRefreshEnabled);
+
       if (this.state.isAutoRefreshEnabled) {
         this.enableRefreshTimer();
       } else {
