@@ -1,4 +1,4 @@
-import Store from 'electron-store';
+import Store = require('electron-store');
 
 interface INotificationsEvents {
   caqiChanged: boolean;
