@@ -1,4 +1,4 @@
-import { app, ipcMain, shell } from 'electron';
+import { app, ipcMain, shell, globalShortcut } from 'electron';
 
 import { IAirlyCurrentMeasurement } from './airly';
 import { getCAQIMeta } from './caqi';
@@ -29,6 +29,10 @@ app.on('ready', () => {
       // Prevents renderer process code from not running when window is hidden
       backgroundThrottling: false,
     },
+  });
+
+  globalShortcut.register('Command+,', () => {
+    showPreferencesWindow();
   });
 });
 
