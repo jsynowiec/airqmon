@@ -11,7 +11,7 @@ import { AIRLY_API_URL, IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement
 import { getCAQIMeta } from '../caqi';
 import { isEmptyObject } from '../helpers';
 import IPC_EVENTS from '../ipc-events';
-import { shouldNotifyAbout, userSettings } from '../user-settings';
+import { shouldNotifyAbout, userSettings, getRefreshIntervalMeta } from '../user-settings';
 
 interface IAppProps {
   airlyToken: string;
@@ -39,8 +39,6 @@ interface IDataAppState {
 interface IAppState extends IBaseAppState, IDataAppState {
   isAutoRefreshEnabled: boolean;
 }
-
-const REFRESH_DELAY = 300000; // 5 minutes
 
 class App extends React.Component<IAppProps, IAppState> {
   private lastUsedStationId?: number = null;
@@ -241,9 +239,11 @@ class App extends React.Component<IAppProps, IAppState> {
       clearInterval(this.refreshTimer);
     }
 
+    const refreshIntervalMeta = getRefreshIntervalMeta(userSettings.get('refreshInterval'));
+
     this.refreshTimer = setInterval(() => {
       this.refreshData();
-    }, REFRESH_DELAY);
+    }, refreshIntervalMeta.value);
   }
 
   notifyAboutAvailableUpdate(version, url) {

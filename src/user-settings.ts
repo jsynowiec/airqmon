@@ -8,16 +8,46 @@ interface INotificationsEvents {
 interface IUserSettings {
   launchAtLogin: boolean;
   refreshMeasurements: boolean;
+  refreshInterval: Intervals;
   notifications: {
     enabled: boolean;
     events: INotificationsEvents;
   };
 }
 
+enum Intervals {
+  Short = 0,
+  Medium = 1,
+  Long = 2,
+}
+
+const REFRESH_INTERVAL = [
+  {
+    id: Intervals.Short,
+    value: 300000,
+    label: '5 minutes',
+  },
+  {
+    id: Intervals.Medium,
+    value: 900000,
+    label: '15 minutes',
+  },
+  {
+    id: Intervals.Long,
+    value: 1800000,
+    label: '30 minutes',
+  },
+];
+
+export function getRefreshIntervalMeta(interval: Intervals) {
+  return REFRESH_INTERVAL.find((value) => value.id === interval);
+}
+
 export const userSettings = new Store<IUserSettings>({
   defaults: {
     launchAtLogin: false,
     refreshMeasurements: true,
+    refreshInterval: Intervals.Short,
     notifications: {
       enabled: true,
       events: {
