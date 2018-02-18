@@ -118,7 +118,7 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
                     disabled={!this.state.showNotifications}
                     onChange={this.handleNotificationEventsChange}
                   />{' '}
-                  Notify when location changed
+                  Notify when location changes
                 </label>
               </div>
             </div>
