@@ -6,13 +6,11 @@ interface INotificationsEvents {
 }
 
 interface IUserSettings {
-  launchAtLogin: boolean;
+  openAtLogin: boolean;
   refreshMeasurements: boolean;
-  refreshInterval: Intervals;
-  notifications: {
-    enabled: boolean;
-    events: INotificationsEvents;
-  };
+  refreshMeasurementsInterval: Intervals;
+  showNotifications: boolean;
+  notificationEvents: INotificationsEvents;
 }
 
 enum Intervals {
@@ -51,21 +49,18 @@ export function getRefreshIntervalMeta(interval: Intervals) {
 
 export const userSettings = new Store<IUserSettings>({
   defaults: {
-    launchAtLogin: false,
+    openAtLogin: false,
     refreshMeasurements: true,
-    refreshInterval: Intervals.Short,
-    notifications: {
-      enabled: true,
-      events: {
-        caqiChanged: true,
-        stationChanged: true,
-      },
+    refreshMeasurementsInterval: Intervals.Short,
+    showNotifications: true,
+    notificationEvents: {
+      caqiChanged: true,
+      stationChanged: true,
     },
   },
   name: 'user-settings',
 });
 
 export function shouldNotifyAbout(event: keyof INotificationsEvents): boolean {
-  const notificationsSettings = userSettings.get('notifications');
-  return notificationsSettings.enabled && notificationsSettings.events[event];
+  return userSettings.get('showNotifications') && userSettings.get('notificationEvents')[event];
 }

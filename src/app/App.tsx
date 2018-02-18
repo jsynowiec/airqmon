@@ -43,7 +43,7 @@ interface IDataAppState {
 
 interface IAppState extends IBaseAppState, IDataAppState {
   isAutoRefreshEnabled: boolean;
-  refreshInterval: IRefreshIntervalMeta;
+  refreshMeasurementsIntervalMeta: IRefreshIntervalMeta;
 }
 
 class App extends React.Component<IAppProps, IAppState> {
@@ -55,7 +55,9 @@ class App extends React.Component<IAppProps, IAppState> {
 
     this.state = {
       isAutoRefreshEnabled: userSettings.get('refreshMeasurements'),
-      refreshInterval: getRefreshIntervalMeta(userSettings.get('refreshInterval')),
+      refreshMeasurementsIntervalMeta: getRefreshIntervalMeta(
+        userSettings.get('refreshMeasurementsInterval'),
+      ),
       connectionStatus: false,
       tokens: {
         airly: this.props.airlyToken,
@@ -113,10 +115,10 @@ class App extends React.Component<IAppProps, IAppState> {
       });
     });
 
-    userSettings.onDidChange('refreshInterval', (newValue) => {
+    userSettings.onDidChange('refreshMeasurementsInterval', (refreshMeasurementsInterval) => {
       this.setState(
         {
-          refreshInterval: getRefreshIntervalMeta(newValue),
+          refreshMeasurementsIntervalMeta: getRefreshIntervalMeta(refreshMeasurementsInterval),
         },
         () => {
           this.enableRefreshTimer();
@@ -269,7 +271,7 @@ class App extends React.Component<IAppProps, IAppState> {
 
     this.refreshTimer = setInterval(() => {
       this.refreshData();
-    }, this.state.refreshInterval.value);
+    }, this.state.refreshMeasurementsIntervalMeta.value);
   }
 
   notifyAboutAvailableUpdate(version, url) {
