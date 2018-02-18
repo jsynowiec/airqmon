@@ -2,7 +2,6 @@
 
 [![Build Status][travis-badge]][travis-ci]
 [![GitHub release][badge-github-release]][airqmon-latest-release]
-[![GitHub release][badge-github-pre-release]][airqmon-latest-release]
 [![Downloads total][badge-downloads-total]][airqmon-latest-release]
 
 [![David][badge-david-deps]][david]
@@ -73,7 +72,6 @@ Licensed under the [Apache License, Version 2.0 (the "License")][license]
 
 [badge-downloads-total]: https://img.shields.io/github/downloads/jsynowiec/airqmon/total.svg
 [badge-github-release]: https://img.shields.io/github/release/jsynowiec/airqmon.svg
-[badge-github-pre-release]: https://img.shields.io/github/release/jsynowiec/airqmon/all.svg
 [badge-license]: https://img.shields.io/github/license/jsynowiec/airqmon.svg
 [badge-david-deps]: https://img.shields.io/david/jsynowiec/airqmon.svg
 [badge-donate]: https://img.shields.io/badge/€-donate-brightgreen.svg
