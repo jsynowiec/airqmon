@@ -16,7 +16,7 @@ A menu bar app that displays live air quality informations from the nearest [Air
 </p>
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/1029142/36356674-6e1b0f3c-14f5-11e8-967d-79f8adba4ef2.png" width="342px" align="center" alt="Airqmon window with measurement details" />
+  <img src="https://user-images.githubusercontent.com/1029142/36356674-6e1b0f3c-14f5-11e8-967d-79f8adba4ef2.png" width="412px" align="center" alt="Airqmon window with measurement details" />
 </p>
 
 <p align="center">
@@ -31,9 +31,13 @@ Download the [latest release][airqmon-latest-release], unzip and drag to your `A
 
 Simply overwrite previous application in your `Applications` folder with a newer version of Airqmon.
 
-## Setup
+## Preferences
 
-Currently there is no configuration. This application uses geolocation to find out nearest sensor station.
+There are a few options available to customize on the preferences window that you can access by clicking on the button with a cog or by pressing the `⌘ + ,` shortcut.
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/1029142/36356988-e65eb98c-14f8-11e8-8389-5b5862b88494.png" width="489px" align="center" alt="Airqmon notification about air quality" />
+</p>
 
 ## FAQ
 
