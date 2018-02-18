@@ -5,6 +5,7 @@ import { getCAQIMeta } from './caqi';
 import { isDev } from './helpers';
 import IPC_EVENTS from './ipc-events';
 import TrayWindowManager from './tray-window-manager';
+import { userSettings } from './user-settings';
 
 const keys = require('../keys.json');
 
@@ -68,4 +69,10 @@ ipcMain.on(IPC_EVENTS.SHOW_WINDOW, () => {
 
 ipcMain.on(IPC_EVENTS.CLOSE_WINDOW, () => {
   trayWindowManager.closeWindow();
+});
+
+userSettings.onDidChange('openAtLogin', (openAtLogin) => {
+  app.setLoginItemSettings({
+    openAtLogin,
+  });
 });
