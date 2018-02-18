@@ -6,7 +6,7 @@ import { isDev } from './helpers';
 import IPC_EVENTS from './ipc-events';
 import TrayWindowManager from './tray-window-manager';
 import { IUserSettings } from './user-settings';
-import { showPreferencesWindow } from './preferences-window-manager';
+import { showPreferencesWindow, closePreferencesWindow } from './preferences-window-manager';
 
 const keys = require('../keys.json');
 
@@ -64,11 +64,12 @@ ipcMain.on(IPC_EVENTS.SHOW_WINDOW, () => {
 });
 
 ipcMain.on(IPC_EVENTS.SHOW_PREFERENCES_WINDOW, () => {
-  showPreferencesWindow(trayWindowManager.window);
+  showPreferencesWindow();
 });
 
 ipcMain.on(IPC_EVENTS.CLOSE_WINDOW, () => {
   trayWindowManager.closeWindow();
+  closePreferencesWindow();
 });
 
 ipcMain.on(

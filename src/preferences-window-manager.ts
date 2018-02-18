@@ -5,7 +5,7 @@ import { isDev } from './helpers';
 
 let preferencesWindow: BrowserWindow = null;
 
-export function showPreferencesWindow(parent: BrowserWindow = null) {
+export function showPreferencesWindow() {
   if (preferencesWindow && !preferencesWindow.isDestroyed()) {
     if (!preferencesWindow.isVisible()) {
       preferencesWindow.show();
@@ -24,7 +24,6 @@ export function showPreferencesWindow(parent: BrowserWindow = null) {
       resizable: false,
       maximizable: false,
       backgroundColor: '#ECECEC',
-      parent,
     });
 
     preferencesWindow.loadURL(`file://${path.join(__dirname, 'preferences-window/index.html')}`);
@@ -36,5 +35,11 @@ export function showPreferencesWindow(parent: BrowserWindow = null) {
       preferencesWindow.show();
       preferencesWindow.focus();
     });
+  }
+}
+
+export function closePreferencesWindow() {
+  if (preferencesWindow && !preferencesWindow.isDestroyed()) {
+    preferencesWindow.close();
   }
 }
