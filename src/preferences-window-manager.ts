@@ -8,10 +8,10 @@ let preferencesWindow: BrowserWindow = null;
 export function showPreferencesWindow() {
   if (preferencesWindow && !preferencesWindow.isDestroyed()) {
     if (!preferencesWindow.isVisible()) {
+      preferencesWindow.center();
       preferencesWindow.show();
     }
 
-    preferencesWindow.center();
     preferencesWindow.focus();
   } else {
     preferencesWindow = new BrowserWindow({
