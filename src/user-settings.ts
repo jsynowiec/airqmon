@@ -21,7 +21,13 @@ enum Intervals {
   Long = 2,
 }
 
-const REFRESH_INTERVAL = [
+export interface IRefreshIntervalMeta {
+  id: Intervals;
+  value: number;
+  label: string;
+}
+
+const REFRESH_INTERVAL: IRefreshIntervalMeta[] = [
   {
     id: Intervals.Short,
     value: 300000,

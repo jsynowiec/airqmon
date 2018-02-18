@@ -11,7 +11,12 @@ import { AIRLY_API_URL, IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement
 import { getCAQIMeta } from '../caqi';
 import { isEmptyObject } from '../helpers';
 import IPC_EVENTS from '../ipc-events';
-import { shouldNotifyAbout, userSettings, getRefreshIntervalMeta } from '../user-settings';
+import {
+  shouldNotifyAbout,
+  userSettings,
+  getRefreshIntervalMeta,
+  IRefreshIntervalMeta,
+} from '../user-settings';
 
 interface IAppProps {
   airlyToken: string;
@@ -38,6 +43,7 @@ interface IDataAppState {
 
 interface IAppState extends IBaseAppState, IDataAppState {
   isAutoRefreshEnabled: boolean;
+  refreshInterval: IRefreshIntervalMeta;
 }
 
 class App extends React.Component<IAppProps, IAppState> {
@@ -49,6 +55,7 @@ class App extends React.Component<IAppProps, IAppState> {
 
     this.state = {
       isAutoRefreshEnabled: userSettings.get('refreshMeasurements'),
+      refreshInterval: getRefreshIntervalMeta(userSettings.get('refreshInterval')),
       connectionStatus: false,
       tokens: {
         airly: this.props.airlyToken,
@@ -94,6 +101,27 @@ class App extends React.Component<IAppProps, IAppState> {
       } as IAppState);
 
       this.notifyAboutAvailableUpdate(version, url);
+    });
+
+    userSettings.onDidChange('refreshMeasurements', (newValue) => {
+      this.setState({ isAutoRefreshEnabled: newValue }, () => {
+        if (newValue) {
+          this.enableRefreshTimer();
+        } else {
+          clearInterval(this.refreshTimer);
+        }
+      });
+    });
+
+    userSettings.onDidChange('refreshInterval', (newValue) => {
+      this.setState(
+        {
+          refreshInterval: getRefreshIntervalMeta(newValue),
+        },
+        () => {
+          this.enableRefreshTimer();
+        },
+      );
     });
   }
 
@@ -239,11 +267,9 @@ class App extends React.Component<IAppProps, IAppState> {
       clearInterval(this.refreshTimer);
     }
 
-    const refreshIntervalMeta = getRefreshIntervalMeta(userSettings.get('refreshInterval'));
-
     this.refreshTimer = setInterval(() => {
       this.refreshData();
-    }, refreshIntervalMeta.value);
+    }, this.state.refreshInterval.value);
   }
 
   notifyAboutAvailableUpdate(version, url) {
@@ -257,15 +283,7 @@ class App extends React.Component<IAppProps, IAppState> {
   }
 
   handleRefreshClick() {
-    this.setState({ isAutoRefreshEnabled: !this.state.isAutoRefreshEnabled }, () => {
-      userSettings.set('refreshMeasurements', this.state.isAutoRefreshEnabled);
-
-      if (this.state.isAutoRefreshEnabled) {
-        this.enableRefreshTimer();
-      } else {
-        clearInterval(this.refreshTimer);
-      }
-    });
+    userSettings.set('refreshMeasurements', !this.state.isAutoRefreshEnabled);
   }
 
   handleQuitClick() {
