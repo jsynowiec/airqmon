@@ -3,9 +3,9 @@ import * as React from 'react';
 import { MeasurementReading, IMeasurementReadingProps } from './MeasurementReading';
 
 export const formatters: { [key: string]: (val: number) => string } = {
-  significant: (val: number) => val.toFixed(0),
-  toFixed2: (val: number) => val.toFixed(2),
-  toFixed1: (val: number) => val.toFixed(1),
+  significant: (val) => val.toFixed(0),
+  toFixed2: (val) => val.toFixed(2),
+  toFixed1: (val) => val.toFixed(1),
 };
 
 export interface IMeasurementProps extends IMeasurementReadingProps {

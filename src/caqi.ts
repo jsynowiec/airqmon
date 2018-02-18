@@ -14,9 +14,9 @@ export interface ICAQIMetadata {
   description: string;
 }
 
-export const CAQI_MIN_VAL = 0;
-export const CAQI_MAX_VAL = 100;
-export const CAQI_STEP = 25;
+export const CAQI_MIN_VAL: number = 0;
+export const CAQI_MAX_VAL: number = 100;
+export const CAQI_STEP: number = 25;
 
 export const CAQI_INDEX: ICAQIMetadata[] = [
   {

@@ -69,7 +69,7 @@ class App extends React.Component<IAppProps, IAppState> {
   }
 
   componentDidMount() {
-    ipcRenderer.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status) => {
+    ipcRenderer.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status: 'online' | 'offline') => {
       let newState: IDataAppState = {
         connectionStatus: status === 'online',
       };
@@ -105,14 +105,19 @@ class App extends React.Component<IAppProps, IAppState> {
       this.notifyAboutAvailableUpdate(version, url);
     });
 
-    userSettings.onDidChange('refreshMeasurements', (newValue) => {
-      this.setState({ isAutoRefreshEnabled: newValue }, () => {
-        if (newValue) {
-          this.enableRefreshTimer();
-        } else {
-          clearInterval(this.refreshTimer);
-        }
-      });
+    userSettings.onDidChange('refreshMeasurements', (isAutoRefreshEnabled) => {
+      this.setState(
+        {
+          isAutoRefreshEnabled,
+        },
+        () => {
+          if (this.state.isAutoRefreshEnabled) {
+            this.enableRefreshTimer();
+          } else {
+            clearInterval(this.refreshTimer);
+          }
+        },
+      );
     });
 
     userSettings.onDidChange('refreshMeasurementsInterval', (refreshMeasurementsInterval) => {
@@ -129,10 +134,12 @@ class App extends React.Component<IAppProps, IAppState> {
 
   init() {
     getLocation().then((position) => {
+      const { latitude, longitude } = position.coords;
+
       this.setState(
         {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
+          latitude,
+          longitude,
         },
         () => {
           this.findNearestStation().then((station: IArilyNearestSensorMeasurement) => {

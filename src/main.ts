@@ -41,7 +41,7 @@ app.on('window-all-closed', () => {
   app.quit();
 });
 
-ipcMain.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status) => {
+ipcMain.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status: 'online' | 'offline') => {
   trayWindowManager.ipcSend(IPC_EVENTS.CONN_STATUS_CHANGED, status);
 
   if (status === 'offline') {
@@ -59,8 +59,8 @@ ipcMain.on(IPC_EVENTS.AIR_Q_DATA_UPDATED, (_, currentMeasurement: IAirlyCurrentM
   });
 });
 
-ipcMain.on(IPC_EVENTS.OPEN_BROWSER_FOR_URL, (_, arg) => {
-  shell.openExternal(arg);
+ipcMain.on(IPC_EVENTS.OPEN_BROWSER_FOR_URL, (_, url: string) => {
+  shell.openExternal(url);
 });
 
 ipcMain.on(IPC_EVENTS.SHOW_WINDOW, () => {

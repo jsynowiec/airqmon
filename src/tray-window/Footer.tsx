@@ -6,7 +6,7 @@ import IPC_EVENTS from '../ipc-events';
 
 interface IFooterProps {
   lastUpdateDate?: Date;
-  isAutoRefreshEnabled: Boolean;
+  isAutoRefreshEnabled: boolean;
   onRefreshClick: () => void;
   onQuitClick: () => void;
 }
@@ -17,11 +17,11 @@ const Footer = ({
   onRefreshClick,
   onQuitClick,
 }: IFooterProps) => {
-  function handleExtLinkClick(url) {
+  function handleExtLinkClick(url: string) {
     ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
   }
 
-  const lastUpdate = lastUpdateDate
+  const lastUpdate: string = lastUpdateDate
     ? `, last update at ${formatDateTo24Time(lastUpdateDate)}`
     : null;
 

@@ -4,6 +4,7 @@ const keys = require('../keys.json');
 
 const version: string = require('../package.json').version;
 
+const errorHandler: Rollbar = new Rollbar({
   accessToken: keys.rollbar,
   version,
   captureUncaught: false,

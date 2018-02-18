@@ -8,9 +8,9 @@ import Header from './Header';
 
 interface ITrayWindowProps {
   availableAppUpdate?: { version: string; url: string };
-  connectionStatus: Boolean;
+  connectionStatus: boolean;
   currentMeasurements?: IAirlyCurrentMeasurement;
-  isAutoRefreshEnabled: Boolean;
+  isAutoRefreshEnabled: boolean;
   lastUpdateDate?: Date;
   nearestStation?: IArilyNearestSensorMeasurement;
   onQuitClickHandler: () => void;

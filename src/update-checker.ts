@@ -55,7 +55,7 @@ class UpdateChecker extends EventEmitter implements IUpdateChecker {
 
     this.scheduleCheck(10 * 1000);
 
-    ipcRenderer.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status) => {
+    ipcRenderer.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status: 'oneline' | 'offline') => {
       if (status === 'offline') {
         clearTimeout(this.checkTimer);
       } else {
@@ -64,20 +64,20 @@ class UpdateChecker extends EventEmitter implements IUpdateChecker {
     });
   }
 
-  private getRetryBackoff() {
+  private getRetryBackoff(): number {
     return Math.min(Math.pow(2, this.retries) * 30 * 1000, CHECK_INTERVAL / 2);
   }
 
-  private retryWithBackoff() {
+  private retryWithBackoff(): void {
     this.scheduleCheck(this.getRetryBackoff());
     this.retries += 1;
   }
 
-  private scheduleCheck(delay: number = CHECK_INTERVAL) {
+  private scheduleCheck(delay: number = CHECK_INTERVAL): void {
     this.checkTimer = setTimeout(this.checkForUpdates.bind(this), delay);
   }
 
-  checkForUpdates() {
+  checkForUpdates(): void {
     axios({
       url: `${GITHUB_BASE_URL}/repos/${GITHUB_REPO}/releases`,
     })
@@ -97,8 +97,7 @@ class UpdateChecker extends EventEmitter implements IUpdateChecker {
               this.updateAvailable = true;
               this.updateUrl = assets.find((asset) => {
                 return (
-                  asset.content_type === 'application/zip' &&
-                  asset.name === `${appName}-mac.zip`
+                  asset.content_type === 'application/zip' && asset.name === `${appName}-mac.zip`
                 );
               }).browser_download_url;
 

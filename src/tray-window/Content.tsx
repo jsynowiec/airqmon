@@ -14,7 +14,7 @@ interface IContentProps {
   availableAppUpdate?: { version: string; url: string };
   currentMeasurements?: IAirlyCurrentMeasurement;
   nearestStation?: IArilyNearestSensorMeasurement;
-  connectionStatus: Boolean;
+  connectionStatus: boolean;
 }
 
 class Content extends React.Component<IContentProps> {
@@ -22,7 +22,7 @@ class Content extends React.Component<IContentProps> {
     super(props);
   }
 
-  handleExtLinkClick(url) {
+  handleExtLinkClick(url: string) {
     ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
   }
 
