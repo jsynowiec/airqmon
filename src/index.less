@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'common';
 @import 'tray-window/index';
+@import 'preferences-window/index';
 
 .header-arrow {
   position: absolute;
@@ -13,29 +14,31 @@
   background-color: #e8e6e8;
 }
 
-.window {
-  position: absolute;
-  top: 5px;
+.tray-window {
+  &.window {
+    position: absolute;
+    top: 5px;
 
-  .toolbar {
-    box-shadow: none;
-  }
+    .toolbar {
+      box-shadow: none;
+    }
 
-  .toolbar-header {
-    .title {
-      margin-top: 2px;
+    .toolbar-header {
+      .title {
+        margin-top: 2px;
+      }
+    }
+
+    .window-content {
+      background-color: @background-color;
     }
   }
 
-  .window-content {
-    background-color: @background-color;
+  &.window,
+  .toolbar-header {
+    border-top-left-radius: @window-border-radius;
+    border-top-right-radius: @window-border-radius;
   }
-}
-
-.window,
-.toolbar-header {
-  border-top-left-radius: @window-border-radius;
-  border-top-right-radius: @window-border-radius;
 }
 
 .error-message {

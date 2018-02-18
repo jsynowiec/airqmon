@@ -5,7 +5,8 @@ import { getCAQIMeta } from './caqi';
 import { isDev } from './helpers';
 import IPC_EVENTS from './ipc-events';
 import TrayWindowManager from './tray-window-manager';
-import { userSettings } from './user-settings';
+import { IUserSettings } from './user-settings';
+import { showPreferencesWindow } from './preferences-window-manager';
 
 const keys = require('../keys.json');
 
@@ -24,11 +25,6 @@ app.on('ready', () => {
   trayWindowManager = new TrayWindowManager({
     width: 300,
     height: 500,
-    show: false,
-    frame: false,
-    fullscreenable: false,
-    resizable: false,
-    transparent: true,
     webPreferences: {
       // Prevents renderer process code from not running when window is hidden
       backgroundThrottling: false,
@@ -67,12 +63,26 @@ ipcMain.on(IPC_EVENTS.SHOW_WINDOW, () => {
   trayWindowManager.showWindow();
 });
 
+ipcMain.on(IPC_EVENTS.SHOW_PREFERENCES_WINDOW, () => {
+  showPreferencesWindow(trayWindowManager.window);
+});
+
 ipcMain.on(IPC_EVENTS.CLOSE_WINDOW, () => {
   trayWindowManager.closeWindow();
 });
 
-userSettings.onDidChange('openAtLogin', (openAtLogin) => {
-  app.setLoginItemSettings({
-    openAtLogin,
-  });
-});
+ipcMain.on(
+  IPC_EVENTS.USER_SETTING_CHANGED,
+  <K extends keyof IUserSettings>(
+    _,
+    { key, oldValue, newValue }: { key: K; oldValue: IUserSettings[K]; newValue: IUserSettings[K] },
+  ) => {
+    trayWindowManager.ipcSend(IPC_EVENTS.USER_SETTING_CHANGED, { key, oldValue, newValue });
+
+    if (key === 'openAtLogin') {
+      app.setLoginItemSettings({
+        openAtLogin: newValue as boolean,
+      });
+    }
+  },
+);

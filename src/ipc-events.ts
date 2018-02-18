@@ -4,6 +4,8 @@ enum IPC_EVENTS {
   CONN_STATUS_CHANGED = 'conn-status-changed',
   OPEN_BROWSER_FOR_URL = 'open-browser-for-url',
   SHOW_WINDOW = 'show-window',
+  SHOW_PREFERENCES_WINDOW = 'show-preferences-window',
+  USER_SETTING_CHANGED = 'user-setting-changed',
 }
 
 export default IPC_EVENTS;

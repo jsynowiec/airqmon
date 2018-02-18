@@ -15,6 +15,7 @@ interface ITrayWindowProps {
   nearestStation?: IArilyNearestSensorMeasurement;
   onQuitClickHandler: () => void;
   onRefreshClickHandler: () => void;
+  onPreferencesClickHandler: () => void;
 }
 
 const TrayWindow = ({
@@ -26,6 +27,7 @@ const TrayWindow = ({
   nearestStation,
   onQuitClickHandler,
   onRefreshClickHandler,
+  onPreferencesClickHandler,
 }: ITrayWindowProps) => {
   return (
     <>
@@ -43,6 +45,7 @@ const TrayWindow = ({
         isAutoRefreshEnabled={isAutoRefreshEnabled}
         onQuitClick={onQuitClickHandler}
         onRefreshClick={onRefreshClickHandler}
+        onPreferencesClickHandler={onPreferencesClickHandler}
       />
     </>
   );

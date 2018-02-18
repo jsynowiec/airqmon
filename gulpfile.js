@@ -55,13 +55,13 @@ gulp.task('build:scripts:release', () => {
 });
 
 gulp.task('build:html', () => {
-  return gulp.src('src/index.html')
+  return gulp.src('src/**/*.html')
     .pipe(cache('html'))
     .pipe(gulp.dest('build'));
 });
 
 gulp.task('build:html:release', () => {
-  return gulp.src('src/index.html')
+  return gulp.src('src/**/*.html')
     .pipe(useref())
     .pipe(gulp.dest('build'));
 });
@@ -74,12 +74,12 @@ gulp.task('build:styles', () => {
 
 gulp.task('watch', ['build'], () => {
   gulp.watch(['src/**/*.{ts,tsx}', '!**/*.d.ts'], ['build:scripts']);
-  gulp.watch(['src/index.html'], ['build:html']);
+  gulp.watch(['src/**/*.html'], ['build:html']);
   gulp.watch(['src/**/*.less'], ['build:styles']);
 
   gulp.watch(['build/**/*.js'], electron.restart);
   gulp.watch(['build/index.css'], electron.reload);
-  gulp.watch(['build/index.html'], electron.reload);
+  gulp.watch(['build/**/*.html'], electron.reload);
 });
 
 gulp.task('electron:start', () => {

@@ -20,7 +20,16 @@ class TrayWindowManager {
   }
 
   private createWindow(config: BrowserWindowConstructorOptions): void {
-    this._window = new BrowserWindow(config);
+    this._window = new BrowserWindow({
+      show: false,
+      frame: false,
+      fullscreenable: false,
+      movable: false,
+      maximizable: false,
+      resizable: false,
+      transparent: true,
+      ...config,
+    });
     this._window.loadURL(`file://${path.join(__dirname, 'index.html')}`);
 
     this._window.setVisibleOnAllWorkspaces(true);
@@ -87,6 +96,10 @@ class TrayWindowManager {
   }
 
   closeWindow(): void {
+    this._window.getChildWindows().forEach((childWindow) => {
+      childWindow.close();
+    });
+
     this._window.close();
   }
 

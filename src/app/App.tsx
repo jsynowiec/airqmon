@@ -16,6 +16,7 @@ import {
   userSettings,
   getRefreshIntervalMeta,
   IRefreshIntervalMeta,
+  IUserSettings,
 } from '../user-settings';
 
 interface IAppProps {
@@ -65,6 +66,7 @@ class App extends React.Component<IAppProps, IAppState> {
     };
 
     this.handleRefreshClick = this.handleRefreshClick.bind(this);
+    this.handlePreferencesClick = this.handlePreferencesClick.bind(this);
     this.handleQuitClick = this.handleQuitClick.bind(this);
   }
 
@@ -105,31 +107,46 @@ class App extends React.Component<IAppProps, IAppState> {
       this.notifyAboutAvailableUpdate(version, url);
     });
 
-    userSettings.onDidChange('refreshMeasurements', (isAutoRefreshEnabled) => {
-      this.setState(
+    ipcRenderer.on(
+      IPC_EVENTS.USER_SETTING_CHANGED,
+      <K extends keyof IUserSettings>(
+        _,
         {
-          isAutoRefreshEnabled,
+          key,
+          newValue,
+        }: {
+          key: K;
+          newValue: IUserSettings[K];
         },
-        () => {
-          if (this.state.isAutoRefreshEnabled) {
-            this.enableRefreshTimer();
-          } else {
-            clearInterval(this.refreshTimer);
-          }
-        },
-      );
-    });
-
-    userSettings.onDidChange('refreshMeasurementsInterval', (refreshMeasurementsInterval) => {
-      this.setState(
-        {
-          refreshMeasurementsIntervalMeta: getRefreshIntervalMeta(refreshMeasurementsInterval),
-        },
-        () => {
-          this.enableRefreshTimer();
-        },
-      );
-    });
+      ) => {
+        switch (key) {
+          case 'refreshMeasurements':
+            this.setState(
+              {
+                isAutoRefreshEnabled: newValue as boolean,
+              },
+              () => {
+                if (this.state.isAutoRefreshEnabled) {
+                  this.enableRefreshTimer();
+                } else {
+                  clearInterval(this.refreshTimer);
+                }
+              },
+            );
+            break;
+          case 'refreshMeasurementsInterval':
+            this.setState(
+              {
+                refreshMeasurementsIntervalMeta: getRefreshIntervalMeta(newValue as number),
+              },
+              () => {
+                this.enableRefreshTimer();
+              },
+            );
+            break;
+        }
+      },
+    );
   }
 
   init() {
@@ -295,6 +312,10 @@ class App extends React.Component<IAppProps, IAppState> {
     userSettings.set('refreshMeasurements', !this.state.isAutoRefreshEnabled);
   }
 
+  handlePreferencesClick() {
+    ipcRenderer.send(IPC_EVENTS.SHOW_PREFERENCES_WINDOW);
+  }
+
   handleQuitClick() {
     ipcRenderer.send(IPC_EVENTS.CLOSE_WINDOW);
   }
@@ -303,7 +324,7 @@ class App extends React.Component<IAppProps, IAppState> {
     return (
       <>
         <div className="header-arrow" />
-        <div className="window">
+        <div className="tray-window window">
           <TrayWindow
             connectionStatus={this.state.connectionStatus}
             currentMeasurements={this.state.currentMeasurements}
@@ -312,6 +333,7 @@ class App extends React.Component<IAppProps, IAppState> {
             isAutoRefreshEnabled={this.state.isAutoRefreshEnabled}
             availableAppUpdate={this.state.appUpdate}
             onRefreshClickHandler={this.handleRefreshClick}
+            onPreferencesClickHandler={this.handlePreferencesClick}
             onQuitClickHandler={this.handleQuitClick}
           />
         </div>

@@ -8,6 +8,7 @@ interface IFooterProps {
   lastUpdateDate?: Date;
   isAutoRefreshEnabled: boolean;
   onRefreshClick: () => void;
+  onPreferencesClickHandler: () => void;
   onQuitClick: () => void;
 }
 
@@ -15,6 +16,7 @@ const Footer = ({
   lastUpdateDate,
   isAutoRefreshEnabled,
   onRefreshClick,
+  onPreferencesClickHandler,
   onQuitClick,
 }: IFooterProps) => {
   function handleExtLinkClick(url: string) {
@@ -47,7 +49,11 @@ const Footer = ({
             <span className="icon icon-arrows-ccw" title="Background fetch" />
           </button>
           <button className="btn btn-default">
-            <span className="icon icon-cog" title="Preferences" />
+            <span
+              className="icon icon-cog"
+              title="Preferences"
+              onClick={onPreferencesClickHandler}
+            />
           </button>
           <button className="btn btn-default" onClick={onQuitClick}>
             <span className="icon icon-cancel" title="Quit" />
