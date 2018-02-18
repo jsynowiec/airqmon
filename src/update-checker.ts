@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { app, ipcRenderer } from 'electron';
+import { ipcRenderer } from 'electron';
 import { EventEmitter } from 'events';
 import * as semver from 'semver';
 import { setTimeout, clearTimeout } from 'timers';
@@ -10,7 +10,8 @@ const CHECK_INTERVAL = 2 * 60 * 60 * 1000; // 2 hours
 const GITHUB_BASE_URL = 'https://api.github.com';
 const GITHUB_REPO = 'jsynowiec/airqmon';
 
-const currentVer: string = app.getVersion();
+const currentVer: string = require('../package.json').version;
+const appName: string = require('../package.json').name;
 
 interface IGitHubRelease {
   // https://developer.github.com/v3/repos/releases/
@@ -97,7 +98,7 @@ class UpdateChecker extends EventEmitter implements IUpdateChecker {
               this.updateUrl = assets.find((asset) => {
                 return (
                   asset.content_type === 'application/zip' &&
-                  asset.name === `${app.getName()}-mac.zip`
+                  asset.name === `${appName}-mac.zip`
                 );
               }).browser_download_url;
 

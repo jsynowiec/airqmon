@@ -1,15 +1,15 @@
-import { app } from 'electron';
 import * as Rollbar from 'rollbar';
 
 const keys = require('../keys.json');
 
-const errorHandler = new Rollbar({
+const version: string = require('../package.json').version;
+
   accessToken: keys.rollbar,
-  version: app.getVersion(),
+  version,
   captureUncaught: false,
   captureUnhandledRejections: false,
   payload: {
-    code_version: app.getVersion(),
+    code_version: version,
   },
 });
 
