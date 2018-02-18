@@ -4,7 +4,7 @@ import { getCAQIMeta } from '../../caqi';
 
 import AirQualityValueBar from './AirQualityValueBar';
 
-const AirQualityInfo = ({ airQualityIndex }) => {
+const AirQualityInfo = ({ airQualityIndex }: { airQualityIndex: number }) => {
   const airQualityMeta = getCAQIMeta(Math.round(airQualityIndex));
 
   return (

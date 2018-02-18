@@ -1,4 +1,4 @@
-import { BrowserWindow, BrowserWindowConstructorOptions, screen, Tray } from 'electron';
+import { BrowserWindow, BrowserWindowConstructorOptions, screen, Tray, Point } from 'electron';
 import * as path from 'path';
 
 import viewer from './analytics';
@@ -19,8 +19,17 @@ class TrayWindowManager {
     this.createTray();
   }
 
-  private createWindow(config: BrowserWindowConstructorOptions) {
-    this._window = new BrowserWindow(config);
+  private createWindow(config: BrowserWindowConstructorOptions): void {
+    this._window = new BrowserWindow({
+      show: false,
+      frame: false,
+      fullscreenable: false,
+      movable: false,
+      maximizable: false,
+      resizable: false,
+      transparent: true,
+      ...config,
+    });
     this._window.loadURL(`file://${path.join(__dirname, 'index.html')}`);
 
     this._window.setVisibleOnAllWorkspaces(true);
@@ -36,7 +45,7 @@ class TrayWindowManager {
     });
   }
 
-  private createTray() {
+  private createTray(): void {
     this._tray = new Tray(path.join(assetsDirectory, 'menu_iconTemplate.png'));
 
     this._tray.on('right-click', () => {
@@ -62,7 +71,7 @@ class TrayWindowManager {
     this._window.webContents.send(channel, ...args);
   }
 
-  getWindowPosition(): { x: number; y: number } {
+  getWindowPosition(): Point {
     const windowBounds = this._window.getBounds();
     const trayBounds = this._tray.getBounds();
 
@@ -87,10 +96,14 @@ class TrayWindowManager {
   }
 
   closeWindow(): void {
+    this._window.getChildWindows().forEach((childWindow) => {
+      childWindow.close();
+    });
+
     this._window.close();
   }
 
-  toggleWindow() {
+  toggleWindow(): void {
     if (this._window.isVisible()) {
       this._window.hide();
     } else {

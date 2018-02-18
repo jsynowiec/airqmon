@@ -5,6 +5,9 @@
     "moduleResolution": "node",
     "rootDir": "./src",
     "outDir": "build",
+    "typeRoots": [
+      "types"
+    ],
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
     "allowJs": true,

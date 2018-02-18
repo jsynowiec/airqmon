@@ -11,6 +11,13 @@ import { AIRLY_API_URL, IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement
 import { getCAQIMeta } from '../caqi';
 import { isEmptyObject } from '../helpers';
 import IPC_EVENTS from '../ipc-events';
+import {
+  shouldNotifyAbout,
+  userSettings,
+  getRefreshIntervalMeta,
+  IRefreshIntervalMeta,
+  IUserSettings,
+} from '../user-settings';
 
 interface IAppProps {
   airlyToken: string;
@@ -27,7 +34,7 @@ interface IBaseAppState {
 }
 
 interface IDataAppState {
-  connectionStatus: Boolean;
+  connectionStatus: boolean;
   lastUpdateDate?: Date;
   latitude?: number;
   longitude?: number;
@@ -36,10 +43,9 @@ interface IDataAppState {
 }
 
 interface IAppState extends IBaseAppState, IDataAppState {
-  isAutoRefreshEnabled: Boolean;
+  isAutoRefreshEnabled: boolean;
+  refreshMeasurementsIntervalMeta: IRefreshIntervalMeta;
 }
-
-const REFRESH_DELAY = 300000; // 5 minutes
 
 class App extends React.Component<IAppProps, IAppState> {
   private lastUsedStationId?: number = null;
@@ -49,7 +55,10 @@ class App extends React.Component<IAppProps, IAppState> {
     super(props);
 
     this.state = {
-      isAutoRefreshEnabled: true,
+      isAutoRefreshEnabled: userSettings.get('refreshMeasurements'),
+      refreshMeasurementsIntervalMeta: getRefreshIntervalMeta(
+        userSettings.get('refreshMeasurementsInterval'),
+      ),
       connectionStatus: false,
       tokens: {
         airly: this.props.airlyToken,
@@ -57,11 +66,12 @@ class App extends React.Component<IAppProps, IAppState> {
     };
 
     this.handleRefreshClick = this.handleRefreshClick.bind(this);
+    this.handlePreferencesClick = this.handlePreferencesClick.bind(this);
     this.handleQuitClick = this.handleQuitClick.bind(this);
   }
 
   componentDidMount() {
-    ipcRenderer.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status) => {
+    ipcRenderer.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status: 'online' | 'offline') => {
       let newState: IDataAppState = {
         connectionStatus: status === 'online',
       };
@@ -96,25 +106,70 @@ class App extends React.Component<IAppProps, IAppState> {
 
       this.notifyAboutAvailableUpdate(version, url);
     });
+
+    ipcRenderer.on(
+      IPC_EVENTS.USER_SETTING_CHANGED,
+      <K extends keyof IUserSettings>(
+        _,
+        {
+          key,
+          newValue,
+        }: {
+          key: K;
+          newValue: IUserSettings[K];
+        },
+      ) => {
+        switch (key) {
+          case 'refreshMeasurements':
+            this.setState(
+              {
+                isAutoRefreshEnabled: newValue as boolean,
+              },
+              () => {
+                if (this.state.isAutoRefreshEnabled) {
+                  this.enableRefreshTimer();
+                } else {
+                  clearInterval(this.refreshTimer);
+                }
+              },
+            );
+            break;
+          case 'refreshMeasurementsInterval':
+            this.setState(
+              {
+                refreshMeasurementsIntervalMeta: getRefreshIntervalMeta(newValue as number),
+              },
+              () => {
+                this.enableRefreshTimer();
+              },
+            );
+            break;
+        }
+      },
+    );
   }
 
   init() {
     getLocation().then((position) => {
+      const { latitude, longitude } = position.coords;
+
       this.setState(
         {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
+          latitude,
+          longitude,
         },
         () => {
           this.findNearestStation().then((station: IArilyNearestSensorMeasurement) => {
             if (this.lastUsedStationId !== null) {
               if (this.lastUsedStationId !== station.id) {
-                new Notification('Location changed', {
-                  // tslint:disable-next-line:max-line-length
-                  body: `Found a new nearest sensor station ${(station.distance / 1000).toFixed(
-                    2,
-                  )} away located at ${station.address.locality}, ${station.address.route}.`,
-                });
+                if (shouldNotifyAbout('stationChanged') === true) {
+                  new Notification('Location changed', {
+                    // tslint:disable-next-line:max-line-length
+                    body: `Found a new nearest sensor station ${(station.distance / 1000).toFixed(
+                      2,
+                    )} away located at ${station.address.locality}, ${station.address.route}.`,
+                  });
+                }
               }
             }
 
@@ -202,13 +257,15 @@ class App extends React.Component<IAppProps, IAppState> {
             if (oldCAQIMeta.index !== newCAQIMeta.index) {
               visitor.event('Air quality', 'Air quality changed.', label).send();
 
-              const aqchangeNotif = new Notification('Air quality changed', {
-                body: label,
-              });
+              if (shouldNotifyAbout('caqiChanged') === true) {
+                const aqchangeNotif = new Notification('Air quality changed', {
+                  body: label,
+                });
 
-              aqchangeNotif.onclick = () => {
-                ipcRenderer.send(IPC_EVENTS.SHOW_WINDOW);
-              };
+                aqchangeNotif.onclick = () => {
+                  ipcRenderer.send(IPC_EVENTS.SHOW_WINDOW);
+                };
+              }
             }
           }
 
@@ -238,7 +295,7 @@ class App extends React.Component<IAppProps, IAppState> {
 
     this.refreshTimer = setInterval(() => {
       this.refreshData();
-    }, REFRESH_DELAY);
+    }, this.state.refreshMeasurementsIntervalMeta.value);
   }
 
   notifyAboutAvailableUpdate(version, url) {
@@ -252,13 +309,11 @@ class App extends React.Component<IAppProps, IAppState> {
   }
 
   handleRefreshClick() {
-    this.setState({ isAutoRefreshEnabled: !this.state.isAutoRefreshEnabled }, () => {
-      if (this.state.isAutoRefreshEnabled) {
-        this.enableRefreshTimer();
-      } else {
-        clearInterval(this.refreshTimer);
-      }
-    });
+    userSettings.set('refreshMeasurements', !this.state.isAutoRefreshEnabled);
+  }
+
+  handlePreferencesClick() {
+    ipcRenderer.send(IPC_EVENTS.SHOW_PREFERENCES_WINDOW);
   }
 
   handleQuitClick() {
@@ -269,7 +324,7 @@ class App extends React.Component<IAppProps, IAppState> {
     return (
       <>
         <div className="header-arrow" />
-        <div className="window">
+        <div className="tray-window window">
           <TrayWindow
             connectionStatus={this.state.connectionStatus}
             currentMeasurements={this.state.currentMeasurements}
@@ -278,6 +333,7 @@ class App extends React.Component<IAppProps, IAppState> {
             isAutoRefreshEnabled={this.state.isAutoRefreshEnabled}
             availableAppUpdate={this.state.appUpdate}
             onRefreshClickHandler={this.handleRefreshClick}
+            onPreferencesClickHandler={this.handlePreferencesClick}
             onQuitClickHandler={this.handleQuitClick}
           />
         </div>

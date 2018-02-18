@@ -5,6 +5,8 @@ import { getCAQIMeta } from './caqi';
 import { isDev } from './helpers';
 import IPC_EVENTS from './ipc-events';
 import TrayWindowManager from './tray-window-manager';
+import { IUserSettings } from './user-settings';
+import { showPreferencesWindow } from './preferences-window-manager';
 
 const keys = require('../keys.json');
 
@@ -23,11 +25,6 @@ app.on('ready', () => {
   trayWindowManager = new TrayWindowManager({
     width: 300,
     height: 500,
-    show: false,
-    frame: false,
-    fullscreenable: false,
-    resizable: false,
-    transparent: true,
     webPreferences: {
       // Prevents renderer process code from not running when window is hidden
       backgroundThrottling: false,
@@ -40,7 +37,7 @@ app.on('window-all-closed', () => {
   app.quit();
 });
 
-ipcMain.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status) => {
+ipcMain.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status: 'online' | 'offline') => {
   trayWindowManager.ipcSend(IPC_EVENTS.CONN_STATUS_CHANGED, status);
 
   if (status === 'offline') {
@@ -58,14 +55,34 @@ ipcMain.on(IPC_EVENTS.AIR_Q_DATA_UPDATED, (_, currentMeasurement: IAirlyCurrentM
   });
 });
 
-ipcMain.on(IPC_EVENTS.OPEN_BROWSER_FOR_URL, (_, arg) => {
-  shell.openExternal(arg);
+ipcMain.on(IPC_EVENTS.OPEN_BROWSER_FOR_URL, (_, url: string) => {
+  shell.openExternal(url);
 });
 
 ipcMain.on(IPC_EVENTS.SHOW_WINDOW, () => {
   trayWindowManager.showWindow();
 });
 
+ipcMain.on(IPC_EVENTS.SHOW_PREFERENCES_WINDOW, () => {
+  showPreferencesWindow(trayWindowManager.window);
+});
+
 ipcMain.on(IPC_EVENTS.CLOSE_WINDOW, () => {
   trayWindowManager.closeWindow();
 });
+
+ipcMain.on(
+  IPC_EVENTS.USER_SETTING_CHANGED,
+  <K extends keyof IUserSettings>(
+    _,
+    { key, oldValue, newValue }: { key: K; oldValue: IUserSettings[K]; newValue: IUserSettings[K] },
+  ) => {
+    trayWindowManager.ipcSend(IPC_EVENTS.USER_SETTING_CHANGED, { key, oldValue, newValue });
+
+    if (key === 'openAtLogin') {
+      app.setLoginItemSettings({
+        openAtLogin: newValue as boolean,
+      });
+    }
+  },
+);

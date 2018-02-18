@@ -6,8 +6,9 @@ import IPC_EVENTS from '../ipc-events';
 
 interface IFooterProps {
   lastUpdateDate?: Date;
-  isAutoRefreshEnabled: Boolean;
+  isAutoRefreshEnabled: boolean;
   onRefreshClick: () => void;
+  onPreferencesClickHandler: () => void;
   onQuitClick: () => void;
 }
 
@@ -15,13 +16,14 @@ const Footer = ({
   lastUpdateDate,
   isAutoRefreshEnabled,
   onRefreshClick,
+  onPreferencesClickHandler,
   onQuitClick,
 }: IFooterProps) => {
-  function handleExtLinkClick(url) {
+  function handleExtLinkClick(url: string) {
     ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
   }
 
-  const lastUpdate = lastUpdateDate
+  const lastUpdate: string = lastUpdateDate
     ? `, last update at ${formatDateTo24Time(lastUpdateDate)}`
     : null;
 
@@ -44,7 +46,14 @@ const Footer = ({
             className={'btn btn-default' + (isAutoRefreshEnabled ? ' active' : '')}
             onClick={onRefreshClick}
           >
-            <span className="icon icon-arrows-ccw" title="Auto refresh" />
+            <span className="icon icon-arrows-ccw" title="Background fetch" />
+          </button>
+          <button className="btn btn-default">
+            <span
+              className="icon icon-cog"
+              title="Preferences"
+              onClick={onPreferencesClickHandler}
+            />
           </button>
           <button className="btn btn-default" onClick={onQuitClick}>
             <span className="icon icon-cancel" title="Quit" />

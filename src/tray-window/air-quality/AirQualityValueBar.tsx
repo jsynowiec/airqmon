@@ -33,7 +33,7 @@ class AirQualityValueBar extends React.Component<
     };
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     const elBoundingBox = this.valueBarNode.getBoundingClientRect();
 
     this.setState({

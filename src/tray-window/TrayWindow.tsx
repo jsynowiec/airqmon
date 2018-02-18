@@ -8,13 +8,14 @@ import Header from './Header';
 
 interface ITrayWindowProps {
   availableAppUpdate?: { version: string; url: string };
-  connectionStatus: Boolean;
+  connectionStatus: boolean;
   currentMeasurements?: IAirlyCurrentMeasurement;
-  isAutoRefreshEnabled: Boolean;
+  isAutoRefreshEnabled: boolean;
   lastUpdateDate?: Date;
   nearestStation?: IArilyNearestSensorMeasurement;
   onQuitClickHandler: () => void;
   onRefreshClickHandler: () => void;
+  onPreferencesClickHandler: () => void;
 }
 
 const TrayWindow = ({
@@ -26,6 +27,7 @@ const TrayWindow = ({
   nearestStation,
   onQuitClickHandler,
   onRefreshClickHandler,
+  onPreferencesClickHandler,
 }: ITrayWindowProps) => {
   return (
     <>
@@ -43,6 +45,7 @@ const TrayWindow = ({
         isAutoRefreshEnabled={isAutoRefreshEnabled}
         onQuitClick={onQuitClickHandler}
         onRefreshClick={onRefreshClickHandler}
+        onPreferencesClickHandler={onPreferencesClickHandler}
       />
     </>
   );

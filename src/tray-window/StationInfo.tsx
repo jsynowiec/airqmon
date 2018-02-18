@@ -1,6 +1,13 @@
 import * as React from 'react';
+import { IArilyNearestSensorMeasurement } from '../airly';
 
-const StationInfo = ({ station, onClickHandler }) => {
+const StationInfo = ({
+  station,
+  onClickHandler,
+}: {
+  station: IArilyNearestSensorMeasurement;
+  onClickHandler: () => void;
+}) => {
   return (
     <div className="station-info">
       <a className="link" href="#" onClick={onClickHandler}>
