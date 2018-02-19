@@ -1,4 +1,5 @@
-import { app, ipcMain, shell, globalShortcut } from 'electron';
+import { app, ipcMain, shell } from 'electron';
+import electronLocalshortcut = require('electron-localshortcut');
 
 import { IAirlyCurrentMeasurement } from './airly';
 import { getCAQIMeta } from './caqi';
@@ -31,9 +32,7 @@ app.on('ready', () => {
     },
   });
 
-  globalShortcut.register('Command+,', () => {
-    showPreferencesWindow();
-  });
+  electronLocalshortcut.register(trayWindowManager.window, 'Cmd+,', showPreferencesWindow);
 });
 
 // Quit the app when the window is closed
