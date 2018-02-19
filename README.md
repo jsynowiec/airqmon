@@ -47,10 +47,6 @@ To override your security settings and open the app:
 
 Read more: [PH25088](https://support.apple.com/kb/PH25088?locale=en_US)
 
-### There is no data or displayed station is very far away
-
-[Airly][airly] sensor stations are probably located only in Poland (but I plan to add support for different APIs and data providers at some point).
-
 ## Privacy
 
 Airqmon tracks some usage data, like window displays or CAQI index changes, and reports errors using external services. No private data other than computer hostname is collected. The information that is collected is used to provide, maintain, protect and improve Airqmon. Collected data is not shared with anyone.
