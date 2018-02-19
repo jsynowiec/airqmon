@@ -6,8 +6,14 @@ import visitor from '../analytics';
 import { getLocation } from '../geolocation';
 import { TrayWindow } from '../tray-window';
 import updateChecker from '../update-checker';
+import errorHandler from '../error-handler';
 
-import { AIRLY_API_URL, IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../airly';
+import {
+  AIRLY_API_URL,
+  AirlyAPIStatus,
+  IAirlyCurrentMeasurement,
+  IArilyNearestSensorMeasurement,
+} from '../airly';
 import { getCAQIMeta } from '../caqi';
 import { isEmptyObject } from '../helpers';
 import IPC_EVENTS from '../ipc-events';
@@ -18,6 +24,8 @@ import {
   IRefreshIntervalMeta,
   IUserSettings,
 } from '../user-settings';
+
+const API_REQUEST_RETRY: number = 60000;
 
 interface IAppProps {
   airlyToken: string;
@@ -34,7 +42,7 @@ interface IBaseAppState {
 }
 
 interface IDataAppState {
-  connectionStatus: boolean;
+  connectionStatus?: boolean;
   lastUpdateDate?: Date;
   latitude?: number;
   longitude?: number;
@@ -44,6 +52,7 @@ interface IDataAppState {
 
 interface IAppState extends IBaseAppState, IDataAppState {
   isAutoRefreshEnabled: boolean;
+  airlyApiStatus?: AirlyAPIStatus;
   refreshMeasurementsIntervalMeta: IRefreshIntervalMeta;
 }
 
@@ -91,7 +100,19 @@ class App extends React.Component<IAppProps, IAppState> {
             clearInterval(this.refreshTimer);
           }
         } else {
-          this.init();
+          getLocation().then((position) => {
+            const { latitude, longitude } = position.coords;
+
+            this.setState(
+              {
+                latitude,
+                longitude,
+              },
+              () => {
+                this.init();
+              },
+            );
+          });
         }
       });
     });
@@ -150,39 +171,63 @@ class App extends React.Component<IAppProps, IAppState> {
   }
 
   init() {
-    getLocation().then((position) => {
-      const { latitude, longitude } = position.coords;
-
-      this.setState(
-        {
-          latitude,
-          longitude,
-        },
-        () => {
-          this.findNearestStation().then((station: IArilyNearestSensorMeasurement) => {
-            if (this.lastUsedStationId !== null) {
-              if (this.lastUsedStationId !== station.id) {
-                if (shouldNotifyAbout('stationChanged') === true) {
-                  new Notification('Location changed', {
-                    // tslint:disable-next-line:max-line-length
-                    body: `Found a new nearest sensor station ${(station.distance / 1000).toFixed(
-                      2,
-                    )} away located at ${station.address.locality}, ${station.address.route}.`,
-                  });
-                }
+    this.findNearestStation()
+      .then((station: IArilyNearestSensorMeasurement) => {
+        return new Promise((resolve, reject) => {
+          if (this.lastUsedStationId !== null) {
+            if (this.lastUsedStationId !== station.id) {
+              if (shouldNotifyAbout('stationChanged') === true) {
+                new Notification('Location changed', {
+                  // tslint:disable-next-line:max-line-length
+                  body: `Found a new nearest sensor station ${(station.distance / 1000).toFixed(
+                    2,
+                  )} away located at ${station.address.locality}, ${station.address.route}.`,
+                });
               }
             }
+          }
 
-            this.lastUsedStationId = station.id;
+          this.lastUsedStationId = station.id;
 
-            this.refreshData();
-            if (this.state.isAutoRefreshEnabled) {
-              this.enableRefreshTimer();
-            }
-          });
-        },
-      );
-    });
+          this.setState(
+            {
+              airlyApiStatus: AirlyAPIStatus.OK,
+            },
+            () => {
+              this.refreshData()
+                .then(() => {
+                  if (this.state.isAutoRefreshEnabled) {
+                    this.enableRefreshTimer();
+                  }
+
+                  resolve();
+                })
+                .catch((reason) => {
+                  reject(reason);
+                });
+            },
+          );
+        });
+      })
+      .catch((reason) => {
+        if (reason) {
+          errorHandler.error(reason.message, reason);
+        }
+
+        this.refreshTimer = setTimeout(() => {
+          this.init();
+        }, API_REQUEST_RETRY);
+
+        if (reason.response) {
+          let airlyApiStatus = AirlyAPIStatus.OTHER_ERROR;
+
+          if (reason.response.status === 429) {
+            airlyApiStatus = AirlyAPIStatus.RATE_LIMIT_EXCEEDED;
+          }
+
+          this.setState({ airlyApiStatus });
+        }
+      });
   }
 
   findNearestStation() {
@@ -201,91 +246,96 @@ class App extends React.Component<IAppProps, IAppState> {
       })
         .then((value) => {
           if (value.status === 200) {
+            const nearestStation = value.data;
+
+            if (nearestStation === null || Object.keys(nearestStation).indexOf('id') == -1) {
+              this.setState({ airlyApiStatus: AirlyAPIStatus.NO_STATION }, () => reject());
+            } else {
+              this.setState({ nearestStation }, () => resolve(nearestStation));
+            }
+          }
+        })
+        .catch((reason) => reject(reason));
+    });
+  }
+
+  refreshData() {
+    return new Promise((resolve, reject) => {
+      axios({
+        baseURL: AIRLY_API_URL,
+        method: 'get',
+        url: '/v1/sensor/measurements',
+        headers: {
+          apikey: this.state.tokens.airly,
+        },
+        params: {
+          sensorId: this.state.nearestStation.id,
+        },
+      })
+        .then((value) => {
+          if (value.status === 200) {
+            let measurements = value.data.currentMeasurements;
+            // some stations don't have current measurements so we need to get latest historical
+            if (isEmptyObject(measurements)) {
+              measurements = value.data.history.reduceRight((acc, el) => {
+                if (acc === null && isEmptyObject(el.measurements) === false) {
+                  acc = el.measurements;
+                }
+
+                return acc;
+              }, null);
+            }
+
+            if (this.state.currentMeasurements) {
+              const oldCAQIMeta = getCAQIMeta(
+                Math.round(this.state.currentMeasurements.airQualityIndex),
+              );
+              const newCAQIMeta = getCAQIMeta(Math.round(measurements.airQualityIndex));
+
+              // tslint:disable-next-line:max-line-length
+              const label = `Air quality changed from ${oldCAQIMeta.labels.airQuality.toLowerCase()} to ${newCAQIMeta.labels.airQuality.toLowerCase()}. ${
+                newCAQIMeta.advisory
+              }`;
+
+              if (oldCAQIMeta.index !== newCAQIMeta.index) {
+                visitor.event('Air quality', 'Air quality changed.', label).send();
+
+                if (shouldNotifyAbout('caqiChanged') === true) {
+                  const aqchangeNotif = new Notification('Air quality changed', {
+                    body: label,
+                  });
+
+                  aqchangeNotif.onclick = () => {
+                    ipcRenderer.send(IPC_EVENTS.SHOW_WINDOW);
+                  };
+                }
+              }
+            }
+
             this.setState(
               {
-                nearestStation: value.data,
+                currentMeasurements: measurements,
+                lastUpdateDate: new Date(),
               },
               () => {
-                resolve(value.data);
+                ipcRenderer.send(IPC_EVENTS.AIR_Q_DATA_UPDATED, this.state.currentMeasurements);
+                resolve();
               },
             );
           }
         })
         .catch((reason) => {
-          reject(reason);
-        });
-    });
-  }
-
-  refreshData() {
-    axios({
-      baseURL: AIRLY_API_URL,
-      method: 'get',
-      url: '/v1/sensor/measurements',
-      headers: {
-        apikey: this.state.tokens.airly,
-      },
-      params: {
-        sensorId: this.state.nearestStation.id,
-      },
-    })
-      .then((value) => {
-        if (value.status === 200) {
-          let measurements = value.data.currentMeasurements;
-          // some stations don't have current measurements so we need to get latest historical
-          if (isEmptyObject(measurements)) {
-            measurements = value.data.history.reduceRight((acc, el) => {
-              if (acc === null && isEmptyObject(el.measurements) === false) {
-                acc = el.measurements;
-              }
-
-              return acc;
-            }, null);
-          }
-
-          if (this.state.currentMeasurements) {
-            const oldCAQIMeta = getCAQIMeta(
-              Math.round(this.state.currentMeasurements.airQualityIndex),
-            );
-            const newCAQIMeta = getCAQIMeta(Math.round(measurements.airQualityIndex));
-
-            // tslint:disable-next-line:max-line-length
-            const label = `Air quality changed from ${oldCAQIMeta.labels.airQuality.toLowerCase()} to ${newCAQIMeta.labels.airQuality.toLowerCase()}. ${
-              newCAQIMeta.advisory
-            }`;
-
-            if (oldCAQIMeta.index !== newCAQIMeta.index) {
-              visitor.event('Air quality', 'Air quality changed.', label).send();
-
-              if (shouldNotifyAbout('caqiChanged') === true) {
-                const aqchangeNotif = new Notification('Air quality changed', {
-                  body: label,
-                });
-
-                aqchangeNotif.onclick = () => {
-                  ipcRenderer.send(IPC_EVENTS.SHOW_WINDOW);
-                };
-              }
-            }
-          }
-
           this.setState(
             {
-              currentMeasurements: measurements,
-              lastUpdateDate: new Date(),
+              currentMeasurements: null,
+              lastUpdateDate: null,
             },
             () => {
-              ipcRenderer.send(IPC_EVENTS.AIR_Q_DATA_UPDATED, this.state.currentMeasurements);
+              reject(reason);
             },
           );
-        }
-      })
-      .catch(() => {
-        this.setState({
-          currentMeasurements: null,
-          lastUpdateDate: null,
         });
-      });
+    });
   }
 
   enableRefreshTimer() {
@@ -326,6 +376,7 @@ class App extends React.Component<IAppProps, IAppState> {
         <div className="header-arrow" />
         <div className="tray-window window">
           <TrayWindow
+            airlyApiStatus={this.state.airlyApiStatus}
             connectionStatus={this.state.connectionStatus}
             currentMeasurements={this.state.currentMeasurements}
             nearestStation={this.state.nearestStation}

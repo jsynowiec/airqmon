@@ -31,3 +31,10 @@ export interface IArilyNearestSensorMeasurement {
   };
   measurementTime: string;
 }
+
+export enum AirlyAPIStatus {
+  OK = 1,
+  NO_STATION = 2,
+  OTHER_ERROR = 3,
+  RATE_LIMIT_EXCEEDED = 4,
+}

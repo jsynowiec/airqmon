@@ -2,11 +2,11 @@ import * as React from 'react';
 import { ipcRenderer } from 'electron';
 
 import Loader from './Loader';
-import Offline from './Offline';
+import ErrorMessage from './ErrorMessage';
 import UpdateAlert from './UpdateAlert';
 import StationInfo from './StationInfo';
 import AirQualityInfo from './air-quality/AirQualityInfo';
-import { IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../airly';
+import { AirlyAPIStatus, IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../airly';
 import MeasurementPane from './measurement/MeasurementPane';
 import IPC_EVENTS from '../ipc-events';
 
@@ -14,6 +14,7 @@ interface IContentProps {
   availableAppUpdate?: { version: string; url: string };
   currentMeasurements?: IAirlyCurrentMeasurement;
   nearestStation?: IArilyNearestSensorMeasurement;
+  airlyApiStatus?: AirlyAPIStatus;
   connectionStatus: boolean;
 }
 
@@ -28,7 +29,27 @@ class Content extends React.Component<IContentProps> {
 
   render() {
     if (this.props.connectionStatus === false) {
-      return <Offline />;
+      return (
+        <ErrorMessage
+          header="There is no Internet connection"
+          message="Your computer is offline."
+        />
+      );
+    }
+
+    if (this.props.airlyApiStatus !== AirlyAPIStatus.OK) {
+      switch (this.props.airlyApiStatus) {
+        case AirlyAPIStatus.OTHER_ERROR:
+        case AirlyAPIStatus.RATE_LIMIT_EXCEEDED:
+          return (
+            <ErrorMessage
+              header="Communication problem"
+              message="There was an unexpected response while requesting sensor station data. Request will be send again in a few minutes."
+            />
+          );
+        case AirlyAPIStatus.NO_STATION:
+          return <ErrorMessage message="There is no sensor station available in your vicinity." />;
+      }
     }
 
     if (this.props.currentMeasurements) {
