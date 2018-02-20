@@ -34,6 +34,7 @@ interface IAppProps {
 interface IBaseAppState {
   tokens: {
     airly: string;
+    userProvidedAirly?: string;
   };
   appUpdate?: {
     version: string;
@@ -59,6 +60,7 @@ interface IAppState extends IBaseAppState, IDataAppState {
 class App extends React.Component<IAppProps, IAppState> {
   private lastUsedStationId?: number = null;
   private refreshTimer: NodeJS.Timer = null;
+  private initTimer: NodeJS.Timer = null;
 
   constructor(props: IAppProps) {
     super(props);
@@ -71,6 +73,7 @@ class App extends React.Component<IAppProps, IAppState> {
       connectionStatus: false,
       tokens: {
         airly: this.props.airlyToken,
+        userProvidedAirly: userSettings.get('airlyApiKey'),
       },
     };
 
@@ -96,9 +99,7 @@ class App extends React.Component<IAppProps, IAppState> {
 
       this.setState(newState, () => {
         if (status === 'offline') {
-          if (this.refreshTimer) {
-            clearInterval(this.refreshTimer);
-          }
+          this.disableRefreshTimer();
         } else {
           getLocation().then((position) => {
             const { latitude, longitude } = position.coords;
@@ -150,7 +151,7 @@ class App extends React.Component<IAppProps, IAppState> {
                 if (this.state.isAutoRefreshEnabled) {
                   this.enableRefreshTimer();
                 } else {
-                  clearInterval(this.refreshTimer);
+                  this.disableRefreshTimer();
                 }
               },
             );
@@ -165,12 +166,30 @@ class App extends React.Component<IAppProps, IAppState> {
               },
             );
             break;
+          case 'airlyApiKey':
+            this.setState(
+              {
+                tokens: {
+                  ...this.state.tokens,
+                  userProvidedAirly: newValue as string,
+                },
+              },
+              () => {
+                this.init();
+              },
+            );
+            break;
         }
       },
     );
   }
 
   init() {
+    if (this.initTimer) {
+      clearTimeout(this.initTimer);
+      this.initTimer = null;
+    }
+
     this.findNearestStation()
       .then((station: IArilyNearestSensorMeasurement) => {
         return new Promise((resolve, reject) => {
@@ -211,10 +230,18 @@ class App extends React.Component<IAppProps, IAppState> {
       })
       .catch((reason) => {
         if (reason) {
-          errorHandler.error(reason.message, reason);
+          let shouldLogError: boolean = true;
+
+          if (reason.response && reason.response.status === 429) {
+            shouldLogError = false;
+          }
+
+          if (shouldLogError) {
+            errorHandler.error(reason.message, reason);
+          }
         }
 
-        this.refreshTimer = setTimeout(() => {
+        this.initTimer = setTimeout(() => {
           this.init();
         }, API_REQUEST_RETRY);
 
@@ -223,6 +250,10 @@ class App extends React.Component<IAppProps, IAppState> {
 
           if (reason.response.status === 429) {
             airlyApiStatus = AirlyAPIStatus.RATE_LIMIT_EXCEEDED;
+          }
+
+          if ([401, 403].indexOf(reason.response.status) !== -1) {
+            airlyApiStatus = AirlyAPIStatus.WRONG_TOKEN;
           }
 
           this.setState({ airlyApiStatus });
@@ -237,7 +268,7 @@ class App extends React.Component<IAppProps, IAppState> {
         method: 'get',
         url: '/v1/nearestSensor/measurements',
         headers: {
-          apikey: this.state.tokens.airly,
+          apikey: this.state.tokens.userProvidedAirly || this.state.tokens.airly,
         },
         params: {
           latitude: this.state.latitude,
@@ -266,7 +297,7 @@ class App extends React.Component<IAppProps, IAppState> {
         method: 'get',
         url: '/v1/sensor/measurements',
         headers: {
-          apikey: this.state.tokens.airly,
+          apikey: this.state.tokens.userProvidedAirly || this.state.tokens.airly,
         },
         params: {
           sensorId: this.state.nearestStation.id,
@@ -338,10 +369,15 @@ class App extends React.Component<IAppProps, IAppState> {
     });
   }
 
-  enableRefreshTimer() {
-    if (this.refreshTimer) {
+  disableRefreshTimer(): void {
+    if (this.refreshTimer !== null) {
       clearInterval(this.refreshTimer);
+      this.refreshTimer = null;
     }
+  }
+
+  enableRefreshTimer() {
+    this.disableRefreshTimer();
 
     this.refreshTimer = setInterval(() => {
       this.refreshData();

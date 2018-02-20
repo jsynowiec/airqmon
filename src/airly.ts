@@ -1,3 +1,6 @@
+const homepage = require('../package.json').homepage;
+export const AIRLY_API_RATE_LIMITS_WORKAROUND = `${homepage}#api-rate-limit-workaround`;
+
 export const AIRLY_API_URL = 'https://airapi.airly.eu';
 
 export interface IAirlyCurrentMeasurement {

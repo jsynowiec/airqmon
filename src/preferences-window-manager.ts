@@ -16,8 +16,8 @@ export function showPreferencesWindow() {
   } else {
     preferencesWindow = new BrowserWindow({
       title: 'Airqmon preferences',
-      width: 377,
-      height: 215,
+      width: 520,
+      height: 310,
       show: false,
       center: true,
       fullscreenable: false,

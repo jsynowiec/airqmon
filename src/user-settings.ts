@@ -74,6 +74,14 @@ class ConfigStore<T> {
   get<K extends keyof T>(key: K): T[K] {
     return this._store.get(key);
   }
+
+  has(key: keyof T): boolean {
+    return this._store.has(key);
+  }
+
+  delete(key: keyof T): void {
+    this._store.delete(key);
+  }
 }
 
 export const userSettings = new ConfigStore<IUserSettings>({

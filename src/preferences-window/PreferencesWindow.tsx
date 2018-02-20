@@ -1,9 +1,14 @@
 import * as React from 'react';
 import { IUserSettings, userSettings, REFRESH_INTERVAL } from '../user-settings';
+import { ipcRenderer } from 'electron';
+import IPC_EVENTS from '../ipc-events';
+import { AIRLY_API_RATE_LIMITS_WORKAROUND } from '../airly';
 
 interface IPreferencesWindowState extends IUserSettings {}
 
 class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
+  private textInputDebounceTimer: NodeJS.Timer = null;
+
   constructor(props) {
     super(props);
 
@@ -17,6 +22,7 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
     );
     this.handleShowNotificationsChange = this.handleShowNotificationsChange.bind(this);
     this.handleNotificationEventsChange = this.handleNotificationEventsChange.bind(this);
+    this.handleAirlyApiKeyChange = this.handleAirlyApiKeyChange.bind(this);
   }
 
   private setValue<K extends keyof IUserSettings>(key: K, value: IUserSettings[K]): void {
@@ -50,6 +56,29 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
     });
   }
 
+  handleAirlyApiKeyChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    let value: string = event.target.value;
+
+    if (this.textInputDebounceTimer) {
+      clearTimeout(this.textInputDebounceTimer);
+    }
+
+    this.setState(
+      {
+        airlyApiKey: value,
+      },
+      () => {
+        setTimeout(() => {
+          userSettings.set('airlyApiKey', value);
+        }, 1000);
+      },
+    );
+  }
+
+  handleExtLinkClick(url: string) {
+    ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
+  }
+
   render() {
     const refreshIntervalOptions: JSX.Element[] = REFRESH_INTERVAL.reduce((acc, val) => {
       return [
@@ -61,9 +90,10 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
     }, []);
 
     return (
-      <div className="preferences-window window">
-        <div className="window-content">
-          <form>
+      <div className="window preferences-window ">
+        <div className="window-content preferences-window__grid">
+          <div className="preferences-window__grid__section-label">Launch Behavior:</div>
+          <div className="preferences-window__grid__section-content">
             <div className="checkbox">
               <label>
                 <input
@@ -74,18 +104,21 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
                 Launch Airqmon at login
               </label>
             </div>
+          </div>
+          <div className="preferences-window__grid__section-label">Update readings every:</div>
+          <div className="preferences-window__grid__section-content">
             <div>
-              <label>
-                Update sensor readings every
-                <select
-                  className="form-control inline"
-                  value={this.state.refreshMeasurementsInterval}
-                  onChange={this.handleRefreshMeasurementIntervalChange}
-                >
-                  {refreshIntervalOptions}
-                </select>
-              </label>
+              <select
+                className="form-control inline"
+                value={this.state.refreshMeasurementsInterval}
+                onChange={this.handleRefreshMeasurementIntervalChange}
+              >
+                {refreshIntervalOptions}
+              </select>
             </div>
+          </div>
+          <div className="preferences-window__grid__section-label">Notifications:</div>
+          <div className="preferences-window__grid__section-content">
             <div className="checkbox">
               <label>
                 <input
@@ -122,7 +155,29 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
                 </label>
               </div>
             </div>
-          </form>
+          </div>
+          <div className="preferences-window__grid__section-label">Airly API key:</div>
+          <div className="preferences-window__grid__section-content">
+            <div className="form-group">
+              <input
+                type="text"
+                className="form-control"
+                value={this.state.airlyApiKey || ''}
+                onChange={this.handleAirlyApiKeyChange}
+              />
+              <p className="preferences-window__grid__section-content__explanation">
+                By providing your own Airly credentials you'll be able to use Airqmon without
+                worrying about exceeding daily data limit rates.
+              </p>
+            </div>
+          </div>
+          <a
+            className="link preferences-window__grid__section-help"
+            href="#"
+            onClick={this.handleExtLinkClick.bind(this, AIRLY_API_RATE_LIMITS_WORKAROUND)}
+          >
+            <span className="icon icon-help-circled" />
+          </a>
         </div>
       </div>
     );

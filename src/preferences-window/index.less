@@ -1,9 +1,54 @@
 .preferences-window {
-  .window-content {
-    background-color: #ececec;
+  &__grid {
+    background-color: @background-color-dark;
 
-    form {
-      margin-left: 55px;
+    display: grid;
+    grid-template-columns: 55px 155px auto 55px;
+
+    &__section-label {
+      grid-column-start: 2;
+      grid-column-end: 3;
+      justify-self: end;
+      align-self: start;
+      text-align: right;
+
+      margin: 10px;
+    }
+
+    &__section-content {
+      grid-column-start: 3;
+      grid-column-end: 4;
+      justify-self: start;
+      align-self: start;
+
+      &__explanation {
+        font-size: 8pt;
+        line-height: 1.5;
+        margin-top: 5px;
+      }
+
+      .form-group {
+        input[type='text'] {
+          margin-top: 5px;
+        }
+      }
+
+      select {
+        margin-top: 10px;
+      }
+
+      .checkbox {
+        margin-bottom: 0;
+      }
+    }
+
+    &__section-help {
+      grid-column-start: 4;
+      grid-column-end: 5;
+      justify-self: center;
+      align-self: center;
+
+      margin: 10px;
     }
 
     .checkbox input[type='checkbox'],
@@ -20,9 +65,11 @@
     }
 
     select {
-      &.inline {
-        width: auto;
-        margin-left: 5px;
+      &.form-control {
+        &:focus {
+          border-color: #ddd;
+          box-shadow: none;
+        }
       }
     }
 
