@@ -2,15 +2,18 @@ import * as React from 'react';
 
 interface IErrorMessageProps {
   header?: string;
-  message: string;
+  children: JSX.Element;
 }
 
-const ErrorMessage = ({ header, message }: IErrorMessageProps) => {
+const ErrorMessage = ({ header = null, children }: IErrorMessageProps) => {
+  const messageHeader =
+    header === null ? null : <div className="error-message__header">{header}</div>;
+
   return (
     <div className="centered-content">
       <div className="error-message">
-        <div className="error-message__header">{header}</div>
-        <div className="error-message__notice">{message}</div>
+        {messageHeader}
+        <div className="error-message__notice">{children}</div>
       </div>
     </div>
   );

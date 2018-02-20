@@ -30,25 +30,48 @@ class Content extends React.Component<IContentProps> {
   render() {
     if (this.props.connectionStatus === false) {
       return (
-        <ErrorMessage
-          header="There is no Internet connection"
-          message="Your computer is offline."
-        />
+        <ErrorMessage header="There is no Internet connection">
+          <>Your computer is offline.</>
+        </ErrorMessage>
       );
     }
 
     if (this.props.airlyApiStatus !== AirlyAPIStatus.OK) {
       switch (this.props.airlyApiStatus) {
-        case AirlyAPIStatus.OTHER_ERROR:
         case AirlyAPIStatus.RATE_LIMIT_EXCEEDED:
           return (
-            <ErrorMessage
-              header="Communication problem"
-              message="There was an unexpected response while requesting sensor station data. Request will be send again in a few minutes."
-            />
+            <ErrorMessage header="Request limit reached">
+              <>
+                Unfortunately Airqmon exceeded the daily limit of how many times it can download
+                sensor readings from Airly. You can either wait until tomorrow or provide your own
+                credentials in application preferences.
+              </>
+            </ErrorMessage>
+          );
+        case AirlyAPIStatus.WRONG_TOKEN:
+          return (
+            <ErrorMessage header="Wrong credentials">
+              <>
+                Provided credentials were rejected by server. Please confirm whether pasted API key
+                is valid.
+              </>
+            </ErrorMessage>
+          );
+        case AirlyAPIStatus.OTHER_ERROR:
+          return (
+            <ErrorMessage header="Communication problem">
+              <>
+                There was an unexpected response while requesting sensor station data. Request will
+                be send again in a few minutes.
+              </>
+            </ErrorMessage>
           );
         case AirlyAPIStatus.NO_STATION:
-          return <ErrorMessage message="There is no sensor station available in your vicinity." />;
+          return (
+            <ErrorMessage>
+              <>There is no sensor station available in your vicinity.</>
+            </ErrorMessage>
+          );
       }
     }
 
