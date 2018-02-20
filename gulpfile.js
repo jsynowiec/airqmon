@@ -78,7 +78,7 @@ gulp.task('watch', ['build'], () => {
   gulp.watch(['src/**/*.less'], ['build:styles']);
 
   gulp.watch(['build/**/*.js'], electron.restart);
-  gulp.watch(['build/index.css'], electron.reload);
+  gulp.watch(['build/index.css'], electron.restart);
   gulp.watch(['build/**/*.html'], electron.reload);
 });
 
