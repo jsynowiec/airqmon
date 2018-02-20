@@ -13,6 +13,7 @@ export interface IUserSettings {
   refreshMeasurementsInterval: Intervals;
   showNotifications: boolean;
   notificationEvents: INotificationsEvents;
+  airlyApiKey?: string;
 }
 
 enum Intervals {
@@ -30,18 +31,18 @@ export interface IRefreshIntervalMeta {
 export const REFRESH_INTERVAL: IRefreshIntervalMeta[] = [
   {
     id: Intervals.Short,
-    value: 300000,
-    label: '5 minutes',
-  },
-  {
-    id: Intervals.Medium,
     value: 900000,
     label: '15 minutes',
   },
   {
-    id: Intervals.Long,
+    id: Intervals.Medium,
     value: 1800000,
     label: '30 minutes',
+  },
+  {
+    id: Intervals.Long,
+    value: 3600000,
+    label: '1 hour',
   },
 ];
 
