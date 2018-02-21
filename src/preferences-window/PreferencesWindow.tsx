@@ -25,16 +25,16 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
     this.handleNotificationEventsChange = this.handleNotificationEventsChange.bind(this);
     this.handleAirlyApiKeyChange = this.handleAirlyApiKeyChange.bind(this);
 
-    this.handlePasteEvent = this.handlePasteEvent.bind(this);
+    this.handleEditEvents = this.handleEditEvents.bind(this);
   }
 
   componentDidMount() {
     this.webContents = remote.getCurrentWebContents();
-    this.webContents.addListener('before-input-event', this.handlePasteEvent);
+    this.webContents.addListener('before-input-event', this.handleEditEvents);
   }
 
   componentWillUnmount() {
-    this.webContents.removeListener('before-input-event', this.handlePasteEvent);
+    this.webContents.removeListener('before-input-event', this.handleEditEvents);
   }
 
   private setValue<K extends keyof IUserSettings>(key: K, value: IUserSettings[K]): void {
@@ -48,7 +48,7 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
     );
   }
 
-  handlePasteEvent(_, input: Electron.Input) {
+  handleEditEvents(_, input: Electron.Input) {
     if (input.key === 'a' && input.meta && !input.alt && !input.control && !input.shift) {
       this.webContents.selectAll();
     }
