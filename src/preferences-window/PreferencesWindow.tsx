@@ -48,18 +48,22 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
     );
   }
 
-  handleEditEvents(_, input: Electron.Input) {
-    if (input.key === 'a' && input.meta && !input.alt && !input.control && !input.shift) {
-      this.webContents.selectAll();
-    }
-    if (input.key === 'x' && input.meta && !input.alt && !input.control && !input.shift) {
-      this.webContents.cut();
-    }
-    if (input.key === 'c' && input.meta && !input.alt && !input.control && !input.shift) {
-      this.webContents.copy();
-    }
-    if (input.key === 'v' && input.meta && !input.alt && !input.control && !input.shift) {
-      this.webContents.paste();
+  handleEditEvents(_, input: Electron.Input): void {
+    if (input.meta && !input.alt && !input.control && !input.shift) {
+      switch (input.key) {
+        case 'a':
+          this.webContents.selectAll();
+          break;
+        case 'x':
+          this.webContents.cut();
+          break;
+        case 'c':
+          this.webContents.copy();
+          break;
+        case 'v':
+          this.webContents.paste();
+          break;
+      }
     }
   }
 
