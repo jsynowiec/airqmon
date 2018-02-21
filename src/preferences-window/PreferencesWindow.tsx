@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IUserSettings, userSettings, REFRESH_INTERVAL } from '../user-settings';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, remote } from 'electron';
 import IPC_EVENTS from '../ipc-events';
 import { AIRLY_API_RATE_LIMITS_WORKAROUND } from '../airly';
 
@@ -8,6 +8,7 @@ interface IPreferencesWindowState extends IUserSettings {}
 
 class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
   private textInputDebounceTimer: NodeJS.Timer = null;
+  private webContents: Electron.WebContents;
 
   constructor(props) {
     super(props);
@@ -23,6 +24,17 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
     this.handleShowNotificationsChange = this.handleShowNotificationsChange.bind(this);
     this.handleNotificationEventsChange = this.handleNotificationEventsChange.bind(this);
     this.handleAirlyApiKeyChange = this.handleAirlyApiKeyChange.bind(this);
+
+    this.handlePasteEvent = this.handlePasteEvent.bind(this);
+  }
+
+  componentDidMount() {
+    this.webContents = remote.getCurrentWebContents();
+    this.webContents.addListener('before-input-event', this.handlePasteEvent);
+  }
+
+  componentWillUnmount() {
+    this.webContents.removeListener('before-input-event', this.handlePasteEvent);
   }
 
   private setValue<K extends keyof IUserSettings>(key: K, value: IUserSettings[K]): void {
@@ -34,6 +46,21 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
         userSettings.set(key, value);
       },
     );
+  }
+
+  handlePasteEvent(_, input: Electron.Input) {
+    if (input.key === 'a' && input.meta && !input.alt && !input.control && !input.shift) {
+      this.webContents.selectAll();
+    }
+    if (input.key === 'x' && input.meta && !input.alt && !input.control && !input.shift) {
+      this.webContents.cut();
+    }
+    if (input.key === 'c' && input.meta && !input.alt && !input.control && !input.shift) {
+      this.webContents.copy();
+    }
+    if (input.key === 'v' && input.meta && !input.alt && !input.control && !input.shift) {
+      this.webContents.paste();
+    }
   }
 
   handleOpenAtLoginChange(event: React.ChangeEvent<HTMLInputElement>): void {
