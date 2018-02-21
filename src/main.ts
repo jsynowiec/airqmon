@@ -39,6 +39,10 @@ app.on('ready', () => {
       preferencesWindowManager.showWindow();
     }
   });
+
+  trayWindowManager.window.on('close', () => {
+    preferencesWindowManager.closeWindow();
+  });
 });
 
 // Quit the app when the window is closed
@@ -77,7 +81,6 @@ ipcMain.on(IPC_EVENTS.SHOW_PREFERENCES_WINDOW, () => {
 });
 
 ipcMain.on(IPC_EVENTS.CLOSE_WINDOW, () => {
-  preferencesWindowManager.closeWindow();
   trayWindowManager.closeWindow();
 });
 
