@@ -32,7 +32,7 @@ Simply overwrite previous application in your `Applications` folder with a newer
 There are a few options available to customize on the preferences window that you can access by clicking on the button with a cog or by pressing the `⌘ + ,` shortcut.
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/1029142/36357152-1c273994-14fa-11e8-8434-e356da9fef2a.png" width="489px" align="center" alt="Airqmon notification about air quality" />
+  <img src="https://user-images.githubusercontent.com/1029142/36497771-8bc2c00e-173c-11e8-8c97-7f307c041d56.png" width="632px" align="center" alt="Airqmon notification about air quality" />
 </p>
 
 ## FAQ
