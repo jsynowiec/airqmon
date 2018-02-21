@@ -1,5 +1,4 @@
 import { app, ipcMain, shell } from 'electron';
-import electronLocalshortcut = require('electron-localshortcut');
 
 import { IAirlyCurrentMeasurement } from './airly';
 import { getCAQIMeta } from './caqi';
@@ -35,8 +34,10 @@ app.on('ready', () => {
 
   preferencesWindowManager = new PreferencesWindowManager();
 
-  electronLocalshortcut.register(trayWindowManager.window, 'Cmd+,', () => {
-    preferencesWindowManager.showWindow();
+  trayWindowManager.window.webContents.on('before-input-event', (_, input) => {
+    if (input.key === ',' && input.meta && !input.alt && !input.control && !input.shift) {
+      preferencesWindowManager.showWindow();
+    }
   });
 });
 
@@ -76,8 +77,8 @@ ipcMain.on(IPC_EVENTS.SHOW_PREFERENCES_WINDOW, () => {
 });
 
 ipcMain.on(IPC_EVENTS.CLOSE_WINDOW, () => {
-  trayWindowManager.closeWindow();
   preferencesWindowManager.closeWindow();
+  trayWindowManager.closeWindow();
 });
 
 ipcMain.on(
