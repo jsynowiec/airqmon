@@ -23,7 +23,8 @@ class Content extends React.Component<IContentProps> {
     super(props);
   }
 
-  handleExtLinkClick(url: string) {
+  handleExtLinkClick(url: string, event: MouseEvent) {
+    event.preventDefault();
     ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
   }
 

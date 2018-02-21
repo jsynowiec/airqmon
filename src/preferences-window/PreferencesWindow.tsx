@@ -102,7 +102,8 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
     );
   }
 
-  handleExtLinkClick(url: string) {
+  handleExtLinkClick(url: string, event: MouseEvent) {
+    event.preventDefault();
     ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
   }
 

@@ -19,7 +19,8 @@ const Footer = ({
   onPreferencesClickHandler,
   onQuitClick,
 }: IFooterProps) => {
-  function handleExtLinkClick(url: string) {
+  function handleExtLinkClick(url: string, event: MouseEvent) {
+    event.preventDefault();
     ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
   }
 
