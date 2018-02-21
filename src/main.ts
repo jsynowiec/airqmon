@@ -35,11 +35,9 @@ app.on('ready', () => {
 
   preferencesWindowManager = new PreferencesWindowManager();
 
-  electronLocalshortcut.register(
-    trayWindowManager.window,
-    'Cmd+,',
-    preferencesWindowManager.showWindow,
-  );
+  electronLocalshortcut.register(trayWindowManager.window, 'Cmd+,', () => {
+    preferencesWindowManager.showWindow();
+  });
 });
 
 // Quit the app when the window is closed
