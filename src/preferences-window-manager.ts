@@ -3,18 +3,11 @@ import * as path from 'path';
 
 import { isDev } from './helpers';
 
-let preferencesWindow: BrowserWindow = null;
+export default class PreferencesWindowManager {
+  private _window: BrowserWindow;
 
-export function showPreferencesWindow() {
-  if (preferencesWindow && !preferencesWindow.isDestroyed()) {
-    if (!preferencesWindow.isVisible()) {
-      preferencesWindow.center();
-      preferencesWindow.show();
-    }
-
-    preferencesWindow.focus();
-  } else {
-    preferencesWindow = new BrowserWindow({
+  constructor() {
+    this._window = new BrowserWindow({
       title: 'Airqmon preferences',
       width: 520,
       height: 310,
@@ -26,20 +19,29 @@ export function showPreferencesWindow() {
       backgroundColor: '#ECECEC',
     });
 
-    preferencesWindow.loadURL(`file://${path.join(__dirname, 'preferences-window/index.html')}`);
-    preferencesWindow.webContents.once('did-finish-load', () => {
-      if (isDev()) {
-        preferencesWindow.webContents.openDevTools({ mode: 'detach' });
-      }
+    this._window.loadURL(`file://${path.join(__dirname, 'preferences-window/index.html')}`);
 
-      preferencesWindow.show();
-      preferencesWindow.focus();
+    if (isDev()) {
+      this._window.webContents.openDevTools({ mode: 'detach' });
+    }
+
+    this._window.on('close', (event) => {
+      this._window.hide();
+      event.preventDefault();
     });
   }
-}
 
-export function closePreferencesWindow() {
-  if (preferencesWindow && !preferencesWindow.isDestroyed()) {
-    preferencesWindow.close();
+  get window() {
+    return this._window;
+  }
+
+  showWindow() {
+    this._window.center();
+    this._window.show();
+    this._window.focus();
+  }
+
+  closeWindow() {
+    this._window.destroy();
   }
 }

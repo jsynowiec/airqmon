@@ -7,11 +7,12 @@ import { isDev } from './helpers';
 import IPC_EVENTS from './ipc-events';
 import TrayWindowManager from './tray-window-manager';
 import { IUserSettings } from './user-settings';
-import { showPreferencesWindow, closePreferencesWindow } from './preferences-window-manager';
+import PreferencesWindowManager from './preferences-window-manager';
 
 const keys = require('../keys.json');
 
 let trayWindowManager: TrayWindowManager;
+let preferencesWindowManager: PreferencesWindowManager;
 
 process.env.NODE_ENV = isDev() ? 'development' : 'production';
 
@@ -32,7 +33,13 @@ app.on('ready', () => {
     },
   });
 
-  electronLocalshortcut.register(trayWindowManager.window, 'Cmd+,', showPreferencesWindow);
+  preferencesWindowManager = new PreferencesWindowManager();
+
+  electronLocalshortcut.register(
+    trayWindowManager.window,
+    'Cmd+,',
+    preferencesWindowManager.showWindow,
+  );
 });
 
 // Quit the app when the window is closed
@@ -67,12 +74,12 @@ ipcMain.on(IPC_EVENTS.SHOW_WINDOW, () => {
 });
 
 ipcMain.on(IPC_EVENTS.SHOW_PREFERENCES_WINDOW, () => {
-  showPreferencesWindow();
+  preferencesWindowManager.showWindow();
 });
 
 ipcMain.on(IPC_EVENTS.CLOSE_WINDOW, () => {
   trayWindowManager.closeWindow();
-  closePreferencesWindow();
+  preferencesWindowManager.closeWindow();
 });
 
 ipcMain.on(
