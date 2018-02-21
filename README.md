@@ -49,7 +49,16 @@ Read more: [PH25088](https://support.apple.com/kb/PH25088?locale=en_US)
 
 ### API rate limit workaround
 
-TBD
+Unfortunately, Airly API has some enforced daily and hourly request limits. Because binary version that you can download has a single API key embedded, all users fall under the same rate restrictions. This results in Airly blocking access to sensor data at some point during the day (exact time depends on the number of concurrent users).
+
+Since version 1.1.0, the user can provide his own Airly credentials that will be used instead of the shared key. This mitigates the request limit issue by allowing the application to use a separate request pool.
+
+To configure own credentials, you have to:
+
+1. Register for a developers account at the https://developer.airly.eu/login
+2. Copy the API key that is displayed after signing in at the above page
+3. Open Airqmon preferences by clicking on the cog icon or pressing `⌘+,`
+4. Paste the copied API key into the _Airly API key_ text field
 
 ## Privacy
 
