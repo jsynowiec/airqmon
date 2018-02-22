@@ -16,7 +16,7 @@ A menu bar app that displays live air quality informations from the nearest [Air
 </p>
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/1029142/33020102-3a72e41e-cdfd-11e7-84cd-abb6bbfb8c2d.png" width="378px" align="center" alt="Airqmon notification about air quality" />
+  <img src="https://user-images.githubusercontent.com/1029142/36537429-674931ba-17d0-11e8-88ee-c246226c1053.png" width="378px" align="center" alt="Airqmon notification about air quality" />
 </p>
 
 ## Installation
