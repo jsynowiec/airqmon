@@ -15,6 +15,7 @@ interface IContentProps {
   currentMeasurements?: IAirlyCurrentMeasurement;
   nearestStation?: IArilyNearestSensorMeasurement;
   airlyApiStatus?: AirlyAPIStatus;
+  geolocationError?: PositionError;
   connectionStatus: boolean;
 }
 
@@ -35,6 +36,32 @@ class Content extends React.Component<IContentProps> {
           <>Your computer is offline.</>
         </ErrorMessage>
       );
+    }
+
+    if (this.props.geolocationError) {
+      const error = this.props.geolocationError;
+      switch (error.code) {
+        case error.PERMISSION_DENIED:
+          return (
+            <ErrorMessage header="Location services unavailable">
+              <>
+                The acquisition of the geolocation information failed because the application didn't
+                have the permission to do it or the Location Services are disabled. Please allow
+                Airqmon to use Location Services in the Security & Privacy macOS preferences and
+                then restart the application.
+              </>
+            </ErrorMessage>
+          );
+        case error.POSITION_UNAVAILABLE:
+          return (
+            <ErrorMessage header="Position unavailable">
+              <>
+                The acquisition of the geolocation failed because at least one internal source of
+                position returned an internal error.
+              </>
+            </ErrorMessage>
+          );
+      }
     }
 
     if (this.props.airlyApiStatus !== AirlyAPIStatus.OK) {

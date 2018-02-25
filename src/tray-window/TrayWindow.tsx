@@ -8,6 +8,7 @@ import Header from './Header';
 
 interface ITrayWindowProps {
   airlyApiStatus?: AirlyAPIStatus;
+  geolocationError?: PositionError;
   availableAppUpdate?: { version: string; url: string };
   connectionStatus: boolean;
   currentMeasurements?: IAirlyCurrentMeasurement;
@@ -22,6 +23,7 @@ interface ITrayWindowProps {
 const TrayWindow = ({
   availableAppUpdate,
   connectionStatus,
+  geolocationError,
   currentMeasurements,
   airlyApiStatus,
   isAutoRefreshEnabled,
@@ -37,6 +39,7 @@ const TrayWindow = ({
       <ErrorBoundary>
         <Content
           airlyApiStatus={airlyApiStatus}
+          geolocationError={geolocationError}
           availableAppUpdate={availableAppUpdate}
           connectionStatus={connectionStatus}
           currentMeasurements={currentMeasurements}

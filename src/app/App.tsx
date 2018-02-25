@@ -52,8 +52,9 @@ interface IDataAppState {
 }
 
 interface IAppState extends IBaseAppState, IDataAppState {
-  isAutoRefreshEnabled: boolean;
   airlyApiStatus?: AirlyAPIStatus;
+  geolocationError?: PositionError;
+  isAutoRefreshEnabled: boolean;
   refreshMeasurementsIntervalMeta: IRefreshIntervalMeta;
 }
 
@@ -101,19 +102,25 @@ class App extends React.Component<IAppProps, IAppState> {
         if (status === 'offline') {
           this.disableRefreshTimer();
         } else {
-          getLocation().then((position) => {
-            const { latitude, longitude } = position.coords;
+          getLocation()
+            .then((position) => {
+              const { latitude, longitude } = position.coords;
 
-            this.setState(
-              {
-                latitude,
-                longitude,
-              },
-              () => {
-                this.init();
-              },
-            );
-          });
+              this.setState(
+                {
+                  latitude,
+                  longitude,
+                },
+                () => {
+                  this.init();
+                },
+              );
+            })
+            .catch((geolocationError: PositionError) => {
+              this.setState({
+                geolocationError,
+              });
+            });
         }
       });
     });
@@ -414,6 +421,7 @@ class App extends React.Component<IAppProps, IAppState> {
           <TrayWindow
             airlyApiStatus={this.state.airlyApiStatus}
             connectionStatus={this.state.connectionStatus}
+            geolocationError={this.state.geolocationError}
             currentMeasurements={this.state.currentMeasurements}
             nearestStation={this.state.nearestStation}
             lastUpdateDate={this.state.lastUpdateDate}
