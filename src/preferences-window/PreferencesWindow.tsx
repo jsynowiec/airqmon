@@ -101,7 +101,7 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
       () => {
         setTimeout(() => {
           userSettings.set('airlyApiKey', value);
-        }, 1000);
+        }, 500);
       },
     );
   }
