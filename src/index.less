@@ -15,31 +15,15 @@
 }
 
 .tray-window {
+  background: none;
+  font-family: system-ui;
+
   &.window {
-    position: absolute;
-    top: 5px;
-
-    .toolbar {
-      box-shadow: none;
-    }
-
     .toolbar-header {
       .title {
         margin-top: 2px;
       }
     }
-
-    .window-content {
-      background-color: @background-color;
-      border-right: @border;
-      border-left: @border;
-    }
-  }
-
-  &.window,
-  .toolbar-header {
-    border-top-left-radius: @window-border-radius;
-    border-top-right-radius: @window-border-radius;
   }
 }
 
