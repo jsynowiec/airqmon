@@ -28,6 +28,7 @@ class TrayWindowManager {
       maximizable: false,
       resizable: false,
       transparent: true,
+      vibrancy: 'light',
       ...config,
     });
     this._window.loadURL(`file://${path.join(__dirname, 'index.html')}`);
@@ -84,7 +85,7 @@ class TrayWindowManager {
 
     return {
       x: Math.round(trayBounds.x + trayBounds.width / 2 - windowBounds.width / 2),
-      y: Math.round(yOffset + trayBounds.height + 4),
+      y: Math.round(yOffset + trayBounds.height),
     };
   }
 

@@ -416,7 +416,6 @@ class App extends React.Component<IAppProps, IAppState> {
   render() {
     return (
       <>
-        <div className="header-arrow" />
         <div className="tray-window window">
           <TrayWindow
             airlyApiStatus={this.state.airlyApiStatus}

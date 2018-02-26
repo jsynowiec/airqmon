@@ -35,7 +35,6 @@ const TrayWindow = ({
 }: ITrayWindowProps) => {
   return (
     <>
-      <Header />
       <ErrorBoundary>
         <Content
           airlyApiStatus={airlyApiStatus}
