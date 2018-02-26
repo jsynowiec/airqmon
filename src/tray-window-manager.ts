@@ -28,7 +28,7 @@ class TrayWindowManager {
       maximizable: false,
       resizable: false,
       transparent: true,
-      vibrancy: 'popover',
+      vibrancy: 'light',
       ...config,
     });
     this._window.loadURL(`file://${path.join(__dirname, 'index.html')}`);
