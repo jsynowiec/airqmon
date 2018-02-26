@@ -3746,9 +3746,9 @@ lru-queue@0.1:
   dependencies:
     es5-ext "~0.10.2"
 
-macos-location@~1.0.0:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/macos-location/-/macos-location-1.0.2.tgz#35e43aa2bb1eaa39095d3fda857b4bb6af0679e8"
+macos-location@~1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/macos-location/-/macos-location-1.1.0.tgz#9553111fe3e69a9916e3972734b8a2b918751f53"
   dependencies:
     node-gyp "^3.6.2"
 
