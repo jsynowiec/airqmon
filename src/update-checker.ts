@@ -85,7 +85,8 @@ class UpdateChecker extends EventEmitter implements IUpdateChecker {
         if (result.status === 200) {
           const availableUpdates = result.data
             .filter((elem) => semver.gt(elem.tag_name, currentVer))
-            .sort((r1, r2) => semver.compare(r1.tag_name, r2.tag_name));
+            .sort((r1, r2) => semver.compare(r1.tag_name, r2.tag_name))
+            .reverse();
 
           if (availableUpdates.length > 0) {
             const { tag_name: version, assets } = availableUpdates[0];
