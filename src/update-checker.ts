@@ -53,8 +53,6 @@ class UpdateChecker extends EventEmitter implements IUpdateChecker {
   constructor() {
     super();
 
-    this.scheduleCheck(10 * 1000);
-
     ipcRenderer.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status: 'oneline' | 'offline') => {
       if (status === 'offline') {
         clearTimeout(this.checkTimer);
