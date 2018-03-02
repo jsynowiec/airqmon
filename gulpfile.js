@@ -3,6 +3,7 @@ const { promisify } = require('util');
 const cache = require('gulp-cached');
 const electron = require('electron-connect').server.create();
 const electronPackager = require('electron-packager');
+const { rebuild } = require('electron-rebuild');
 const gulp = require('gulp');
 const gulpSequence = require('gulp-sequence');
 const less = require('gulp-less');
@@ -103,6 +104,11 @@ gulp.task('electron:package', () => {
     out: './out',
     arch: 'x64',
     platform: 'darwin',
+    afterCopy: [(buildPath, electronVersion, platform, arch, callback) => {
+      rebuild({ buildPath, electronVersion, arch })
+        .then(() => callback())
+        .catch((error) => callback(error));
+    }],
   });
 });
 
