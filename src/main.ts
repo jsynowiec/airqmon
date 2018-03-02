@@ -1,10 +1,9 @@
-import { app, ipcMain, shell, IpcMessageEvent } from 'electron';
+import { app, ipcMain, shell } from 'electron';
 
 import { IAirlyCurrentMeasurement } from './airly';
 import { getCAQIMeta } from './caqi';
 import { isDev } from './helpers';
 import IPC_EVENTS from './ipc-events';
-import { getLocation } from './geolocation';
 import TrayWindowManager from './tray-window-manager';
 import { IUserSettings } from './user-settings';
 import PreferencesWindowManager from './preferences-window-manager';
@@ -100,13 +99,3 @@ ipcMain.on(
     }
   },
 );
-
-ipcMain.on(IPC_EVENTS.LOCATION_GET_POSITION, (event: IpcMessageEvent) => {
-  getLocation()
-    .then((position) => {
-      event.sender.send(IPC_EVENTS.LOCATION_NEW_POSITION, position);
-    })
-    .catch((geolocationError: PositionError) => {
-      event.sender.send(IPC_EVENTS.LOCATION_POSITION_RETRIEVAL_ERROR, geolocationError);
-    });
-});

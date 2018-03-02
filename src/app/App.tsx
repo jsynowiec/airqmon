@@ -3,6 +3,7 @@ import * as React from 'react';
 import axios from 'axios';
 
 import visitor from '../analytics';
+import { getLocation } from '../geolocation';
 import { TrayWindow } from '../tray-window';
 import updateChecker from '../update-checker';
 import errorHandler from '../error-handler';
@@ -101,33 +102,28 @@ class App extends React.Component<IAppProps, IAppState> {
         if (status === 'offline') {
           this.disableRefreshTimer();
         } else {
-          ipcRenderer.send(IPC_EVENTS.LOCATION_GET_POSITION);
+          getLocation()
+            .then((position) => {
+              const { latitude, longitude } = position.coords;
+
+              this.setState(
+                {
+                  latitude,
+                  longitude,
+                },
+                () => {
+                  this.init();
+                },
+              );
+            })
+            .catch((geolocationError: PositionError) => {
+              this.setState({
+                geolocationError,
+              });
+            });
         }
       });
     });
-
-    ipcRenderer.on(IPC_EVENTS.LOCATION_NEW_POSITION, (_, position: Position) => {
-      const { latitude, longitude } = position.coords;
-
-      this.setState(
-        {
-          latitude,
-          longitude,
-        },
-        () => {
-          this.init();
-        },
-      );
-    });
-
-    ipcRenderer.on(
-      IPC_EVENTS.LOCATION_POSITION_RETRIEVAL_ERROR,
-      (_, geolocationError: PositionError) => {
-        this.setState({
-          geolocationError,
-        });
-      },
-    );
 
     updateChecker.on('update-available', (version, url) => {
       this.setState({
