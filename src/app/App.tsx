@@ -110,6 +110,7 @@ class App extends React.Component<IAppProps, IAppState> {
                 {
                   latitude,
                   longitude,
+                  geolocationError: null,
                 },
                 () => {
                   this.init();
