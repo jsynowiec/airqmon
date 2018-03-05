@@ -82,12 +82,11 @@ class UpdateChecker extends EventEmitter implements IUpdateChecker {
       .then((result: AxiosResponse<IGitHubRelease[]>) => {
         if (result.status === 200) {
           const availableUpdates = result.data
-            .filter((elem) => semver.gt(elem.tag_name, currentVer))
-            .sort((r1, r2) => semver.compare(r1.tag_name, r2.tag_name))
-            .reverse();
+            .filter((elem) => semver.satisfies(elem.tag_name, `>${currentVer}`))
+            .sort((r1, r2) => semver.compare(r1.tag_name, r2.tag_name));
 
           if (availableUpdates.length > 0) {
-            const { tag_name: version, assets } = availableUpdates[0];
+            const { tag_name: version, assets } = availableUpdates.pop();
 
             // Notify only about newer updates
             if (semver.gt(version, this.latestKnownVersion)) {
