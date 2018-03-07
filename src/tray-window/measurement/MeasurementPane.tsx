@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { IAirlyCurrentMeasurement } from '../../airly';
-import { Contaminates } from '../../contamination';
+import { Contaminants } from '../../contamination';
 import { formatters, Measurement } from './Measurement';
 import { Unit } from './MeasurementReadingUnit';
 
@@ -13,17 +13,17 @@ const MeasurementPane = ({ measurement }: IMeasurementPaneProps) => {
   return (
     <div className="measurement-pane">
       <Measurement
-        contaminate={Contaminates.PM25}
+        contaminant={Contaminants.PM25}
         reading={measurement.pm25}
         formatter={formatters.significant}
       />
       <Measurement
-        contaminate={Contaminates.PM10}
+        contaminant={Contaminants.PM10}
         reading={measurement.pm10}
         formatter={formatters.significant}
       />
       <Measurement
-        contaminate={Contaminates.PM1}
+        contaminant={Contaminants.PM1}
         reading={measurement.pm1}
         formatter={formatters.significant}
       />

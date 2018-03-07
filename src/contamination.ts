@@ -1,11 +1,11 @@
-export enum Contaminates {
+export enum Contaminants {
   PM1 = 'PM1',
   PM10 = 'PM10',
   PM25 = 'PM25',
 }
 
 export const CONTAMINATION_THRESHOLDS = {
-  [Contaminates.PM10]: [
+  [Contaminants.PM10]: [
     {
       index: 0,
       values: {
@@ -49,7 +49,7 @@ export const CONTAMINATION_THRESHOLDS = {
       },
     },
   ],
-  [Contaminates.PM25]: [
+  [Contaminants.PM25]: [
     {
       index: 0,
       values: {
@@ -96,11 +96,11 @@ export const CONTAMINATION_THRESHOLDS = {
 };
 
 export const CONTAMINATION_NORM_VALUES = {
-  [Contaminates.PM10]: 25,
-  [Contaminates.PM25]: 50,
+  [Contaminants.PM10]: 25,
+  [Contaminants.PM25]: 50,
 };
 
-export function getContaminationThresholdIndex(contaminate: Contaminates, val: number): number {
+export function getContaminationThresholdIndex(contaminate: Contaminants, val: number): number {
   return CONTAMINATION_THRESHOLDS[contaminate].find((elem) => {
     return val >= elem.values.min && val <= elem.values.max;
   }).index;

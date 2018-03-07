@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import {
-  Contaminates,
+  Contaminants,
   CONTAMINATION_NORM_VALUES,
   CONTAMINATION_THRESHOLDS,
   getContaminationThresholdIndex,
@@ -16,46 +16,46 @@ export const formatters: { [key: string]: (val: number) => string } = {
   toFixed1: (val) => val.toFixed(1),
 };
 
-const CONTAMINATE_DESCRIPTIONS = {
-  [Contaminates.PM1]: 'PM1',
-  [Contaminates.PM10]: 'PM10',
-  [Contaminates.PM25]: 'PM2.5',
+const CONTAMINANT_DESCRIPTIONS = {
+  [Contaminants.PM1]: 'PM1',
+  [Contaminants.PM10]: 'PM10',
+  [Contaminants.PM25]: 'PM2.5',
 };
 
-const CONTAMINATE_UNITS = {
-  [Contaminates.PM1]: Unit.PM,
-  [Contaminates.PM10]: Unit.PM,
-  [Contaminates.PM25]: Unit.PM,
+const CONTAMINANT_UNITS = {
+  [Contaminants.PM1]: Unit.PM,
+  [Contaminants.PM10]: Unit.PM,
+  [Contaminants.PM25]: Unit.PM,
 };
 
-const CONTAMINATE_FORMATTERS = {
-  [Contaminates.PM1]: formatters.significant,
-  [Contaminates.PM10]: formatters.significant,
-  [Contaminates.PM25]: formatters.significant,
+const CONTAMINANT_FORMATTERS = {
+  [Contaminants.PM1]: formatters.significant,
+  [Contaminants.PM10]: formatters.significant,
+  [Contaminants.PM25]: formatters.significant,
 };
 
 export interface IMeasurementProps extends IMeasurementReadingProps {
-  contaminate?: Contaminates;
+  contaminant?: Contaminants;
   description?: string;
   norm?: number;
 }
 
 export const Measurement: React.SFC<IMeasurementProps> = ({
-  contaminate,
+  contaminant,
   reading,
-  description = CONTAMINATE_DESCRIPTIONS[contaminate],
-  formatter = CONTAMINATE_FORMATTERS[contaminate],
-  norm = CONTAMINATION_NORM_VALUES[contaminate],
-  unit = CONTAMINATE_UNITS[contaminate],
+  description = CONTAMINANT_DESCRIPTIONS[contaminant],
+  formatter = CONTAMINANT_FORMATTERS[contaminant],
+  norm = CONTAMINATION_NORM_VALUES[contaminant],
+  unit = CONTAMINANT_UNITS[contaminant],
 }) => {
   if (typeof reading === 'string') {
     reading = parseFloat(reading);
   }
 
   let normContent: JSX.Element = null;
-  if (contaminate && CONTAMINATION_THRESHOLDS[contaminate]) {
+  if (contaminant && CONTAMINATION_THRESHOLDS[contaminant]) {
     const normContentClassName = `measurement__norm treshold-${getContaminationThresholdIndex(
-      contaminate,
+      contaminant,
       reading,
     )}`;
     normContent = <div className={normContentClassName}>{(reading / norm * 100).toFixed(0)}%</div>;
