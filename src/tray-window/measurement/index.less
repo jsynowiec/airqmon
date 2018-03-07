@@ -2,6 +2,7 @@
   flex-basis: 50%;
   flex-direction: row;
   margin-top: 8px;
+  color: @text-color;
 
   &__reading,
   &__description {
@@ -11,16 +12,31 @@
 
   &__reading {
     font-size: @font-size + 2pt;
-    color: @text-color;
   }
 
   &__norm {
-    font-size: @font-size - 3pt;
-    vertical-align: super;
+    font-size: @font-size - 2pt;
+    color: @text-color;
 
-    &::before {
-      content: ' ';
-      white-space: pre;
+    &.treshold {
+      &-0 {
+        color: @caqi-1;
+      }
+      &-1 {
+        color: @caqi-2;
+      }
+      &-2 {
+        color: @caqi-3;
+      }
+      &-3 {
+        color: @caqi-4;
+      }
+      &-4 {
+        color: @caqi-5;
+      }
+      &-5 {
+        color: @caqi-5;
+      }
     }
   }
 

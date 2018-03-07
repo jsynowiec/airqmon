@@ -11,21 +11,23 @@ export interface IMeasurementReadingUnitProps {
   unit?: Unit;
 }
 
-export const MeasurementReadingUnit = ({ unit = null }: IMeasurementReadingUnitProps) => {
-  let content = {
-    [Unit.PM]: (
-      <>
-        μg/m<sup>3</sup>
-      </>
-    ),
-    [Unit.TEMP_C]: (
-      <>
-        <sup>&deg;</sup>C
-      </>
-    ),
-    [Unit.PRESSURE_PA]: 'hPA',
-    [Unit.PERCENT]: '%',
-  }[unit];
+export const MeasurementReadingUnit = ({ unit }: IMeasurementReadingUnitProps) => {
+  const content = unit
+    ? {
+        [Unit.PM]: (
+          <>
+            μg/m<sup>3</sup>
+          </>
+        ),
+        [Unit.TEMP_C]: (
+          <>
+            <sup>&deg;</sup>C
+          </>
+        ),
+        [Unit.PRESSURE_PA]: 'hPA',
+        [Unit.PERCENT]: '%',
+      }[unit]
+    : null;
 
   return unit !== null ? <div className="measurement__unit"> {content}</div> : null;
 };

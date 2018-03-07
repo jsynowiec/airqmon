@@ -7,11 +7,12 @@ export interface IMeasurementReadingProps extends IMeasurementReadingUnitProps {
   formatter?: (val: number | string) => string;
 }
 
-export const MeasurementReading = ({
-  reading = null,
-  formatter = null,
-  unit = null,
-}: IMeasurementReadingProps) => {
+export const MeasurementReading: React.SFC<IMeasurementReadingProps> = ({
+  reading,
+  formatter,
+  unit,
+  children,
+}) => {
   const content = reading ? (formatter ? formatter(reading) : reading) : 'n/a';
 
   return (
@@ -19,6 +20,7 @@ export const MeasurementReading = ({
       <div className="measurement__reading">
         {content}
         {reading ? <MeasurementReadingUnit unit={unit} /> : null}
+        {children}
       </div>
     </>
   );
