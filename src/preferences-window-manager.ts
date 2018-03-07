@@ -10,7 +10,7 @@ export default class PreferencesWindowManager {
     this._window = new BrowserWindow({
       title: 'Airqmon preferences',
       width: 520,
-      height: 310,
+      height: 330,
       show: false,
       center: true,
       fullscreenable: false,
