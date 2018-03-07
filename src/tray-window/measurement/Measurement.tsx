@@ -48,10 +48,6 @@ export const Measurement: React.SFC<IMeasurementProps> = ({
   norm = CONTAMINATION_NORM_VALUES[contaminant],
   unit = CONTAMINANT_UNITS[contaminant],
 }) => {
-  if (typeof reading === 'string') {
-    reading = parseFloat(reading);
-  }
-
   let normContent: JSX.Element = null;
   if (contaminant && CONTAMINATION_THRESHOLDS[contaminant]) {
     const normContentClassName = `measurement__norm treshold-${getContaminationThresholdIndex(
