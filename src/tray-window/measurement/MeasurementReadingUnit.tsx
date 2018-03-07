@@ -29,5 +29,5 @@ export const MeasurementReadingUnit = ({ unit }: IMeasurementReadingUnitProps) =
       }[unit]
     : null;
 
-  return unit !== null ? <div className="measurement__unit"> {content}</div> : null;
+  return unit ? <div className="measurement__unit"> {content}</div> : null;
 };
