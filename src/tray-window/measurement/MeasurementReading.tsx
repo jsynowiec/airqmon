@@ -1,10 +1,11 @@
 import * as React from 'react';
 
-import { MeasurementReadingUnit, IMeasurementReadingUnitProps } from './MeasurementReadingUnit';
+import { Unit, MeasurementReadingUnit } from './MeasurementReadingUnit';
 
-export interface IMeasurementReadingProps extends IMeasurementReadingUnitProps {
-  reading?: number | string;
-  formatter?: (val: number | string) => string;
+export interface IMeasurementReadingProps {
+  reading?: number;
+  formatter?: (val: number) => string;
+  unit?: Unit;
 }
 
 export const MeasurementReading: React.SFC<IMeasurementReadingProps> = ({
@@ -12,16 +13,12 @@ export const MeasurementReading: React.SFC<IMeasurementReadingProps> = ({
   formatter,
   unit,
   children,
-}) => {
-  const content = reading ? (formatter ? formatter(reading) : reading) : 'n/a';
-
-  return (
-    <>
-      <div className="measurement__reading">
-        {content}
-        {reading ? <MeasurementReadingUnit unit={unit} /> : null}
-        {children}
-      </div>
-    </>
-  );
-};
+}) => (
+  <>
+    <div className="measurement__reading">
+      {reading ? (formatter ? formatter(reading) : reading) : 'n/a'}
+      {reading && unit ? <MeasurementReadingUnit unit={unit} /> : null}
+      {children}
+    </div>
+  </>
+);

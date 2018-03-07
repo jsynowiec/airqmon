@@ -7,27 +7,25 @@ export enum Unit {
   PERCENT = 'PERCENT',
 }
 
-export interface IMeasurementReadingUnitProps {
-  unit?: Unit;
+interface IMeasurementReadingUnitProps {
+  unit: Unit;
 }
 
-export const MeasurementReadingUnit = ({ unit }: IMeasurementReadingUnitProps) => {
-  const content = unit
-    ? {
-        [Unit.PM]: (
-          <>
-            μg/m<sup>3</sup>
-          </>
-        ),
-        [Unit.TEMP_C]: (
-          <>
-            <sup>&deg;</sup>C
-          </>
-        ),
-        [Unit.PRESSURE_PA]: 'hPA',
-        [Unit.PERCENT]: '%',
-      }[unit]
-    : null;
+export const MeasurementReadingUnit: React.SFC<IMeasurementReadingUnitProps> = (props) => {
+  const content = {
+    [Unit.PM]: (
+      <>
+        μg/m<sup>3</sup>
+      </>
+    ),
+    [Unit.TEMP_C]: (
+      <>
+        <sup>&deg;</sup>C
+      </>
+    ),
+    [Unit.PRESSURE_PA]: 'hPA',
+    [Unit.PERCENT]: '%',
+  }[props.unit];
 
-  return unit ? <div className="measurement__unit"> {content}</div> : null;
+  return <div className="measurement__unit"> {content}</div>;
 };

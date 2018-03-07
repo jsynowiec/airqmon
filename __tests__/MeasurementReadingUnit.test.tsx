@@ -9,11 +9,6 @@ describe('MeasurementReadingUnit', () => {
     expect(wrapper.hasClass('measurement__unit')).toBe(true);
   });
 
-  it('doesn\'t render if no unit is given', () => {
-    const wrapper = shallow(<MeasurementReadingUnit />);
-    expect(wrapper.getElement()).toBeNull();
-  });
-
   it('renders correct unit for Unit.PERCENT', () => {
     const wrapper = shallow(<MeasurementReadingUnit unit={Unit.PERCENT} />);
     expect(wrapper.text()).toMatchSnapshot();

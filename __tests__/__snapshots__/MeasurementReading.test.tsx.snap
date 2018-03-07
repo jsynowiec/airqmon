@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MeasurementReading Renders MeasurementReadingUnit if unit is provided 1`] = `
+<React.Fragment>
+  <div
+    className="measurement__reading"
+  >
+    1.23
+    <MeasurementReadingUnit
+      unit="PRESSURE_PA"
+    />
+  </div>
+</React.Fragment>
+`;
+
+exports[`MeasurementReading renders correctly 1`] = `
+<React.Fragment>
+  <div
+    className="measurement__reading"
+  >
+    1
+  </div>
+</React.Fragment>
+`;
+
+exports[`MeasurementReading renders correctly without formatter 1`] = `
+<React.Fragment>
+  <div
+    className="measurement__reading"
+  >
+    1.23
+  </div>
+</React.Fragment>
+`;
+
+exports[`MeasurementReading renders passed children 1`] = `
+<React.Fragment>
+  <div
+    className="measurement__reading"
+  >
+    1.23
+    <div>
+      A children node
+    </div>
+  </div>
+</React.Fragment>
+`;
