@@ -62,7 +62,7 @@
   version "9.4.6"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.4.6.tgz#d8176d864ee48753d053783e4e463aec86b8d82e"
 
-"@types/node@^8.0.24", "@types/node@^8.9.x":
+"@types/node@^8.0.24":
   version "8.9.4"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.9.4.tgz#dfd327582a06c114eb6e0441fa3d6fab35edad48"
 
@@ -1324,9 +1324,9 @@ ecc-jsbn@~0.1.1:
   dependencies:
     jsbn "~0.1.0"
 
-electron-connect@0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/electron-connect/-/electron-connect-0.6.2.tgz#83dc042ef26e2b6b3e1d0f44ec89ec4140646bc3"
+electron-connect@^0.6.2:
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/electron-connect/-/electron-connect-0.6.3.tgz#2e0d361cb1c2b0b88e9bd385732882578b055b6d"
   dependencies:
     cross-spawn "^5.1.0"
     lodash "^4.17.4"
