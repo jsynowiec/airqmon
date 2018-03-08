@@ -96,8 +96,8 @@ export const CONTAMINATION_THRESHOLDS = {
 };
 
 export const CONTAMINATION_NORM_VALUES = {
-  [Contaminants.PM10]: 25,
-  [Contaminants.PM25]: 50,
+  [Contaminants.PM10]: 50,
+  [Contaminants.PM25]: 25,
 };
 
 export function getContaminationThresholdIndex(contaminate: Contaminants, val: number): number {
