@@ -7,7 +7,7 @@ const { rebuild } = require('electron-rebuild');
 const gulp = require('gulp');
 const gulpSequence = require('gulp-sequence');
 const less = require('gulp-less');
-const rimraf = promisify(require('rimraf'));
+const del = require('del');
 const ts = require('gulp-typescript');
 const sourcemaps = require('gulp-sourcemaps');
 const gulpTslint = require('gulp-tslint');
@@ -15,10 +15,11 @@ const tslint = require('tslint');
 const useref = require('gulp-useref');
 
 gulp.task('clean', (cb) => {
-  return Promise.all([
-    rimraf('out'),
-    rimraf('build'),
-    rimraf('coverage'),
+  return del([
+    'out',
+    'build',
+    'coverage',
+    '*.log',
   ]);
 });
 
