@@ -8,6 +8,13 @@
         "kind": "build",
         "isDefault": true
       }
+    },
+    {
+      "type": "gulp",
+      "task": "tslint",
+      "problemMatcher": [
+        "$tslint5"
+      ]
     }
   ]
 }

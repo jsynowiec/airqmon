@@ -12,11 +12,6 @@
         "allow-pascal-case",
         "allow-leading-underscore"
       ]
-    },
-    "strict-boolean-expressions": [
-      true,
-      "allow-null-union",
-      "allow-undefined-union"
-    ]
+    }
   }
 }
