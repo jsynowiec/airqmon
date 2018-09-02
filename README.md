@@ -56,7 +56,7 @@ Since version 1.1.0, the user can provide his own Airly credentials that will be
 To configure own credentials, you have to:
 
 1. Register for a developers account at the https://developer.airly.eu/login
-2. Copy the API key that is displayed after signing in at the above page
+2. After signing in copy the API key that is displayed under the "Authentication" section.
 3. Open Airqmon preferences by clicking on the cog icon or pressing `⌘+,`
 4. Paste the copied API key into the _Airly API key_ text field
 
@@ -66,7 +66,7 @@ Airqmon tracks some usage data, like window displays or CAQI index changes, and 
 
 ## License
 
-Copyright 2017 Jakub Synowiec
+Copyright 2018 Jakub Synowiec
 
 Licensed under the [Apache License, Version 2.0 (the "License")][license]
 
