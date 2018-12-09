@@ -3,6 +3,7 @@
 [![Build Status][travis-badge]][travis-ci]
 [![David][badge-david-deps]][david]
 [![License][badge-license]][license]
+
 [![Donate][badge-donate]][donate]
 
 A menu bar app that displays live air quality informations from the nearest [Airly][airly] sensor station. It also notifies you when the air quality changes or when a new station that is closer to your current location was found.
@@ -74,12 +75,12 @@ Licensed under the [Apache License, Version 2.0 (the "License")][license]
 [license]: https://raw.githubusercontent.com/jsynowiec/airqmon/master/LICENSE
 [airqmon-latest-release]: https://github.com/jsynowiec/airqmon/releases/latest
 [david]: http://david-dm.org/jsynowiec/airqmon
-[donate]: http://bit.ly/donate-js
+[donate]: https://ko-fi.com/X8X8N42K
 
 [badge-github-release]: https://img.shields.io/github/release/jsynowiec/airqmon.svg
 [badge-license]: https://img.shields.io/github/license/jsynowiec/airqmon.svg
 [badge-david-deps]: https://img.shields.io/david/jsynowiec/airqmon.svg
-[badge-donate]: https://img.shields.io/badge/€-donate-brightgreen.svg
+[badge-donate]: https://img.shields.io/badge/☕-buy%20me%20a%20coffee-46b798.svg
 
 [travis-badge]: https://travis-ci.org/jsynowiec/airqmon.svg?branch=master
 [travis-ci]: https://travis-ci.org/jsynowiec/airqmon
