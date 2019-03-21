@@ -79,10 +79,6 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
     this.setValue('showNotifications', event.target.checked);
   }
 
-  handleUseCoreLocationChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    this.setValue('useCoreLocation', event.target.checked);
-  }
-
   handleNotificationEventsChange(event: React.ChangeEvent<HTMLInputElement>): void {
     const { name, checked: value } = event.target;
     this.setValue('notificationEvents', {
@@ -214,19 +210,6 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
           >
             <span className="icon icon-help-circled" />
           </a>
-          <div className="preferences-window__grid__section-label">Beta features:</div>
-          <div className="preferences-window__grid__section-content">
-            <div className="checkbox">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={this.state.useCoreLocation}
-                  onChange={this.handleUseCoreLocationChange}
-                />{' '}
-                Use macOS CoreLocation services
-              </label>
-            </div>
-          </div>
         </div>
       </div>
     );

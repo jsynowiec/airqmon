@@ -14,7 +14,6 @@ export interface IUserSettings {
   showNotifications: boolean;
   notificationEvents: INotificationsEvents;
   airlyApiKey?: string;
-  useCoreLocation: boolean;
 }
 
 enum Intervals {
@@ -94,7 +93,6 @@ export const userSettings = new ConfigStore<IUserSettings>({
     caqiChanged: true,
     stationChanged: true,
   },
-  useCoreLocation: false,
 });
 
 export function shouldNotifyAbout(event: keyof INotificationsEvents): boolean {
