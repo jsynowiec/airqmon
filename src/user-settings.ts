@@ -13,7 +13,6 @@ export interface IUserSettings {
   refreshMeasurementsInterval: Intervals;
   showNotifications: boolean;
   notificationEvents: INotificationsEvents;
-  airlyApiKey?: string;
 }
 
 enum Intervals {

@@ -1,15 +1,11 @@
 import * as React from 'react';
 import { IUserSettings, userSettings, REFRESH_INTERVAL } from '../user-settings';
-import { ipcRenderer, remote } from 'electron';
+import { ipcRenderer } from 'electron';
 import IPC_EVENTS from '../ipc-events';
-import { AIRLY_API_RATE_LIMITS_WORKAROUND } from '../airly';
 
 interface IPreferencesWindowState extends IUserSettings {}
 
 class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
-  private textInputDebounceTimer: NodeJS.Timer = null;
-  private webContents: Electron.WebContents;
-
   constructor(props) {
     super(props);
 
@@ -23,48 +19,17 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
     );
     this.handleShowNotificationsChange = this.handleShowNotificationsChange.bind(this);
     this.handleNotificationEventsChange = this.handleNotificationEventsChange.bind(this);
-    this.handleAirlyApiKeyChange = this.handleAirlyApiKeyChange.bind(this);
-
-    this.handleEditEvents = this.handleEditEvents.bind(this);
-  }
-
-  componentDidMount() {
-    this.webContents = remote.getCurrentWebContents();
-    this.webContents.addListener('before-input-event', this.handleEditEvents);
-  }
-
-  componentWillUnmount() {
-    this.webContents.removeListener('before-input-event', this.handleEditEvents);
   }
 
   private setValue<K extends keyof IUserSettings>(key: K, value: IUserSettings[K]): void {
     this.setState(
       {
-        [key as any]: value,
-      },
+        [key]: value,
+      } as Pick<IPreferencesWindowState, K>,
       () => {
         userSettings.set(key, value);
       },
     );
-  }
-
-  handleEditEvents(_, input: Electron.Input): void {
-    if (input.meta && !input.alt && !input.control && !input.shift) {
-      switch (input.key) {
-        case 'a':
-          this.webContents.selectAll();
-          break;
-        case 'x':
-          this.webContents.cut();
-          break;
-        case 'c':
-          this.webContents.copy();
-          break;
-        case 'v':
-          this.webContents.paste();
-          break;
-      }
-    }
   }
 
   handleOpenAtLoginChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -85,25 +50,6 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
       ...this.state.notificationEvents,
       [name]: value,
     });
-  }
-
-  handleAirlyApiKeyChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    let value: string = event.target.value;
-
-    if (this.textInputDebounceTimer) {
-      clearTimeout(this.textInputDebounceTimer);
-    }
-
-    this.setState(
-      {
-        airlyApiKey: value,
-      },
-      () => {
-        setTimeout(() => {
-          userSettings.set('airlyApiKey', value);
-        }, 500);
-      },
-    );
   }
 
   handleExtLinkClick(url: string, event: MouseEvent) {
@@ -188,28 +134,6 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
               </div>
             </div>
           </div>
-          <div className="preferences-window__grid__section-label">Airly API key:</div>
-          <div className="preferences-window__grid__section-content">
-            <div className="form-group">
-              <input
-                type="text"
-                className="form-control"
-                value={this.state.airlyApiKey || ''}
-                onChange={this.handleAirlyApiKeyChange}
-              />
-              <p className="preferences-window__grid__section-content__explanation">
-                By providing your own Airly credentials you'll be able to use Airqmon without
-                worrying about exceeding daily data limit rates.
-              </p>
-            </div>
-          </div>
-          <a
-            className="link preferences-window__grid__section-help"
-            href="#"
-            onClick={this.handleExtLinkClick.bind(this, AIRLY_API_RATE_LIMITS_WORKAROUND)}
-          >
-            <span className="icon icon-help-circled" />
-          </a>
         </div>
       </div>
     );

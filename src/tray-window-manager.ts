@@ -23,6 +23,7 @@ class TrayWindowManager {
     this._window = new BrowserWindow({
       show: false,
       frame: false,
+      // titleBarStyle: 'hiddenInset',
       fullscreenable: false,
       movable: false,
       maximizable: false,
@@ -76,7 +77,7 @@ class TrayWindowManager {
     const trayBounds = this._tray.getBounds();
 
     const activeDisplay = screen.getDisplayMatching(trayBounds);
-    let yOffset = 0;
+    let yOffset = -2;
 
     if (activeDisplay.bounds.y < 0) {
       yOffset = activeDisplay.bounds.y;
