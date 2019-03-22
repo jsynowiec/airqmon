@@ -8,30 +8,10 @@
     'Helvetica Neue', Helvetica, sans-serif;
 }
 
-.header-arrow {
-  position: absolute;
-  top: 2px;
-  left: 50%;
-  margin-left: -5px;
-  height: 10px;
-  width: 10px;
-  transform: rotate(45deg);
-  background-color: #e8e6e8;
-}
-
 .tray-window {
   &.window {
-    position: absolute;
-    top: 5px;
-
     .toolbar {
       box-shadow: none;
-    }
-
-    .toolbar-header {
-      .title {
-        margin-top: 2px;
-      }
     }
 
     .window-content {
@@ -39,12 +19,6 @@
       border-right: @border;
       border-left: @border;
     }
-  }
-
-  &.window,
-  .toolbar-header {
-    border-top-left-radius: @window-border-radius;
-    border-top-right-radius: @window-border-radius;
   }
 }
 
