@@ -1,21 +1,19 @@
 {
   "version": "0.2.0",
   "configurations": [
-      {
-          "type": "node",
-          "request": "launch",
-          "name": "Electron: Main",
-          "protocol": "inspector",
-          "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
-          "sourceMaps": true,
-          "runtimeArgs": [
-              "--enable-logging",
-              "."
-          ],
-          "windows": {
-              "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
-          },
-          "preLaunchTask": "build"
-      }
+    {
+      "name": "Debug Main Process",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+      "windows": {
+        "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
+      },
+      "args": ["."],
+      "outputCapture": "std",
+      "sourceMaps": true,
+      "preLaunchTask": "build"
+    }
   ]
 }

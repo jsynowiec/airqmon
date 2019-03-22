@@ -1,4 +1,5 @@
 {
+  "version": "2.0.0",
   "tasks": [
     {
       "label": "build",
@@ -8,13 +9,6 @@
         "kind": "build",
         "isDefault": true
       }
-    },
-    {
-      "type": "gulp",
-      "task": "tslint",
-      "problemMatcher": [
-        "$tslint5"
-      ]
     }
   ]
 }

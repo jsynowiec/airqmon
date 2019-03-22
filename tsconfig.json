@@ -1,13 +1,15 @@
 {
   "compilerOptions": {
     "target": "es6",
+    "lib": ["dom", "es6", "esnext"],
     "module": "commonjs",
     "moduleResolution": "node",
     "rootDir": "./src",
     "outDir": "build",
-    "typeRoots": [
-      "types"
-    ],
+    "baseUrl": "./src",
+    "paths": {
+      "common/*": ["common/*"]
+    },
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
@@ -23,7 +25,5 @@
     "strictNullChecks": false,
     "declaration": false
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }
