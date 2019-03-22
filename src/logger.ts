@@ -1,49 +1,41 @@
-import bunyan = require('bunyan');
-import { remote } from 'electron';
+import { createLogger, format, transports } from 'winston';
+const { combine, timestamp, label, printf } = format;
 
+import { remote } from 'electron';
 import { isDev } from './helpers';
 
-function ConsoleStream() {}
-ConsoleStream.prototype.write = function(rec) {
-  rec = JSON.parse(rec);
-
-  console.log(
-    '[%s] %s %s (%s): %s',
-    rec.time,
-    bunyan.nameFromLevel[rec.level].toUpperCase(),
-    rec.name,
-    rec.component || 'main',
-    rec.msg,
-  );
-};
-
-let streams: bunyan.Stream[] = [
-  {
-    path: `${remote.app.getPath(
-      'userData',
-    )}/${remote.app.getName()}-${remote.app.getVersion()}.log`,
-    level: 'debug',
-  },
-];
-
-if (isDev()) {
-  streams = [
-    ...streams,
-    {
-      stream: new ConsoleStream(),
-      level: 'debug',
-    },
-  ];
-}
-
-const logger = bunyan.createLogger({
-  name: remote.app.getName(),
-  level: isDev() ? 'debug' : 'warn',
-  streams,
+const logFormat = printf(({ level, message, label, timestamp }) => {
+  return `${timestamp} [${label}] ${level} - ${message}`;
 });
 
-export default function getLogger(component: string) {
+const logger = createLogger({
+  level: isDev() ? 'debug' : 'warn',
+  format: combine(
+    label({ label: 'main' }),
+    timestamp({
+      format: 'YYYY-MM-DD HH:mm:ss',
+    }),
+    logFormat,
+  ),
+  transports: [
+    new transports.File({
+      filename: `${remote.app.getPath(
+        'userData',
+      )}/${remote.app.getName()}-${remote.app.getVersion()}.log`,
+    }),
+  ],
+});
+
+if (isDev()) {
+  logger.add(new transports.Console());
+}
+
+export default function getLogger(label?: string) {
+  if (!label) {
+    return logger;
+  }
+
   return logger.child({
-    component,
+    label,
   });
 }
