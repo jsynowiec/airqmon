@@ -1,20 +1,20 @@
 import * as React from 'react';
 
-import { AirlyAPIStatus, IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../airly';
 import ErrorBoundary from './ErrorBoundary';
 import Content from './Content';
 import Footer from './Footer';
 import Header from './Header';
+import { SensorStation, ApiError } from '../airqmon-api';
 
 interface ITrayWindowProps {
-  airlyApiStatus?: AirlyAPIStatus;
+  apiError?: ApiError;
   geolocationError?: PositionError;
   availableAppUpdate?: { version: string; url: string };
   connectionStatus: boolean;
-  currentMeasurements?: IAirlyCurrentMeasurement;
   isAutoRefreshEnabled: boolean;
   lastUpdateDate?: Date;
-  nearestStation?: IArilyNearestSensorMeasurement;
+  distanceToStation?: number;
+  sensorStation?: SensorStation;
   onQuitClickHandler: () => void;
   onRefreshClickHandler: () => void;
   onPreferencesClickHandler: () => void;
@@ -23,12 +23,12 @@ interface ITrayWindowProps {
 const TrayWindow = ({
   availableAppUpdate,
   connectionStatus,
+  apiError,
   geolocationError,
-  currentMeasurements,
-  airlyApiStatus,
   isAutoRefreshEnabled,
   lastUpdateDate,
-  nearestStation,
+  distanceToStation,
+  sensorStation,
   onQuitClickHandler,
   onRefreshClickHandler,
   onPreferencesClickHandler,
@@ -38,12 +38,12 @@ const TrayWindow = ({
       <Header />
       <ErrorBoundary>
         <Content
-          airlyApiStatus={airlyApiStatus}
+          apiError={apiError}
           geolocationError={geolocationError}
           availableAppUpdate={availableAppUpdate}
           connectionStatus={connectionStatus}
-          currentMeasurements={currentMeasurements}
-          nearestStation={nearestStation}
+          distanceToStation={distanceToStation}
+          sensorStation={sensorStation}
         />
       </ErrorBoundary>
       <Footer

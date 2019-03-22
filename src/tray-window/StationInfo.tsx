@@ -1,21 +1,25 @@
 import * as React from 'react';
-import { IArilyNearestSensorMeasurement } from '../airly';
+import { SensorStation } from '../airqmon-api';
 
 const StationInfo = ({
   station,
+  distance,
   onClickHandler,
 }: {
-  station: IArilyNearestSensorMeasurement;
+  station: SensorStation;
+  distance: number;
   onClickHandler: () => void;
 }) => {
   return (
     <div className="station-info">
       <a className="link" href="#" onClick={onClickHandler}>
-        <span className="icon icon-direction" />&nbsp;
-        {`${station.address.locality}, ${station.address.route}`}
+        <span className="icon icon-direction" />
+        &nbsp;
+        {`${station.displayAddress}`}
       </a>
       <div className="station-info__distance">
-        Distance to station {(station.distance / 1000).toFixed(1)} km<br />
+        Distance to station {distance.toFixed(2)} km
+        <br />
       </div>
     </div>
   );

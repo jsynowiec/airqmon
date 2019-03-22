@@ -1,50 +1,52 @@
 import * as React from 'react';
 
-import { IAirlyCurrentMeasurement } from '../../airly';
 import { Contaminants } from '../../contamination';
 import { formatters, Measurement } from './Measurement';
 import { Unit } from './MeasurementReadingUnit';
+import { MeasurementValue, MeasurementValueNames } from '../../airqmon-api';
 
 interface IMeasurementPaneProps {
-  measurement?: IAirlyCurrentMeasurement;
+  measurement?: MeasurementValue[];
 }
 
 const MeasurementPane: React.SFC<IMeasurementPaneProps> = (props) => {
-  const { measurement: { pm25, pm10, pm1, temperature, pressure, humidity } } = props;
+  const { measurement } = props;
 
   return (
     <div className="measurement__pane">
       <Measurement
         contaminant={Contaminants.PM25}
-        reading={pm25}
+        reading={measurement.find((value) => value.name == MeasurementValueNames.PM25).value}
         formatter={formatters.significant}
       />
       <Measurement
         contaminant={Contaminants.PM10}
-        reading={pm10}
+        reading={measurement.find((value) => value.name == MeasurementValueNames.PM10).value}
         formatter={formatters.significant}
       />
       <Measurement
         contaminant={Contaminants.PM1}
-        reading={pm1}
+        reading={measurement.find((value) => value.name == MeasurementValueNames.PM1).value}
         formatter={formatters.significant}
       />
       <Measurement
         description="Temperature"
         unit={Unit.TEMP_C}
-        reading={temperature}
+        reading={measurement.find((value) => value.name == MeasurementValueNames.TEMPERATURE).value}
         formatter={formatters.toFixed2}
       />
       <Measurement
         description="Pressure"
         unit={Unit.PRESSURE_PA}
-        reading={pressure / 100}
+        reading={
+          measurement.find((value) => value.name == MeasurementValueNames.PRESSURE).value / 100
+        }
         formatter={formatters.toFixed1}
       />
       <Measurement
         description="Humidity"
         unit={Unit.PERCENT}
-        reading={humidity}
+        reading={measurement.find((value) => value.name == MeasurementValueNames.HUMIDITY).value}
         formatter={formatters.toFixed2}
       />
     </div>

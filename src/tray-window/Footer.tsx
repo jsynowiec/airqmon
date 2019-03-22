@@ -32,11 +32,7 @@ const Footer = ({
     <footer className="toolbar toolbar-footer">
       <div className="toolbar-footer__footer-text">
         Powered by&nbsp;
-        <a
-          className="link"
-          href="#"
-          onClick={handleExtLinkClick.bind(this, 'https://developer.airly.eu')}
-        >
+        <a className="link" href="#" onClick={handleExtLinkClick.bind(this, 'https://airly.eu')}>
           Airly
         </a>
         {lastUpdate}

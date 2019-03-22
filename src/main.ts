@@ -1,12 +1,12 @@
 import { app, ipcMain, shell } from 'electron';
 
-import { IAirlyCurrentMeasurement } from './airly';
 import { getCAQIMeta } from './caqi';
 import { isDev } from './helpers';
 import IPC_EVENTS from './ipc-events';
 import TrayWindowManager from './tray-window-manager';
 import { IUserSettings } from './user-settings';
 import PreferencesWindowManager from './preferences-window-manager';
+import { Measurements } from './airqmon-api';
 
 const keys = require('../keys.json');
 
@@ -58,12 +58,11 @@ ipcMain.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status: 'online' | 'offline') => 
   }
 });
 
-ipcMain.on(IPC_EVENTS.AIR_Q_DATA_UPDATED, (_, currentMeasurement: IAirlyCurrentMeasurement) => {
-  const airQualityLabel = getCAQIMeta(Math.round(currentMeasurement.airQualityIndex)).labels
-    .airQuality;
+ipcMain.on(IPC_EVENTS.AIR_Q_DATA_UPDATED, (_, measurements: Measurements) => {
+  const airQualityLabel = getCAQIMeta(Math.round(measurements.caqi)).labels.airQuality;
 
   trayWindowManager.updateTray({
-    title: currentMeasurement.airQualityIndex.toFixed(0),
+    title: measurements.caqi.toFixed(0),
     tooltip: `Air quality is ${airQualityLabel.toLowerCase()}`,
   });
 });

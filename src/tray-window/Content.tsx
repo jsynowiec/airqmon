@@ -6,15 +6,15 @@ import ErrorMessage from './ErrorMessage';
 import UpdateAlert from './UpdateAlert';
 import StationInfo from './StationInfo';
 import AirQualityInfo from './air-quality/AirQualityInfo';
-import { AirlyAPIStatus, IAirlyCurrentMeasurement, IArilyNearestSensorMeasurement } from '../airly';
 import MeasurementPane from './measurement/MeasurementPane';
 import IPC_EVENTS from '../ipc-events';
+import { SensorStation, ApiError } from '../airqmon-api';
 
 interface IContentProps {
   availableAppUpdate?: { version: string; url: string };
-  currentMeasurements?: IAirlyCurrentMeasurement;
-  nearestStation?: IArilyNearestSensorMeasurement;
-  airlyApiStatus?: AirlyAPIStatus;
+  distanceToStation?: number;
+  sensorStation?: SensorStation;
+  apiError?: ApiError;
   geolocationError?: PositionError;
   connectionStatus: boolean;
 }
@@ -45,47 +45,27 @@ class Content extends React.Component<IContentProps> {
           return (
             <ErrorMessage header="Location services unavailable">
               <>
-                The acquisition of the geolocation information failed because the application didn't
-                have the permission to do it or the Location Services are disabled. Please allow
-                Airqmon to use Location Services in the Security & Privacy macOS preferences and
-                then restart the application.
+                The application is not allowed to access Location Services or the Location Services
+                are disabled. Please allow Airqmon to use Location Services in the Security &
+                Privacy macOS preferences and then restart the application.
               </>
             </ErrorMessage>
           );
         case error.POSITION_UNAVAILABLE:
           return (
-            <ErrorMessage header="Position unavailable">
+            <ErrorMessage header="Location unavailable">
               <>
-                The acquisition of the geolocation failed because at least one internal source of
-                position returned an internal error.
+                Your location could not be determined. Try again later or try restarting the app.
+                Make sure that you have access to the Internet.
               </>
             </ErrorMessage>
           );
       }
     }
 
-    if (this.props.airlyApiStatus !== AirlyAPIStatus.OK) {
-      switch (this.props.airlyApiStatus) {
-        case AirlyAPIStatus.RATE_LIMIT_EXCEEDED:
-          return (
-            <ErrorMessage header="Request limit reached">
-              <>
-                Unfortunately Airqmon exceeded the daily limit of how many times it can download
-                sensor readings from Airly. You can either wait until tomorrow or provide your own
-                credentials in application preferences.
-              </>
-            </ErrorMessage>
-          );
-        case AirlyAPIStatus.WRONG_TOKEN:
-          return (
-            <ErrorMessage header="Wrong credentials">
-              <>
-                Provided credentials were rejected by server. Please confirm whether pasted API key
-                is valid.
-              </>
-            </ErrorMessage>
-          );
-        case AirlyAPIStatus.OTHER_ERROR:
+    if (this.props.apiError) {
+      switch (this.props.apiError) {
+        case ApiError.CONNECTION_ERROR:
           return (
             <ErrorMessage header="Communication problem">
               <>
@@ -94,21 +74,15 @@ class Content extends React.Component<IContentProps> {
               </>
             </ErrorMessage>
           );
-        case AirlyAPIStatus.NO_STATION:
-          return (
-            <ErrorMessage>
-              <>There is no sensor station available in your vicinity.</>
-            </ErrorMessage>
-          );
       }
     }
 
-    if (this.props.currentMeasurements) {
-      const station = this.props.nearestStation;
-      // tslint:disable-next-line:max-line-length
+    if (this.props.sensorStation && this.props.sensorStation.measurements) {
+      const { sensorStation: station, distanceToStation: distance } = this.props;
+
       const stationUrl = `https://map.airly.eu/en/#latitude=${
         station.location.latitude
-      }&longitude=${station.location.longitude}&id=${station.id}`;
+      }&longitude=${station.location.longitude}&id=${station.providerId}`;
 
       const updateAlert = this.props.availableAppUpdate ? (
         <UpdateAlert
@@ -119,9 +93,10 @@ class Content extends React.Component<IContentProps> {
       return (
         <>
           {updateAlert}
-          <AirQualityInfo airQualityIndex={this.props.currentMeasurements.airQualityIndex} />
-          <MeasurementPane measurement={this.props.currentMeasurements} />
+          <AirQualityInfo airQualityIndex={station.measurements.caqi} />
+          <MeasurementPane measurement={station.measurements.values} />
           <StationInfo
+            distance={distance}
             station={station}
             onClickHandler={this.handleExtLinkClick.bind(this, stationUrl)}
           />
