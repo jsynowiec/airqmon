@@ -1,6 +1,5 @@
 os: osx
 language: node_js
 node_js:
-  - "8.2.1"
-  - "node"
+  - '10'
 cache: yarn
