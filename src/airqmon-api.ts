@@ -65,12 +65,13 @@ const logApolloErrors = (reason: ApolloError) => {
 };
 
 export const findNearestStation = (
-  location: Coordinates,
+  location: Location,
 ): Promise<{ distance: number; station: SensorStation }> => {
   return new Promise((resolve, reject) => {
     apolloClient
       .query<{ nearestSensorStation: { distance: number; station: SensorStation } | null }>({
         query: getNearestLocationQuery(location),
+        fetchPolicy: 'cache-first',
       })
       .then((result) => {
         const { nearestSensorStation: queryResult } = result.data;
@@ -93,6 +94,7 @@ export const getStationMeasurements = (id: string): Promise<Measurements> => {
     apolloClient
       .query<{ sensorStation: { measurements: Measurements } }>({
         query: getStationMeasurementsQuery(id),
+        fetchPolicy: 'network-only',
       })
       .then((result) => {
         if (result.data.sensorStation != null) {
