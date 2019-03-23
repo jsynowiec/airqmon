@@ -37,6 +37,7 @@ interface IDataAppState {
 }
 
 interface IAppState extends IBaseAppState, IDataAppState {
+  loadingMessage?: string;
   apiError?: ApiError;
   geolocationError?: PositionError;
   isAutoRefreshEnabled: boolean;
@@ -81,23 +82,30 @@ class App extends React.Component<{}, IAppState> {
         if (status === 'offline') {
           this.disableRefreshTimer();
         } else {
-          getLocation()
-            .then((location) => {
-              this.setState(
-                {
-                  currentLocation: location,
-                  geolocationError: null,
-                },
-                () => {
-                  this.init();
-                },
-              );
-            })
-            .catch((geolocationError: PositionError) => {
-              this.setState({
-                geolocationError,
-              });
-            });
+          this.setState(
+            {
+              loadingMessage: 'Acquiring location',
+            },
+            () => {
+              getLocation()
+                .then((location) => {
+                  this.setState(
+                    {
+                      currentLocation: location,
+                      geolocationError: null,
+                    },
+                    () => {
+                      this.init();
+                    },
+                  );
+                })
+                .catch((geolocationError: PositionError) => {
+                  this.setState({
+                    geolocationError,
+                  });
+                });
+            },
+          );
         }
       });
     });
@@ -161,46 +169,53 @@ class App extends React.Component<{}, IAppState> {
       this.initTimer = null;
     }
 
-    findNearestStation(this.state.currentLocation)
-      .then(({ distance, station }) => {
-        return new Promise((resolve) => {
-          if (this.lastUsedStationId != null) {
-            if (this.lastUsedStationId == station.id) {
-              if (shouldNotifyAbout('stationChanged') === true) {
-                new Notification('Location changed', {
-                  body: `Found a new nearest sensor station ${distance.toFixed(
-                    2,
-                  )} away located at ${station.displayAddress}.`,
-                });
-              }
-            }
-          }
-
-          this.lastUsedStationId = station.id;
-
-          this.setState(
-            {
-              distanceToStation: distance,
-              sensorStation: station,
-              apiError: null,
-            },
-            () => {
-              this.refreshData().then(() => {
-                if (this.state.isAutoRefreshEnabled) {
-                  this.enableRefreshTimer();
+    this.setState(
+      {
+        loadingMessage: 'Looking for the closest sensor station',
+      },
+      () => {
+        findNearestStation(this.state.currentLocation)
+          .then(({ distance, station }) => {
+            return new Promise((resolve) => {
+              if (this.lastUsedStationId != null) {
+                if (this.lastUsedStationId == station.id) {
+                  if (shouldNotifyAbout('stationChanged') === true) {
+                    new Notification('Location changed', {
+                      body: `Found a new nearest sensor station ${distance.toFixed(
+                        2,
+                      )} away located at ${station.displayAddress}.`,
+                    });
+                  }
                 }
+              }
 
-                resolve();
-              });
-            },
-          );
-        });
-      })
-      .catch((apiError: ApiError) => {
-        this.setState({
-          apiError,
-        });
-      });
+              this.lastUsedStationId = station.id;
+
+              this.setState(
+                {
+                  distanceToStation: distance,
+                  sensorStation: station,
+                  apiError: null,
+                },
+                () => {
+                  this.refreshData().then(() => {
+                    if (this.state.isAutoRefreshEnabled) {
+                      this.enableRefreshTimer();
+                    }
+
+                    resolve();
+                  });
+                },
+              );
+            });
+          })
+          .catch((apiError: ApiError) => {
+            this.setState({
+              apiError,
+            });
+          });
+      },
+    );
   }
 
   refreshData() {
@@ -299,6 +314,7 @@ class App extends React.Component<{}, IAppState> {
         <div className="tray-window window">
           <TrayWindow
             connectionStatus={this.state.connectionStatus}
+            loadingMessage={this.state.loadingMessage}
             apiError={this.state.apiError}
             geolocationError={this.state.geolocationError}
             distanceToStation={this.state.distanceToStation}

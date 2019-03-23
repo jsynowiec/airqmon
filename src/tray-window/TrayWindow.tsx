@@ -7,6 +7,7 @@ import Header from './Header';
 import { SensorStation, ApiError } from '../airqmon-api';
 
 interface ITrayWindowProps {
+  loadingMessage?: string;
   apiError?: ApiError;
   geolocationError?: PositionError;
   availableAppUpdate?: { version: string; url: string };
@@ -22,6 +23,7 @@ interface ITrayWindowProps {
 const TrayWindow = ({
   availableAppUpdate,
   connectionStatus,
+  loadingMessage,
   apiError,
   geolocationError,
   isAutoRefreshEnabled,
@@ -37,6 +39,7 @@ const TrayWindow = ({
       <ErrorBoundary>
         <Content
           apiError={apiError}
+          loadingMessage={loadingMessage}
           geolocationError={geolocationError}
           availableAppUpdate={availableAppUpdate}
           connectionStatus={connectionStatus}

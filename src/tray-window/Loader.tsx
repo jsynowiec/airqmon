@@ -1,10 +1,14 @@
 import * as React from 'react';
 
-const Loader = () => {
+interface ILoaderProps {
+  message?: string;
+}
+
+const Loader = ({ message }: ILoaderProps = { message: 'Loading data' }) => {
   return (
     <div className="centered-content">
       <div className="loader">
-        <div className="loader__summary">Loading data&hellip;</div>
+        <div className="loader__summary">{message}&hellip;</div>
         <div className="loader__spinner">
           <div className="loader__spinner__r1" />
           <div className="loader__spinner__r2" />

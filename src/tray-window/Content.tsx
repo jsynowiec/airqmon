@@ -12,6 +12,7 @@ import { SensorStation, ApiError } from '../airqmon-api';
 
 interface IContentProps {
   availableAppUpdate?: { version: string; url: string };
+  loadingMessage?: string;
   distanceToStation?: number;
   sensorStation?: SensorStation;
   apiError?: ApiError;
@@ -96,7 +97,7 @@ class Content extends React.Component<IContentProps> {
       );
     }
 
-    return <Loader />;
+    return <Loader message={this.props.loadingMessage} />;
   }
 }
 
