@@ -12,6 +12,11 @@ export const getNearestLocationQuery = ({
     distance
     station {
       id
+      provider {
+        name
+        url
+        stationDetails
+      }
       location {
         latitude
         longitude

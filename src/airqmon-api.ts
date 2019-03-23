@@ -13,18 +13,17 @@ export enum ApiError {
   CONNECTION_ERROR,
 }
 
-export enum SensorStationProvider {
-  AIRLY = 'airly',
-}
-
 export type SensorStation = {
   id: string;
-  provider: SensorStationProvider;
-  providerId: string;
+  provider: {
+    name: string;
+    url?: string;
+    stationDetails?: string;
+  };
   elevation: number | null;
   location: Location;
   displayAddress: string;
-  measurements?: Measurements | null;
+  measurements?: Measurements;
 };
 
 export enum MeasurementValueNames {

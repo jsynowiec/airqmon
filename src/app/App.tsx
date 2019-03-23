@@ -31,7 +31,6 @@ interface IBaseAppState {
 
 interface IDataAppState {
   connectionStatus?: boolean;
-  lastUpdateDate?: Date;
   currentLocation?: Location;
   distanceToStation?: number;
   sensorStation?: SensorStation;
@@ -74,7 +73,6 @@ class App extends React.Component<{}, IAppState> {
       if (status === 'offline') {
         newState = {
           ...newState,
-          lastUpdateDate: null,
           sensorStation: null,
         };
       }
@@ -234,7 +232,6 @@ class App extends React.Component<{}, IAppState> {
 
           this.setState(
             {
-              lastUpdateDate: new Date(),
               sensorStation: {
                 ...this.state.sensorStation,
                 measurements,
@@ -306,7 +303,6 @@ class App extends React.Component<{}, IAppState> {
             geolocationError={this.state.geolocationError}
             distanceToStation={this.state.distanceToStation}
             sensorStation={this.state.sensorStation}
-            lastUpdateDate={this.state.lastUpdateDate}
             isAutoRefreshEnabled={this.state.isAutoRefreshEnabled}
             availableAppUpdate={this.state.appUpdate}
             onRefreshClickHandler={this.handleRefreshClick}

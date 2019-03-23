@@ -80,10 +80,6 @@ class Content extends React.Component<IContentProps> {
     if (this.props.sensorStation && this.props.sensorStation.measurements) {
       const { sensorStation: station, distanceToStation: distance } = this.props;
 
-      const stationUrl = `https://map.airly.eu/en/#latitude=${
-        station.location.latitude
-      }&longitude=${station.location.longitude}&id=${station.providerId}`;
-
       const updateAlert = this.props.availableAppUpdate ? (
         <UpdateAlert
           onClickHandler={this.handleExtLinkClick.bind(this, this.props.availableAppUpdate.url)}
@@ -95,11 +91,7 @@ class Content extends React.Component<IContentProps> {
           {updateAlert}
           <AirQualityInfo airQualityIndex={station.measurements.caqi} />
           <MeasurementPane measurement={station.measurements.values} />
-          <StationInfo
-            distance={distance}
-            station={station}
-            onClickHandler={this.handleExtLinkClick.bind(this, stationUrl)}
-          />
+          <StationInfo distance={distance} station={station} />
         </>
       );
     }

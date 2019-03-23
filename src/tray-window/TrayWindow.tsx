@@ -12,7 +12,6 @@ interface ITrayWindowProps {
   availableAppUpdate?: { version: string; url: string };
   connectionStatus: boolean;
   isAutoRefreshEnabled: boolean;
-  lastUpdateDate?: Date;
   distanceToStation?: number;
   sensorStation?: SensorStation;
   onQuitClickHandler: () => void;
@@ -26,7 +25,6 @@ const TrayWindow = ({
   apiError,
   geolocationError,
   isAutoRefreshEnabled,
-  lastUpdateDate,
   distanceToStation,
   sensorStation,
   onQuitClickHandler,
@@ -47,7 +45,6 @@ const TrayWindow = ({
         />
       </ErrorBoundary>
       <Footer
-        lastUpdateDate={lastUpdateDate}
         isAutoRefreshEnabled={isAutoRefreshEnabled}
         onQuitClick={onQuitClickHandler}
         onRefreshClick={onRefreshClickHandler}
