@@ -3,7 +3,7 @@ import * as React from 'react';
 const Header = () => {
   return (
     <header className="toolbar toolbar-header">
-      <h1 className="title">Airqmon</h1>
+      <h1 className="title toolbar-header__title">Airqmon</h1>
     </header>
   );
 };
