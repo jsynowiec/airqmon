@@ -77,7 +77,7 @@ class TrayWindowManager {
     const trayBounds = this._tray.getBounds();
 
     const activeDisplay = screen.getDisplayMatching(trayBounds);
-    let yOffset = -2;
+    let yOffset = 0;
 
     if (activeDisplay.bounds.y < 0) {
       yOffset = activeDisplay.bounds.y;
@@ -85,7 +85,7 @@ class TrayWindowManager {
 
     return {
       x: Math.round(trayBounds.x + trayBounds.width / 2 - windowBounds.width / 2),
-      y: Math.round(yOffset + trayBounds.height + 4),
+      y: Math.round(yOffset + trayBounds.height),
     };
   }
 
