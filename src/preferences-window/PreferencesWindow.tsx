@@ -117,7 +117,7 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
                     disabled={!this.state.showNotifications}
                     onChange={this.handleNotificationEventsChange}
                   />{' '}
-                  Notify when CAQI changes
+                  when air quality index changes
                 </label>
               </div>
               <div className="checkbox">
@@ -129,7 +129,7 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
                     disabled={!this.state.showNotifications}
                     onChange={this.handleNotificationEventsChange}
                   />{' '}
-                  Notify when location changes
+                  when location changes
                 </label>
               </div>
             </div>
