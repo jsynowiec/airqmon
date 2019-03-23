@@ -16,7 +16,7 @@ export const MeasurementReading: React.SFC<IMeasurementReadingProps> = ({
 }) => (
   <>
     <div className="measurement__reading">
-      {reading ? (formatter ? formatter(reading) : reading) : 'n/a'}
+      {reading != null ? (formatter ? formatter(reading) : reading) : 'n/a'}
       {reading && unit ? <MeasurementReadingUnit unit={unit} /> : null}
       {children}
     </div>

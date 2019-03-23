@@ -54,7 +54,10 @@ export const Measurement: React.SFC<IMeasurementProps> = ({
       contaminant,
       reading,
     )}`;
-    normContent = <div className={normContentClassName}>{(reading / norm * 100).toFixed(0)}%</div>;
+    normContent =
+      reading && norm ? (
+        <div className={normContentClassName}>{((reading / norm) * 100).toFixed(0)}%</div>
+      ) : null;
   }
 
   return (
