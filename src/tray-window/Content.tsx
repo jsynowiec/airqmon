@@ -70,9 +70,15 @@ class Content extends React.Component<IContentProps> {
           return (
             <ErrorMessage header="Communication problem">
               <>
-                There was an unexpected response while requesting sensor station data. Request will
-                be send again in a few minutes.
+                There was an unexpected response while requesting sensor station data. A new request
+                will be sent again in a few minutes.
               </>
+            </ErrorMessage>
+          );
+        case ApiError.NO_STATION:
+          return (
+            <ErrorMessage header="Sensor station unavailable">
+              <>Unfortunately, there is no available sensor station in the vicinity.</>
             </ErrorMessage>
           );
       }

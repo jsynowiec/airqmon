@@ -65,49 +65,55 @@ class App extends React.Component<{}, IAppState> {
     this.handleQuitClick = this.handleQuitClick.bind(this);
   }
 
+  setState<K extends keyof IAppState, S extends IAppState, P extends {}>(
+    state:
+      | ((prevState: Readonly<S>, props: Readonly<P>) => Pick<S, K> | S | null)
+      | (Pick<S, K> | S | null),
+    cb?: () => void,
+  ): Promise<void> | void {
+    if (typeof cb == 'function') {
+      return super.setState(state, cb);
+    }
+
+    return new Promise((resolve) => {
+      super.setState(state, resolve);
+    });
+  }
+
   componentDidMount() {
-    ipcRenderer.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status: 'online' | 'offline') => {
+    ipcRenderer.on(IPC_EVENTS.CONN_STATUS_CHANGED, async (_, status: 'online' | 'offline') => {
       let newState: IDataAppState = {
         connectionStatus: status === 'online',
       };
 
-      if (status === 'offline') {
+      if (status == 'offline') {
         newState = {
           ...newState,
           sensorStation: null,
         };
       }
 
-      this.setState(newState, () => {
-        if (status === 'offline') {
-          this.disableRefreshTimer();
-        } else {
-          this.setState(
-            {
-              loadingMessage: 'Acquiring location',
-            },
-            () => {
-              getLocation()
-                .then((location) => {
-                  this.setState(
-                    {
-                      currentLocation: location,
-                      geolocationError: null,
-                    },
-                    () => {
-                      this.init();
-                    },
-                  );
-                })
-                .catch((geolocationError: PositionError) => {
-                  this.setState({
-                    geolocationError,
-                  });
-                });
-            },
-          );
+      await this.setState(newState);
+
+      if (status == 'offline') {
+        this.disableRefreshTimer();
+      } else {
+        await this.setState({
+          loadingMessage: 'Acquiring location',
+        });
+        try {
+          const location = await getLocation();
+          await this.setState({
+            currentLocation: location,
+            geolocationError: null,
+          });
+          await this.init();
+        } catch (geolocationError) {
+          await this.setState({
+            geolocationError,
+          });
         }
-      });
+      }
     });
 
     updateChecker.on('update-available', (version, url) => {
@@ -123,7 +129,7 @@ class App extends React.Component<{}, IAppState> {
 
     ipcRenderer.on(
       IPC_EVENTS.USER_SETTING_CHANGED,
-      <K extends keyof IUserSettings>(
+      async <K extends keyof IUserSettings>(
         _,
         {
           key,
@@ -135,140 +141,109 @@ class App extends React.Component<{}, IAppState> {
       ) => {
         switch (key) {
           case 'refreshMeasurements':
-            this.setState(
-              {
-                isAutoRefreshEnabled: newValue as boolean,
-              },
-              () => {
-                if (this.state.isAutoRefreshEnabled) {
-                  this.enableRefreshTimer();
-                } else {
-                  this.disableRefreshTimer();
-                }
-              },
-            );
+            await this.setState({
+              isAutoRefreshEnabled: newValue as boolean,
+            });
+            if (this.state.isAutoRefreshEnabled) {
+              this.enableRefreshTimer();
+            } else {
+              this.disableRefreshTimer();
+            }
             break;
           case 'refreshMeasurementsInterval':
-            this.setState(
-              {
-                refreshMeasurementsIntervalMeta: getRefreshIntervalMeta(newValue as number),
-              },
-              () => {
-                this.enableRefreshTimer();
-              },
-            );
+            await this.setState({
+              refreshMeasurementsIntervalMeta: getRefreshIntervalMeta(newValue as number),
+            });
+            this.enableRefreshTimer();
             break;
         }
       },
     );
   }
 
-  init() {
+  async init() {
     if (this.initTimer) {
       clearTimeout(this.initTimer);
       this.initTimer = null;
     }
 
-    this.setState(
-      {
-        loadingMessage: 'Looking for the closest sensor station',
-      },
-      () => {
-        findNearestStation(this.state.currentLocation)
-          .then(({ distance, station }) => {
-            return new Promise((resolve) => {
-              if (this.lastUsedStationId != null) {
-                if (this.lastUsedStationId == station.id) {
-                  if (shouldNotifyAbout('stationChanged') === true) {
-                    new Notification('Location changed', {
-                      body: `Found a new nearest sensor station ${distance.toFixed(
-                        2,
-                      )} away located at ${station.displayAddress}.`,
-                    });
-                  }
-                }
-              }
+    await this.setState({
+      loadingMessage: 'Looking for the closest sensor station',
+    });
 
-              this.lastUsedStationId = station.id;
-
-              this.setState(
-                {
-                  distanceToStation: distance,
-                  sensorStation: station,
-                  apiError: null,
-                },
-                () => {
-                  this.refreshData().then(() => {
-                    if (this.state.isAutoRefreshEnabled) {
-                      this.enableRefreshTimer();
-                    }
-
-                    resolve();
-                  });
-                },
-              );
+    try {
+      const { distance, station } = await findNearestStation(this.state.currentLocation);
+      if (this.lastUsedStationId != null) {
+        if (this.lastUsedStationId == station.id) {
+          if (shouldNotifyAbout('stationChanged') === true) {
+            new Notification('Location changed', {
+              body: `Found a new nearest sensor station ${distance.toFixed(2)} away located at ${
+                station.displayAddress
+              }.`,
             });
-          })
-          .catch((apiError: ApiError) => {
-            this.setState({
-              apiError,
-            });
-          });
-      },
-    );
+          }
+        }
+      }
+
+      this.lastUsedStationId = station.id;
+
+      await this.setState({
+        distanceToStation: distance,
+        sensorStation: station,
+        apiError: null,
+      });
+
+      await this.refreshData();
+      if (this.state.isAutoRefreshEnabled) {
+        this.enableRefreshTimer();
+      }
+    } catch (apiError) {
+      await this.setState({
+        apiError,
+      });
+    }
   }
 
-  refreshData() {
-    return new Promise((resolve) => {
-      const { id } = this.state.sensorStation;
+  async refreshData() {
+    const { id } = this.state.sensorStation;
 
-      getStationMeasurements(id)
-        .then((measurements) => {
-          if (this.state.sensorStation.measurements) {
-            const oldCAQIMeta = getCAQIMeta(Math.round(this.state.sensorStation.measurements.caqi));
-            const newCAQIMeta = getCAQIMeta(Math.round(measurements.caqi));
+    try {
+      const measurements = await getStationMeasurements(id);
 
-            const label = `Air quality changed from ${oldCAQIMeta.labels.airQuality.toLowerCase()} to ${newCAQIMeta.labels.airQuality.toLowerCase()}. ${
-              newCAQIMeta.advisory
-            }`;
+      if (this.state.sensorStation.measurements) {
+        const oldCAQIMeta = getCAQIMeta(Math.round(this.state.sensorStation.measurements.caqi));
+        const newCAQIMeta = getCAQIMeta(Math.round(measurements.caqi));
 
-            if (oldCAQIMeta.index !== newCAQIMeta.index) {
-              visitor.event('Air quality', 'Air quality changed.', label).send();
-              if (shouldNotifyAbout('caqiChanged') === true) {
-                const aqchangeNotif = new Notification('Air quality changed', {
-                  body: label,
-                });
-                aqchangeNotif.onclick = () => {
-                  ipcRenderer.send(IPC_EVENTS.SHOW_WINDOW);
-                };
-              }
-            }
+        const label = `Air quality changed from ${oldCAQIMeta.labels.airQuality.toLowerCase()} to ${newCAQIMeta.labels.airQuality.toLowerCase()}. ${
+          newCAQIMeta.advisory
+        }`;
+
+        if (oldCAQIMeta.index !== newCAQIMeta.index) {
+          visitor.event('Air quality', 'Air quality changed.', label).send();
+          if (shouldNotifyAbout('caqiChanged') === true) {
+            const aqchangeNotif = new Notification('Air quality changed', {
+              body: label,
+            });
+            aqchangeNotif.onclick = () => {
+              ipcRenderer.send(IPC_EVENTS.SHOW_WINDOW);
+            };
           }
+        }
+      }
 
-          this.setState(
-            {
-              sensorStation: {
-                ...this.state.sensorStation,
-                measurements,
-              },
-              apiError: null,
-            },
-            () => {
-              ipcRenderer.send(
-                IPC_EVENTS.AIR_Q_DATA_UPDATED,
-                this.state.sensorStation.measurements,
-              );
-
-              resolve();
-            },
-          );
-        })
-        .catch((apiError: ApiError) => {
-          this.setState({
-            apiError,
-          });
-        });
-    });
+      await this.setState({
+        sensorStation: {
+          ...this.state.sensorStation,
+          measurements,
+        },
+        apiError: null,
+      });
+      ipcRenderer.send(IPC_EVENTS.AIR_Q_DATA_UPDATED, this.state.sensorStation.measurements);
+    } catch (apiError) {
+      await this.setState({
+        apiError,
+      });
+    }
   }
 
   disableRefreshTimer(): void {
