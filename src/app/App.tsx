@@ -2,7 +2,7 @@ import { ipcRenderer } from 'electron';
 import * as React from 'react';
 
 import visitor from '../analytics';
-import { getLocation } from '../geolocation';
+import { getLocation, Location } from '../geolocation';
 import { TrayWindow } from '../tray-window';
 import updateChecker from '../update-checker';
 
@@ -32,7 +32,7 @@ interface IBaseAppState {
 interface IDataAppState {
   connectionStatus?: boolean;
   lastUpdateDate?: Date;
-  currentLocation?: Coordinates;
+  currentLocation?: Location;
   distanceToStation?: number;
   sensorStation?: SensorStation;
 }
@@ -84,10 +84,10 @@ class App extends React.Component<{}, IAppState> {
           this.disableRefreshTimer();
         } else {
           getLocation()
-            .then((position) => {
+            .then((location) => {
               this.setState(
                 {
-                  currentLocation: position.coords,
+                  currentLocation: location,
                   geolocationError: null,
                 },
                 () => {
