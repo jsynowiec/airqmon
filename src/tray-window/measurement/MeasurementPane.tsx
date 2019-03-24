@@ -23,35 +23,35 @@ const MeasurementPane: React.SFC<IMeasurementPaneProps> = (props) => {
       <Measurement
         contaminant={Contaminants.PM25}
         reading={getValue(measurement, MeasurementValueNames.PM25)}
-        formatter={formatters.significant}
+        formatter={formatters.toFixed1}
       />
       <Measurement
         contaminant={Contaminants.PM10}
         reading={getValue(measurement, MeasurementValueNames.PM10)}
-        formatter={formatters.significant}
+        formatter={formatters.toFixed1}
       />
       <Measurement
         contaminant={Contaminants.PM1}
         reading={getValue(measurement, MeasurementValueNames.PM1)}
-        formatter={formatters.significant}
+        formatter={formatters.toFixed1}
       />
       <Measurement
         description="Temperature"
         unit={Unit.TEMP_C}
         reading={getValue(measurement, MeasurementValueNames.TEMPERATURE)}
-        formatter={formatters.toFixed2}
+        formatter={formatters.toFixed1}
       />
       <Measurement
         description="Pressure"
         unit={Unit.PRESSURE_PA}
-        reading={pressure != null ? pressure / 100 : pressure}
-        formatter={formatters.toFixed1}
+        reading={pressure}
+        formatter={formatters.significant}
       />
       <Measurement
         description="Humidity"
         unit={Unit.PERCENT}
         reading={getValue(measurement, MeasurementValueNames.HUMIDITY)}
-        formatter={formatters.toFixed2}
+        formatter={formatters.significant}
       />
     </div>
   );
