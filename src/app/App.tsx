@@ -112,6 +112,12 @@ class App extends React.Component<{}, IAppState> {
       }
     });
 
+    ipcRenderer.on(IPC_EVENTS.PW_MONITOR_UNLOCK, async () => {
+      if (this.state.sensorStation && this.state.isAutoRefreshEnabled) {
+        await this.refreshData();
+      }
+    });
+
     updateChecker.on('update-available', (version, url) => {
       this.setState({
         appUpdate: {

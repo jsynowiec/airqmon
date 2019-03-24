@@ -6,6 +6,7 @@ enum IPC_EVENTS {
   SHOW_PREFERENCES_WINDOW = 'show-preferences-window',
   SHOW_WINDOW = 'show-window',
   USER_SETTING_CHANGED = 'user-setting-changed',
+  PW_MONITOR_UNLOCK = 'pw-monitor-unlock',
 }
 
 export default IPC_EVENTS;

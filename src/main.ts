@@ -1,4 +1,4 @@
-import { app, ipcMain, shell } from 'electron';
+import { app, ipcMain, shell, powerMonitor } from 'electron';
 
 import { getCAQIMeta } from './caqi';
 import { isDev } from './helpers';
@@ -42,6 +42,14 @@ app.on('ready', () => {
 
   trayWindowManager.window.on('close', () => {
     preferencesWindowManager.closeWindow();
+  });
+
+  powerMonitor.on('unlock-screen', () => {
+    if (trayWindowManager.visible) {
+      trayWindowManager.setWindowPosition();
+    }
+
+    trayWindowManager.ipcSend(IPC_EVENTS.PW_MONITOR_UNLOCK);
   });
 });
 

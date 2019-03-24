@@ -62,7 +62,11 @@ class TrayWindowManager {
     });
   }
 
-  private setWindowPosition(): void {
+  get visible(): boolean {
+    return this._window.isVisible();
+  }
+
+  setWindowPosition(): void {
     const position = this.getWindowPosition();
 
     this._window.setPosition(position.x, position.y, false);
