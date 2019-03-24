@@ -1,38 +1,33 @@
 import * as React from 'react';
-
-import ErrorBoundary from './ErrorBoundary';
+import { ApiError, SensorStation } from '../airqmon-api';
 import Content from './Content';
+import ErrorBoundary from './ErrorBoundary';
 import Footer from './Footer';
 import Header from './Header';
-import { SensorStation, ApiError } from '../airqmon-api';
 
 interface ITrayWindowProps {
-  loadingMessage?: string;
   apiError?: ApiError;
-  geolocationError?: PositionError;
   availableAppUpdate?: { version: string; url: string };
   connectionStatus: boolean;
-  isAutoRefreshEnabled: boolean;
   distanceToStation?: number;
+  geolocationError?: PositionError;
+  isAutoRefreshEnabled: boolean;
+  loadingMessage?: string;
   sensorStation?: SensorStation;
-  onQuitClickHandler: () => void;
-  onRefreshClickHandler: () => void;
-  onPreferencesClickHandler: () => void;
 }
 
-const TrayWindow = ({
-  availableAppUpdate,
-  connectionStatus,
-  loadingMessage,
-  apiError,
-  geolocationError,
-  isAutoRefreshEnabled,
-  distanceToStation,
-  sensorStation,
-  onQuitClickHandler,
-  onRefreshClickHandler,
-  onPreferencesClickHandler,
-}: ITrayWindowProps) => {
+const TrayWindow = (props: ITrayWindowProps) => {
+  const {
+    apiError,
+    availableAppUpdate,
+    connectionStatus,
+    distanceToStation,
+    geolocationError,
+    isAutoRefreshEnabled,
+    loadingMessage,
+    sensorStation,
+  } = props;
+
   return (
     <>
       <Header />
@@ -47,12 +42,7 @@ const TrayWindow = ({
           sensorStation={sensorStation}
         />
       </ErrorBoundary>
-      <Footer
-        isAutoRefreshEnabled={isAutoRefreshEnabled}
-        onQuitClick={onQuitClickHandler}
-        onRefreshClick={onRefreshClickHandler}
-        onPreferencesClickHandler={onPreferencesClickHandler}
-      />
+      <Footer isAutoRefreshEnabled={isAutoRefreshEnabled} />
     </>
   );
 };

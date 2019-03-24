@@ -59,10 +59,6 @@ class App extends React.Component<{}, IAppState> {
       ),
       connectionStatus: false,
     };
-
-    this.handleRefreshClick = this.handleRefreshClick.bind(this);
-    this.handlePreferencesClick = this.handlePreferencesClick.bind(this);
-    this.handleQuitClick = this.handleQuitClick.bind(this);
   }
 
   setState<K extends keyof IAppState, S extends IAppState, P extends {}>(
@@ -271,18 +267,6 @@ class App extends React.Component<{}, IAppState> {
     });
   }
 
-  handleRefreshClick() {
-    userSettings.set('refreshMeasurements', !this.state.isAutoRefreshEnabled);
-  }
-
-  handlePreferencesClick() {
-    ipcRenderer.send(IPC_EVENTS.SHOW_PREFERENCES_WINDOW);
-  }
-
-  handleQuitClick() {
-    ipcRenderer.send(IPC_EVENTS.CLOSE_WINDOW);
-  }
-
   render() {
     return (
       <>
@@ -296,9 +280,6 @@ class App extends React.Component<{}, IAppState> {
             sensorStation={this.state.sensorStation}
             isAutoRefreshEnabled={this.state.isAutoRefreshEnabled}
             availableAppUpdate={this.state.appUpdate}
-            onRefreshClickHandler={this.handleRefreshClick}
-            onPreferencesClickHandler={this.handlePreferencesClick}
-            onQuitClickHandler={this.handleQuitClick}
           />
         </div>
       </>

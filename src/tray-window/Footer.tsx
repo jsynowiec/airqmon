@@ -1,19 +1,25 @@
-import { remote } from 'electron';
+import { ipcRenderer, remote } from 'electron';
 import * as React from 'react';
+import IPC_EVENTS from '../ipc-events';
+import { userSettings } from '../user-settings';
 
 interface IFooterProps {
   isAutoRefreshEnabled: boolean;
-  onRefreshClick: () => void;
-  onPreferencesClickHandler: () => void;
-  onQuitClick: () => void;
 }
 
-const Footer = ({
-  isAutoRefreshEnabled,
-  onRefreshClick,
-  onPreferencesClickHandler,
-  onQuitClick,
-}: IFooterProps) => {
+const Footer = ({ isAutoRefreshEnabled }: IFooterProps) => {
+  const handlePreferencesClick = () => {
+    ipcRenderer.send(IPC_EVENTS.SHOW_PREFERENCES_WINDOW);
+  };
+
+  const handleQuitClick = () => {
+    ipcRenderer.send(IPC_EVENTS.CLOSE_WINDOW);
+  };
+
+  const handleRefreshClick = () => {
+    userSettings.set('refreshMeasurements', !isAutoRefreshEnabled);
+  };
+
   return (
     <footer className="toolbar toolbar-footer">
       <div className="toolbar-footer__footer-text">v{remote.app.getVersion()}</div>
@@ -21,18 +27,14 @@ const Footer = ({
         <div className="btn-group">
           <button
             className={'btn btn-default' + (isAutoRefreshEnabled ? ' active' : '')}
-            onClick={onRefreshClick}
+            onClick={handleRefreshClick}
           >
             <span className="icon icon-arrows-ccw" title="Background fetch" />
           </button>
           <button className="btn btn-default">
-            <span
-              className="icon icon-cog"
-              title="Preferences"
-              onClick={onPreferencesClickHandler}
-            />
+            <span className="icon icon-cog" title="Preferences" onClick={handlePreferencesClick} />
           </button>
-          <button className="btn btn-default" onClick={onQuitClick}>
+          <button className="btn btn-default" onClick={handleQuitClick}>
             <span className="icon icon-cancel" title="Quit" />
           </button>
         </div>
