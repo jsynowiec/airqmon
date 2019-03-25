@@ -1,8 +1,8 @@
-import { getContaminationThresholdIndex } from '../src/contamination';
+import { getContaminationThresholdIndex, Contaminants } from '../src/contamination';
 
 const getContaminationThresholdIndexForPM10 = (value: number) => {
-  return getContaminationThresholdIndex('PM10', value);
-}
+  return getContaminationThresholdIndex(Contaminants.PM10, value);
+};
 
 describe('test getContaminationThresholdIndex helper', () => {
   describe('for PM10 thresholds', () => {
