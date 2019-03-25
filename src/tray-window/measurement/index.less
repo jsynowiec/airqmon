@@ -9,7 +9,6 @@
   flex-basis: 50%;
   flex-direction: row;
   margin-top: 8px;
-  color: @text-color;
 
   &__reading,
   &__description {
@@ -23,26 +22,49 @@
 
   &__norm {
     font-size: @font-size - 2pt;
-    color: @text-color;
 
     &.treshold {
       &-0 {
-        color: @caqi-1;
+        color: #theme.light.aq-index() [caqi-1];
+
+        .dark-theme & {
+          color: #theme.dark.aq-index() [caqi-1];
+        }
       }
       &-1 {
-        color: @caqi-2;
+        color: #theme.light.aq-index() [caqi-2];
+
+        .dark-theme & {
+          color: #theme.dark.aq-index() [caqi-2];
+        }
       }
       &-2 {
-        color: @caqi-3;
+        color: #theme.light.aq-index() [caqi-3];
+
+        .dark-theme & {
+          color: #theme.dark.aq-index() [caqi-3];
+        }
       }
       &-3 {
-        color: @caqi-4;
+        color: #theme.light.aq-index() [caqi-4];
+
+        .dark-theme & {
+          color: #theme.dark.aq-index() [caqi-4];
+        }
       }
       &-4 {
-        color: @caqi-5;
+        color: #theme.light.aq-index() [caqi-5];
+
+        .dark-theme & {
+          color: #theme.dark.aq-index() [caqi-5];
+        }
       }
       &-5 {
-        color: @caqi-5;
+        color: #theme.light.aq-index() [caqi-5];
+
+        .dark-theme & {
+          color: #theme.dark.aq-index() [caqi-5];
+        }
       }
     }
   }
@@ -58,7 +80,11 @@
 
   &__description {
     text-transform: uppercase;
-    color: #666;
+    color: #theme.light.text.color() [secondary];
     font-size: @font-size - 2pt;
+
+    .dark-theme & {
+      color: #theme.dark.text.color() [secondary];
+    }
   }
 }

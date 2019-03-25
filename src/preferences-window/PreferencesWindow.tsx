@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { IUserSettings, userSettings, REFRESH_INTERVAL } from '../user-settings';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, remote } from 'electron';
 import IPC_EVENTS from '../ipc-events';
 
-interface IPreferencesWindowState extends IUserSettings {}
+interface IPreferencesWindowState extends IUserSettings {
+  isDarkMode: boolean;
+}
 
 class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
   constructor(props) {
@@ -11,6 +13,7 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
 
     this.state = {
       ...userSettings.store,
+      isDarkMode: remote.systemPreferences.isDarkMode(),
     };
 
     this.handleOpenAtLoginChange = this.handleOpenAtLoginChange.bind(this);
@@ -20,6 +23,14 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
     this.handleShowNotificationsChange = this.handleShowNotificationsChange.bind(this);
     this.handleNotificationEventsChange = this.handleNotificationEventsChange.bind(this);
     this.handleTelemetryChange = this.handleTelemetryChange.bind(this);
+  }
+
+  componentDidMount() {
+    remote.systemPreferences.subscribeNotification('AppleInterfaceThemeChangedNotification', () => {
+      this.setState({
+        isDarkMode: remote.systemPreferences.isDarkMode(),
+      });
+    });
   }
 
   private setValue<K extends keyof IUserSettings>(key: K, value: IUserSettings[K]): void {
@@ -72,8 +83,13 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
       ];
     }, []);
 
+    let windowClassName = 'window preferences-window';
+    if (this.state.isDarkMode) {
+      windowClassName += ' dark-theme';
+    }
+
     return (
-      <div className="window preferences-window ">
+      <div className={windowClassName}>
         <div className="window-content preferences-window__grid">
           <div className="preferences-window__grid__section-label">Launch Behavior:</div>
           <div className="preferences-window__grid__section-content">

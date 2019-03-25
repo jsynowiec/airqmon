@@ -1,15 +1,109 @@
-/* Variables */
-@background-color: #ffffff;
-@background-color-dark: #ececec;
-@text-color: #333;
-@text-color-error: #cc0000;
-@window-border-radius: 6px;
 @font-size: 10pt;
+@window-border-radius: 6px;
 @base-spacing: 8px;
-@border: 1px solid #c2c0c2;
 
-@caqi-1: #79bc6a;
-@caqi-2: #bbcf4c;
-@caqi-3: #eec20b;
-@caqi-4: #f29305;
-@caqi-5: #e8416f;
+#theme() {
+  .light() {
+    .text() {
+      .color() {
+        primary: rgb(36, 36, 36);
+        secondary: rgb(128, 128, 128);
+        error: rgb(204, 0, 0);
+      }
+    }
+    .background() {
+      .color() {
+        primary: rgb(236, 236, 236);
+        secondary: rgb(227, 227, 227);
+      }
+    }
+    .border() {
+      color: rgb(194, 194, 194);
+      size: 1px;
+      style: solid;
+    }
+    .section-line() {
+      .color() {
+        primary: rgb(213, 213, 213);
+      }
+    }
+    .header() {
+      .border() {
+        .color() {
+          primary: rgb(178, 178, 178);
+        }
+      }
+    }
+    .aq-index() {
+      caqi-1: rgb(30, 195, 55);
+      caqi-2: rgb(187, 207, 76);
+      caqi-3: rgb(245, 194, 0);
+      caqi-4: rgb(245, 139, 0);
+      caqi-5: rgb(245, 49, 38);
+    }
+  }
+  .dark() {
+    .text() {
+      .color() {
+        primary: rgb(224, 224, 224);
+        secondary: rgb(162, 162, 162);
+        error: rgb(204, 0, 0);
+      }
+    }
+    .background() {
+      .color() {
+        primary: rgb(50, 50, 50);
+        secondary: rgb(56, 56, 56);
+      }
+    }
+    .border() {
+      color: rgb(74, 74, 74);
+      size: 1px;
+      style: solid;
+    }
+    .section-line() {
+      .color() {
+        primary: rgb(70, 70, 70);
+        secondary: rgb(74, 74, 74);
+      }
+    }
+    .header() {
+      .border() {
+        .color() {
+          primary: rgb(18, 18, 18);
+        }
+      }
+    }
+    .footer() {
+      .border() {
+        .color() {
+          primary: rgb(103, 103, 103);
+        }
+      }
+      .gradient() {
+        .color() {
+          top: rgb(70, 70, 70);
+          bottom: rgb(60, 60, 60);
+        }
+      }
+    }
+    .button() {
+      .text() {
+        color: rgb(252, 252, 252);
+      }
+      .gradient() {
+        .color() {
+          top: rgb(110, 110, 110);
+          bottom: rgb(100, 100, 100);
+        }
+      }
+    }
+    .aq-index() {
+      caqi-1: rgb(60, 225, 85);
+      caqi-2: rgb(187, 207, 76);
+      caqi-3: rgb(255, 224, 20);
+      caqi-4: rgb(255, 169, 20);
+      caqi-5: rgb(255, 79, 68);
+    }
+  }
+}

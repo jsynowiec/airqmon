@@ -3,7 +3,6 @@ import { ApiError, SensorStation } from '../airqmon-api';
 import Content from './Content';
 import ErrorBoundary from './ErrorBoundary';
 import Footer from './Footer';
-import Header from './Header';
 
 interface ITrayWindowProps {
   apiError?: ApiError;
@@ -30,7 +29,6 @@ const TrayWindow = (props: ITrayWindowProps) => {
 
   return (
     <>
-      <Header />
       <ErrorBoundary>
         <Content
           apiError={apiError}

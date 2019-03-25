@@ -16,7 +16,6 @@ export default class PreferencesWindowManager {
       fullscreenable: false,
       resizable: false,
       maximizable: false,
-      backgroundColor: '#ECECEC',
     });
 
     this._window.loadURL(`file://${path.join(__dirname, 'preferences-window/index.html')}`);

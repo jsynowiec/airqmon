@@ -1,9 +1,12 @@
 .preferences-window {
-  font-size: 12px;
+  font-size: 9pt;
+  background-color: #theme.light.background.color() [primary];
+
+  &.dark-theme {
+    background-color: #theme.dark.background.color() [primary];
+  }
 
   &__grid {
-    background-color: @background-color-dark;
-
     display: grid;
     grid-template-columns: 55px 155px auto 55px;
 
@@ -22,12 +25,6 @@
       grid-column-end: 4;
       justify-self: start;
       align-self: start;
-
-      &__explanation {
-        font-size: 7pt;
-        line-height: 1.5;
-        margin-top: 5px;
-      }
 
       .form-group {
         input[type='text'] {
@@ -64,7 +61,7 @@
     }
 
     label {
-      font-size: 12px;
+      font-size: 10pt;
     }
 
     .radio label,
@@ -75,7 +72,7 @@
     select {
       &.form-control {
         &:focus {
-          border-color: #ddd;
+          border-color: #theme.light.border() [color];
           box-shadow: none;
         }
       }
@@ -89,6 +86,20 @@
       .checkbox {
         margin-top: 5px;
         margin-bottom: 5px;
+      }
+    }
+
+    .dark-theme & {
+      select {
+        &.form-control {
+          color: #theme.dark.text.color() [primary];
+          background-color: #theme.dark.background.color() [secondary];
+          border-color: #theme.dark.border() [color];
+
+          &:focus {
+            border-color: #theme.dark.border() [color];
+          }
+        }
       }
     }
   }

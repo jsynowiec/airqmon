@@ -8,7 +8,6 @@
 
   font-size: @font-size;
   font-weight: 300;
-  color: @text-color;
 }
 
 .centered-content {
@@ -16,4 +15,14 @@
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+.section-line {
+  margin: 16px 32px;
+  height: 1px;
+  background-color: #theme.light.section-line.color() [primary];
+
+  .dark-theme & {
+    background-color: #theme.dark.section-line.color() [primary];
+  }
 }

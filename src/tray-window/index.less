@@ -2,17 +2,6 @@
 @import 'measurement/index';
 @import 'air-quality/index';
 
-a.link {
-  cursor: pointer;
-  font-weight: 400;
-  color: @text-color;
-  text-decoration: none;
-
-  span {
-    cursor: pointer;
-  }
-}
-
 .error-message {
   .summary;
 
@@ -38,18 +27,83 @@ a.link {
 
 .station-info {
   .summary;
-  margin-top: @base-spacing * 2;
   font-size: @font-size - 3pt;
+  color: #theme.light.text.color() [secondary];
+
+  .dark-theme & {
+    color: #theme.dark.text.color() [secondary];
+  }
+
+  a.link {
+    color: #theme.light.text.color() [secondary];
+
+    .dark-theme & {
+      color: #theme.dark.text.color() [secondary];
+    }
+  }
 }
 
-.toolbar-header__title {
-  font-size: 13px;
+.toolbar-footer {
+  &__footer-text {
+    margin-top: 10px;
+    padding-left: 10px;
+    font-size: @font-size - 4px;
+    font-weight: 300;
+    float: left;
+  }
 }
 
-.toolbar-footer__footer-text {
-  margin-top: 10px;
-  padding-left: 10px;
-  font-size: @font-size - 4px;
-  font-weight: 300;
-  float: left;
+.tray-window {
+  background: transparent;
+
+  &.window {
+    .toolbar {
+      box-shadow: none;
+      background: transparent;
+
+      .btn-default {
+        &.active {
+          border-color: #theme.light.border() [color];
+        }
+      }
+    }
+    &.dark-theme {
+      .toolbar {
+        border-color: #theme.dark.footer.border.color() [primary];
+        color: #theme.dark.text.color() [primary];
+        background-color: #theme.dark.background.color() [primary];
+        background-image: linear-gradient(
+          to bottom,
+          #theme.dark.footer.gradient.color() [top] 0%,
+          #theme.dark.footer.gradient.color() [bottom] 100%
+        );
+      }
+
+      .btn-default {
+        color: #theme.dark.button.text() [color];
+        background-color: #theme.dark.background.color() [primary];
+        background-image: linear-gradient(
+          to bottom,
+          #theme.dark.button.gradient.color() [top] 0%,
+          #theme.dark.button.gradient.color() [bottom] 100%
+        );
+        border-color: #theme.dark.border() [color];
+
+        .icon {
+          color: #theme.dark.button.text() [color];
+        }
+
+        &:active {
+          background-color: #theme.dark.background.color() [secondary];
+          background-image: none;
+        }
+
+        &.active {
+          border-color: #theme.dark.border() [color];
+          background-color: #theme.dark.background.color() [primary];
+          background-image: none;
+        }
+      }
+    }
+  }
 }

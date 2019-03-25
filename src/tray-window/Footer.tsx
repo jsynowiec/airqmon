@@ -22,7 +22,7 @@ const Footer = ({ isAutoRefreshEnabled }: IFooterProps) => {
 
   return (
     <footer className="toolbar toolbar-footer">
-      <div className="toolbar-footer__footer-text">v{remote.app.getVersion()}</div>
+      <div className="toolbar-footer__footer-text">Airqmon v{remote.app.getVersion()}</div>
       <div className="toolbar-actions pull-right">
         <div className="btn-group">
           <button
@@ -31,8 +31,8 @@ const Footer = ({ isAutoRefreshEnabled }: IFooterProps) => {
           >
             <span className="icon icon-arrows-ccw" title="Background fetch" />
           </button>
-          <button className="btn btn-default">
-            <span className="icon icon-cog" title="Preferences" onClick={handlePreferencesClick} />
+          <button className="btn btn-default" onClick={handlePreferencesClick}>
+            <span className="icon icon-cog" title="Preferences" />
           </button>
           <button className="btn btn-default" onClick={handleQuitClick}>
             <span className="icon icon-cancel" title="Quit" />

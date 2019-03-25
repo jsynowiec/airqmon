@@ -25,7 +25,7 @@ app.dock.hide();
 app.on('ready', () => {
   trayWindowManager = new TrayWindowManager({
     width: 300,
-    height: 500,
+    height: 520,
     webPreferences: {
       // Prevents renderer process code from not running when window is hidden
       backgroundThrottling: false,

@@ -10,11 +10,15 @@
     text-align: center;
 
     & > div {
-      background-color: @text-color;
+      background-color: #theme.light.text.color() [primary];
       height: 100%;
       width: 2px;
       margin: 1px;
       display: inline-block;
+
+      .dark-theme & {
+        background-color: #theme.dark.text.color() [primary];
+      }
     }
 
     &__r1 {

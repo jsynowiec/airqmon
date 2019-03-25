@@ -1,4 +1,4 @@
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, remote } from 'electron';
 import * as React from 'react';
 
 import visitor from '../analytics';
@@ -37,6 +37,7 @@ interface IDataAppState {
 }
 
 interface IAppState extends IBaseAppState, IDataAppState {
+  isDarkMode: boolean;
   loadingMessage?: string;
   apiError?: ApiError;
   geolocationError?: PositionError;
@@ -53,6 +54,7 @@ class App extends React.Component<{}, IAppState> {
     super(props);
 
     this.state = {
+      isDarkMode: remote.systemPreferences.isDarkMode(),
       isAutoRefreshEnabled: userSettings.get('refreshMeasurements'),
       refreshMeasurementsIntervalMeta: getRefreshIntervalMeta(
         userSettings.get('refreshMeasurementsInterval'),
@@ -114,7 +116,11 @@ class App extends React.Component<{}, IAppState> {
 
     ipcRenderer.on(IPC_EVENTS.PW_MONITOR_UNLOCK, async () => {
       if (this.state.sensorStation && this.state.isAutoRefreshEnabled) {
-        await this.refreshData();
+        setTimeout(async () => {
+          if (this.state.connectionStatus) {
+            await this.refreshData();
+          }
+        }, 2 * 1000);
       }
     });
 
@@ -161,6 +167,12 @@ class App extends React.Component<{}, IAppState> {
         }
       },
     );
+
+    remote.systemPreferences.subscribeNotification('AppleInterfaceThemeChangedNotification', () => {
+      this.setState({
+        isDarkMode: remote.systemPreferences.isDarkMode(),
+      });
+    });
   }
 
   async init() {
@@ -274,9 +286,14 @@ class App extends React.Component<{}, IAppState> {
   }
 
   render() {
+    let windowClassName = 'window tray-window';
+    if (this.state.isDarkMode) {
+      windowClassName += ' dark-theme';
+    }
+
     return (
       <>
-        <div className="tray-window window">
+        <div className={windowClassName}>
           <TrayWindow
             connectionStatus={this.state.connectionStatus}
             loadingMessage={this.state.loadingMessage}

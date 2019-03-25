@@ -23,12 +23,12 @@ class TrayWindowManager {
     this._window = new BrowserWindow({
       show: false,
       frame: false,
-      // titleBarStyle: 'hiddenInset',
       fullscreenable: false,
       movable: false,
       maximizable: false,
       resizable: false,
       transparent: true,
+      vibrancy: 'appearance-based',
       ...config,
     });
     this._window.loadURL(`file://${path.join(__dirname, 'index.html')}`);
