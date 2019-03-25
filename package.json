@@ -13,7 +13,6 @@
     "build:watch": "gulp watch",
     "build": "gulp build",
     "package": "gulp package",
-    "rebuild": "electron-rebuild",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
