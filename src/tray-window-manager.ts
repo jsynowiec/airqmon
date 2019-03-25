@@ -33,8 +33,6 @@ class TrayWindowManager {
     });
     this._window.loadURL(`file://${path.join(__dirname, 'index.html')}`);
 
-    this._window.setVisibleOnAllWorkspaces(true);
-
     if (isDev()) {
       this._window.webContents.openDevTools({ mode: 'detach' });
     }
@@ -94,10 +92,11 @@ class TrayWindowManager {
   }
 
   showWindow(): void {
+    this._window.setVisibleOnAllWorkspaces(true);
     this.setWindowPosition();
-
     this._window.show();
     this._window.focus();
+    this._window.setVisibleOnAllWorkspaces(false);
   }
 
   closeWindow(): void {

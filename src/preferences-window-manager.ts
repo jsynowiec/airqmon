@@ -35,9 +35,11 @@ export default class PreferencesWindowManager {
   }
 
   showWindow() {
+    this._window.setVisibleOnAllWorkspaces(true);
     this._window.center();
     this._window.show();
     this._window.focus();
+    this._window.setVisibleOnAllWorkspaces(false);
   }
 
   closeWindow() {
