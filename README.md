@@ -64,7 +64,7 @@ Licensed under the [Apache License, Version 2.0 (the "License")][license]
 [license]: https://raw.githubusercontent.com/jsynowiec/airqmon/master/LICENSE
 [airqmon-latest-release]: https://github.com/jsynowiec/airqmon/releases/latest
 [david]: http://david-dm.org/jsynowiec/airqmon
-[donate]: https://ko-fi.com/X8X8N42K
+[donate]: https://paypal.me/jaqb/5eur
 [badge-github-release]: https://img.shields.io/github/release/jsynowiec/airqmon.svg
 [badge-license]: https://img.shields.io/github/license/jsynowiec/airqmon.svg
 [badge-david-deps]: https://img.shields.io/david/jsynowiec/airqmon.svg
