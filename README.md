@@ -1,4 +1,4 @@
-# <img src="https://user-images.githubusercontent.com/1029142/32918679-7336704a-cb23-11e7-92b2-d8a7f2588055.png" width="60px" align="center" alt="Airqmon icon" /> [Airqmon][airqmon-site] [![GitHub release][badge-github-release]][airqmon-latest-release]
+# <img src="https://user-images.githubusercontent.com/1029142/32918679-7336704a-cb23-11e7-92b2-d8a7f2588055.png" width="60px" align="center" alt="Airqmon icon" /> Airqmon [![GitHub release][badge-github-release]][airqmon-latest-release]
 
 [![Build Status][travis-badge]][travis-ci]
 [![David][badge-david-deps]][david]
@@ -61,7 +61,6 @@ Copyright 2019 Jakub Synowiec
 
 Licensed under the [Apache License, Version 2.0 (the "License")][license]
 
-[airqmon-site]: https://airqmon.app
 [license]: https://raw.githubusercontent.com/jsynowiec/airqmon/master/LICENSE
 [airqmon-latest-release]: https://github.com/jsynowiec/airqmon/releases/latest
 [david]: http://david-dm.org/jsynowiec/airqmon
