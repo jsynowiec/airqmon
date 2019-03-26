@@ -28,7 +28,6 @@ class TrayWindowManager {
       maximizable: false,
       resizable: false,
       transparent: true,
-      vibrancy: 'appearance-based',
       ...config,
     });
     this._window.loadURL(`file://${path.join(__dirname, 'index.html')}`);
