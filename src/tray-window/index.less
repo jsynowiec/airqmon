@@ -69,6 +69,14 @@
       box-shadow: none;
       background: transparent;
 
+      border-color: #theme.light.footer.border.color() [primary];
+      background-color: #theme.light.background.color() [primary];
+      background-image: linear-gradient(
+        to bottom,
+        #theme.light.footer.gradient.color() [top] 0%,
+        #theme.light.footer.gradient.color() [bottom] 100%
+      );
+
       .btn-default {
         &.active {
           border-color: #theme.light.border() [color];
