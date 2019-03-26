@@ -13,7 +13,7 @@ A menu bar app that displays live air quality informations from the nearest sens
 </p>
 
 <p align="center">
-  <img width="412" align="center" alt="Airqmon window with measurement details, light apperance" src="https://user-images.githubusercontent.com/1029142/54989495-f4bb4080-4fb8-11e9-8f8b-85d74db5bf13.png" /><img width="412" align="center" alt="Airqmon window with measurement details, dark apperance" src="https://user-images.githubusercontent.com/1029142/54989497-f4bb4080-4fb8-11e9-9a3c-bcaa5b38066d.png" />
+  <img width="412" align="center" alt="Airqmon window with measurement details, light apperance" src="https://user-images.githubusercontent.com/1029142/55006266-be43ec80-4fdd-11e9-8a44-624c8e32cb2f.png" /><img width="412" align="center" alt="Airqmon window with measurement details, dark apperance" src="https://user-images.githubusercontent.com/1029142/55006267-be43ec80-4fdd-11e9-82f4-d4f4e254e4bc.png" />
 </p>
 
 <p align="center">
