@@ -37,6 +37,14 @@
   a.link {
     color: #theme.light.text.color() [secondary];
 
+    &.data-provider {
+      color: #theme.light.text.color() [link];
+
+      .dark-theme & {
+        color: #theme.dark.text.color() [link];
+      }
+    }
+
     .dark-theme & {
       color: #theme.dark.text.color() [secondary];
     }
@@ -81,7 +89,7 @@
 
       .btn-default {
         color: #theme.dark.button.text() [color];
-        background-color: #theme.dark.background.color() [primary];
+        background-color: #theme.dark.button.background() [color];
         background-image: linear-gradient(
           to bottom,
           #theme.dark.button.gradient.color() [top] 0%,
@@ -94,13 +102,13 @@
         }
 
         &:active {
-          background-color: #theme.dark.background.color() [secondary];
+          background-color: lighten(#theme.dark.background.color() [primary], 10%);
           background-image: none;
         }
 
         &.active {
           border-color: #theme.dark.border() [color];
-          background-color: #theme.dark.background.color() [primary];
+          background-color: #theme.dark.background.color() [secondary];
           background-image: none;
         }
       }

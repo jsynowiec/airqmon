@@ -12,7 +12,11 @@ const StationInfo = ({ station, distance }: { station: SensorStation; distance: 
   }
 
   const providerLink = station.provider.url ? (
-    <a className="link" href="#" onClick={handleExtLinkClick.bind(this, station.provider.url)}>
+    <a
+      className="link data-provider"
+      href="#"
+      onClick={handleExtLinkClick.bind(this, station.provider.url)}
+    >
       {station.provider.name}
     </a>
   ) : (
