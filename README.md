@@ -13,12 +13,16 @@ A menu bar app that displays live air quality informations from the nearest sens
 </p>
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/1029142/36356674-6e1b0f3c-14f5-11e8-967d-79f8adba4ef2.png" width="412px" align="center" alt="Airqmon window with measurement details" />
+  <img width="412" align="center" alt="Airqmon window with measurement details, light apperance" src="https://user-images.githubusercontent.com/1029142/54989495-f4bb4080-4fb8-11e9-8f8b-85d74db5bf13.png" /><img width="412" align="center" alt="Airqmon window with measurement details, dark apperance" src="https://user-images.githubusercontent.com/1029142/54989497-f4bb4080-4fb8-11e9-9a3c-bcaa5b38066d.png" />
 </p>
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/1029142/36537429-674931ba-17d0-11e8-88ee-c246226c1053.png" width="378px" align="center" alt="Airqmon notification about air quality" />
 </p>
+
+Supported data providers:
+
+- [Airly][airly],
 
 ## Installation
 
@@ -31,10 +35,6 @@ Simply overwrite previous application in your `Applications` folder with a newer
 ## Preferences
 
 There are a few options available to customize on the preferences window that you can access by clicking on the button with a cog or by pressing the `⌘ + ,` shortcut.
-
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/1029142/36497771-8bc2c00e-173c-11e8-8c97-7f307c041d56.png" width="632px" align="center" alt="Airqmon notification about air quality" />
-</p>
 
 ## FAQ
 
@@ -51,7 +51,9 @@ Read more: [PH25088](https://support.apple.com/kb/PH25088?locale=en_US)
 
 ## Privacy
 
-Airqmon tracks some usage data, like window displays or CAQI index changes, and reports errors using external services. No private data other than computer hostname is collected. The information that is collected is used to provide, maintain, protect and improve Airqmon. Collected data is not shared with anyone. You can opt-out from sending the telemetry, but not from sending error reports.
+Airqmon tracks some usage data, like window displays or CAQI index changes, and reports errors using external services. No private data other than computer hostname is collected. The information that is collected is used to provide, maintain, protect and improve Airqmon. Collected data is not shared with anyone.
+
+You can opt-out from sending the telemetry, but not from sending error reports.
 
 ## License
 
@@ -69,3 +71,4 @@ Licensed under the [Apache License, Version 2.0 (the "License")][license]
 [badge-donate]: https://img.shields.io/badge/☕-buy%20me%20a%20coffee-46b798.svg
 [travis-badge]: https://travis-ci.org/jsynowiec/airqmon.svg?branch=master
 [travis-ci]: https://travis-ci.org/jsynowiec/airqmon
+[airly]: https://airly.eu/
