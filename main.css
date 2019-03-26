@@ -1,0 +1,470 @@
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+html {
+    color: #222;
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
+}
+
+/* ==========================================================================
+   Browser Upgrade Prompt
+   ========================================================================== */
+
+.browserupgrade {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Hide visually and from screen readers
+ */
+
+.hidden {
+    display: none !important;
+}
+
+/*
+ * Hide only visually, but have it available for screen readers:
+ * http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ */
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element
+ * to be focusable when navigated to via the keyboard:
+ * https://www.drupal.org/node/897638
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+
+.invisible {
+    visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+    /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+       (min-resolution: 1.25dppx),
+       (min-resolution: 120dpi) {
+    /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   http://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+
+@media print {
+    *,
+    *:before,
+    *:after,
+    *:first-letter,
+    *:first-line {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster:
+                                   http://www.sanbeiji.com/archives/953 */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links that are fragment identifiers,
+     * or use the `javascript:` pseudo protocol
+     */
+
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    /*
+     * Printing Tables:
+     * http://css-discuss.incutio.com/wiki/Printing_Tables
+     */
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}
+
+
+/*
+* Customizing
+*/
+body {
+    height: 100%;
+    background-color: rgb(56, 56, 56);
+    color: rgb(36, 36, 36);
+    font-size: 18px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSDisplay-Regular',
+    'Helvetica Neue', Helvetica, sans-serif;
+    font-weight: 300;
+}
+
+h2 {
+    font-weight: 100;
+    font-size: 36px;
+}
+
+p {
+    margin: 30px 0;
+}
+
+header {
+    background-color: rgb(255,255,255);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 100px;
+
+}
+
+header h1 {
+    flex-grow: 1;
+    font-size: 48px;
+    font-weight: 300;
+}
+
+header h1 img {
+    width: 64px;
+}
+
+header .nav a {
+    color: rgb(36, 36, 36);
+    margin: 0px 20px;
+    font-size: 18px;
+}
+
+header .nav a span {
+    border-bottom: 2px solid #FFF;
+}
+
+header .nav a:hover span {
+    border-bottom: 2px solid rgb(38, 120, 219);
+}
+
+header .nav img {
+    margin-right: 8px;
+}
+
+.wrap {
+    width: 960px;
+    height: auto;
+    left: 50%;
+    margin-left: -480px;
+    position: relative;
+    box-sizing: border-box;
+    padding: 40px 0;
+}
+
+.content {
+    width: 620px;
+}
+
+.sidebar {
+    width: 320px;
+    padding-left: 20px;
+    box-sizing: border-box;
+}
+
+#intro {
+    width: 100%;
+    background-color: #FFFFFF;
+}
+
+li {
+    margin: 5px 0;
+}
+
+#preview {
+    position: absolute;
+    top: 250px;
+    left: 50%;
+    margin-left: 150px;
+}
+
+.more {
+    width: 100%;
+    color: rgb(224, 224, 224);
+}
+
+a {
+    text-decoration: none;
+    color: rgb(38, 120, 219);
+}
+
+a:hover {
+    color: rgb(38, 120, 219);
+}
+
+.more a {
+    color: rgb(63, 142, 229);
+}
+
+.more a:hover {
+    color: rgb(224, 224, 224);
+}
+
+footer {
+    width: 100%;
+    border-top: 1px solid rgb(76, 76, 76);
+    text-align: center;
+    color: rgb(141, 141, 141);
+    box-sizing: border-box;
+    padding: 40px;
+    font-size: 14px;
+}
+
+footer a {
+    color: rgb(141, 141, 141);
+}
+
+@media screen and (max-width: 1280px) {
+    header {
+        padding: 10px 50px;
+    }
+    #preview img {
+        width: 400px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    header h1 {
+        font-size: 48px;
+    }
+    header h1 img {
+        width: 120px;
+    }
+    header .nav {
+        margin: 70px 0px;
+    }
+    header .nav a {
+        margin: 0px 20px;
+        font-size: 18px;
+    }
+    .wrap {
+        padding: 20px 10px;
+        width: 100%;
+        left: 0;
+        margin-left: 0;
+    }
+    .content {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 720px) {
+    header {
+        padding: 10px 20px;
+    }
+    header .nav a span{
+        display: none;
+    }
+    .download-item {
+        width: 100px;
+    }
+}
+@media screen and (max-width: 520px) {
+    header .nav {
+        display: none;
+    }
+}
+@media screen and (max-width: 420px) {
+    #preview {
+        margin-left: -150px;
+    }
+    #preview img {
+        width: 300px;
+    }
+    .sidebar {
+        width: 100%;
+    }
+}
+
+
+
