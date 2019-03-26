@@ -61,6 +61,12 @@ Copyright 2019 Jakub Synowiec
 
 Licensed under the [Apache License, Version 2.0 (the "License")][license]
 
+## Sponsors & donations
+
+My sincere thanks to the following individuals and companies for helping to keep this project running and free.
+
+* [thymikee](https://github.com/thymikee)
+
 [license]: https://raw.githubusercontent.com/jsynowiec/airqmon/master/LICENSE
 [airqmon-latest-release]: https://github.com/jsynowiec/airqmon/releases/latest
 [david]: http://david-dm.org/jsynowiec/airqmon
