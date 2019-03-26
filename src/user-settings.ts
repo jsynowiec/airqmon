@@ -42,7 +42,7 @@ export const REFRESH_INTERVAL: IRefreshIntervalMeta[] = [
   {
     id: Intervals.Long,
     value: 1800000,
-    label: '30 hour',
+    label: '30 minutes',
   },
 ];
 
