@@ -35,7 +35,7 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
   }
 
   private setValue<K extends keyof IUserSettings>(key: K, value: IUserSettings[K]): void {
-    getVisitor().event('Settings', 'User changed settings value.', 'key', `${value}`);
+    getVisitor().event('Settings', 'User changed settings value.', `${key}`, `${value}`);
     this.setState(
       {
         [key]: value,

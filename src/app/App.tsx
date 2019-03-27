@@ -191,7 +191,7 @@ class App extends React.Component<{}, IAppState> {
         if (this.lastUsedStationId != station.id) {
           if (shouldNotifyAbout('stationChanged') === true) {
             getVisitor()
-              .event('Location', 'Station changed.', station.id)
+              .event('Location', 'Station changed.', 'station.id', station.id)
               .send();
 
             new Notification('Location changed', {
@@ -238,7 +238,7 @@ class App extends React.Component<{}, IAppState> {
 
         if (oldCAQIMeta.index !== newCAQIMeta.index) {
           getVisitor()
-            .event('Air quality', 'Air quality changed.', label)
+            .event('Air quality', 'Air quality changed.', 'caqi.label', label)
             .send();
           if (shouldNotifyAbout('caqiChanged') === true) {
             const aqchangeNotif = new Notification('Air quality changed', {
