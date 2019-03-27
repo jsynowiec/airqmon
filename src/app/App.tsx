@@ -188,7 +188,7 @@ class App extends React.Component<{}, IAppState> {
     try {
       const { distance, station } = await findNearestStation(this.state.currentLocation);
       if (this.lastUsedStationId != null) {
-        if (this.lastUsedStationId == station.id) {
+        if (this.lastUsedStationId != station.id) {
           if (shouldNotifyAbout('stationChanged') === true) {
             getVisitor()
               .event('Location', 'Station changed.', station.id)
