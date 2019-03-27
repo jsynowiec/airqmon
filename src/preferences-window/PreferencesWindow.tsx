@@ -2,7 +2,7 @@ import * as React from 'react';
 import { IUserSettings, userSettings, REFRESH_INTERVAL } from '../user-settings';
 import { ipcRenderer, remote } from 'electron';
 import IPC_EVENTS from '../ipc-events';
-import visitor from '../analytics';
+import { getVisitor } from '../analytics';
 
 interface IPreferencesWindowState extends IUserSettings {
   isDarkMode: boolean;
@@ -35,7 +35,7 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
   }
 
   private setValue<K extends keyof IUserSettings>(key: K, value: IUserSettings[K]): void {
-    visitor.event('Settings', 'User changed settings value.', 'key', `${value}`);
+    getVisitor().event('Settings', 'User changed settings value.', 'key', `${value}`);
     this.setState(
       {
         [key]: value,

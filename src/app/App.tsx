@@ -1,7 +1,7 @@
 import { ipcRenderer, remote } from 'electron';
 import * as React from 'react';
 
-import visitor from '../analytics';
+import { getVisitor } from '../analytics';
 import { getLocation, Location } from '../geolocation';
 import { TrayWindow } from '../tray-window';
 import updateChecker from '../update-checker';
@@ -189,8 +189,11 @@ class App extends React.Component<{}, IAppState> {
       const { distance, station } = await findNearestStation(this.state.currentLocation);
       if (this.lastUsedStationId != null) {
         if (this.lastUsedStationId == station.id) {
-          visitor.event('Location', 'New data station found.', station.id).send();
           if (shouldNotifyAbout('stationChanged') === true) {
+            getVisitor()
+              .event('Location', 'Station changed.', station.id)
+              .send();
+
             new Notification('Location changed', {
               body: `Found a new nearest sensor station ${distance.toFixed(2)} away located at ${
                 station.displayAddress
@@ -234,7 +237,9 @@ class App extends React.Component<{}, IAppState> {
         }`;
 
         if (oldCAQIMeta.index !== newCAQIMeta.index) {
-          visitor.event('Air quality', 'Air quality changed.', label).send();
+          getVisitor()
+            .event('Air quality', 'Air quality changed.', label)
+            .send();
           if (shouldNotifyAbout('caqiChanged') === true) {
             const aqchangeNotif = new Notification('Air quality changed', {
               body: label,
@@ -280,7 +285,9 @@ class App extends React.Component<{}, IAppState> {
     new Notification('Update available', {
       body: `Version ${version} is available to download.`,
     }).addEventListener('click', () => {
-      visitor.event('App updates', 'Clicked on notification body.').send();
+      getVisitor()
+        .event('App updates', 'Clicked on notification body.')
+        .send();
 
       ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
     });
