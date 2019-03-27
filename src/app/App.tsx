@@ -189,6 +189,7 @@ class App extends React.Component<{}, IAppState> {
       const { distance, station } = await findNearestStation(this.state.currentLocation);
       if (this.lastUsedStationId != null) {
         if (this.lastUsedStationId == station.id) {
+          visitor.event('Location', 'New data station found.', station.id).send();
           if (shouldNotifyAbout('stationChanged') === true) {
             new Notification('Location changed', {
               body: `Found a new nearest sensor station ${distance.toFixed(2)} away located at ${

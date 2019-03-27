@@ -1,7 +1,7 @@
 import { BrowserWindow, BrowserWindowConstructorOptions, screen, Tray, Point } from 'electron';
 import * as path from 'path';
 
-import viewer from './analytics';
+import visitor from './analytics';
 import { isDev } from './helpers';
 
 const assetsDirectory = path.join(__dirname, '../assets');
@@ -47,13 +47,13 @@ class TrayWindowManager {
     this._tray = new Tray(path.join(assetsDirectory, 'menu_iconTemplate.png'));
 
     this._tray.on('right-click', () => {
-      viewer.event('Tray icon clicks', 'User right-clicked the tray icon.').send();
+      visitor.event('Tray icon clicks', 'User right-clicked the tray icon.').send();
 
       this.toggleWindow();
     });
 
     this._tray.on('click', () => {
-      viewer.event('Tray icon clicks', 'User clicked the tray icon.').send();
+      visitor.event('Tray icon clicks', 'User clicked the tray icon.').send();
 
       this.toggleWindow();
     });
