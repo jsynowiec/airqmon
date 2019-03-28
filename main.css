@@ -8,7 +8,7 @@
    Base styles: opinionated defaults
    ========================================================================== */
 
-html {
+   html {
     color: #222;
     font-size: 1em;
     line-height: 1.4;
@@ -334,17 +334,20 @@ header .nav img {
 }
 
 .wrap {
-    width: 960px;
-    height: auto;
-    left: 50%;
-    margin-left: -480px;
-    position: relative;
     box-sizing: border-box;
+    max-width: 960px;
+    margin: 0 auto;
     padding: 40px 0;
 }
 
+.intro-wrap {
+    display: grid;
+    grid-template-columns: 620px 1fr;
+    position: relative;
+}
+
 .content {
-    width: 620px;
+    max-width: 620px;
 }
 
 .sidebar {
@@ -354,7 +357,6 @@ header .nav img {
 }
 
 #intro {
-    width: 100%;
     background-color: #FFFFFF;
 }
 
@@ -364,9 +366,12 @@ li {
 
 #preview {
     position: absolute;
-    top: 250px;
-    left: 50%;
-    margin-left: 150px;
+    right: -150px;
+    top: 100px;
+}
+
+#preview img {
+    width: 492px;
 }
 
 .more {
@@ -409,8 +414,14 @@ footer a {
     header {
         padding: 10px 50px;
     }
+
+    #preview {
+        top: 200px;
+        right: 0;
+    }
+
     #preview img {
-        width: 400px;
+        max-width: 400px;
     }
 }
 
@@ -428,15 +439,22 @@ footer a {
         margin: 0px 20px;
         font-size: 18px;
     }
+
+    #preview {
+        top: 0;
+        right: 0;
+        position: relative;
+    }
+
+    .intro-wrap {
+        /* Bit less then image width to correct white space in the image*/
+        grid-template-columns: 1fr 360px;
+    }
+
     .wrap {
         padding: 20px 10px;
-        width: 100%;
-        left: 0;
-        margin-left: 0;
     }
-    .content {
-        width: 100%;
-    }
+
 }
 @media screen and (max-width: 720px) {
     header {
@@ -448,6 +466,21 @@ footer a {
     .download-item {
         width: 100px;
     }
+
+    .intro-wrap {
+        grid-template-columns: 1fr;
+        margin-bottom: 100px;
+    }
+
+    #preview {
+        margin: 0 auto;
+        margin-bottom: -200px
+    }
+
+    #preview img {
+        width: 100%;
+        max-width: 500px;
+    }
 }
 @media screen and (max-width: 520px) {
     header .nav {
@@ -455,16 +488,11 @@ footer a {
     }
 }
 @media screen and (max-width: 420px) {
-    #preview {
-        margin-left: -150px;
+    .intro-wrap {
+        margin-bottom: 150px;
     }
-    #preview img {
-        width: 300px;
-    }
+
     .sidebar {
         width: 100%;
     }
 }
-
-
-
