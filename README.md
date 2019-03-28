@@ -65,7 +65,8 @@ Licensed under the [Apache License, Version 2.0 (the "License")][license]
 
 My sincere thanks to the following individuals and companies for helping to keep this project running and free.
 
-* [thymikee](https://github.com/thymikee)
+* [thymikee](https://github.com/thymikee),
+* [kdzwinel](https://github.com/kdzwinel),
 
 [license]: https://raw.githubusercontent.com/jsynowiec/airqmon/master/LICENSE
 [airqmon-latest-release]: https://github.com/jsynowiec/airqmon/releases/latest
