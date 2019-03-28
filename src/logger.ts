@@ -2,14 +2,14 @@ import { createLogger, format, transports } from 'winston';
 const { combine, timestamp, label, printf } = format;
 
 import { remote } from 'electron';
-import { isDev } from './helpers';
+import * as isDev from 'electron-is-dev';
 
 const logFormat = printf(({ level, message, label, timestamp }) => {
   return `${timestamp} [${label}] ${level} - ${message}`;
 });
 
 const logger = createLogger({
-  level: isDev() ? 'debug' : 'warn',
+  level: isDev ? 'debug' : 'warn',
   format: combine(
     label({ label: 'main' }),
     timestamp({
@@ -26,7 +26,7 @@ const logger = createLogger({
   ],
 });
 
-if (isDev()) {
+if (isDev) {
   logger.add(new transports.Console());
 }
 

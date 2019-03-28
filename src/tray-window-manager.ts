@@ -2,7 +2,7 @@ import { BrowserWindow, BrowserWindowConstructorOptions, screen, Tray, Point } f
 import * as path from 'path';
 
 import { getVisitor } from './analytics';
-import { isDev } from './helpers';
+import * as isDev from 'electron-is-dev';
 
 const assetsDirectory = path.join(__dirname, '../assets');
 
@@ -32,7 +32,7 @@ class TrayWindowManager {
     });
     this._window.loadURL(`file://${path.join(__dirname, 'index.html')}`);
 
-    if (isDev()) {
+    if (isDev) {
       this._window.webContents.openDevTools({ mode: 'detach' });
     }
 

@@ -1,7 +1,7 @@
 import { BrowserWindow } from 'electron';
 import * as path from 'path';
 
-import { isDev } from './helpers';
+import * as isDev from 'electron-is-dev';
 
 export default class PreferencesWindowManager {
   private _window: BrowserWindow;
@@ -20,7 +20,7 @@ export default class PreferencesWindowManager {
 
     this._window.loadURL(`file://${path.join(__dirname, 'preferences-window/index.html')}`);
 
-    if (isDev()) {
+    if (isDev) {
       this._window.webContents.openDevTools({ mode: 'detach' });
     }
 

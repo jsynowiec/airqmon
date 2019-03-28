@@ -2,7 +2,7 @@ import { remote, app as _app } from 'electron';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import * as ua from 'universal-analytics';
 import * as uuid from 'uuid';
-import { isDev } from './helpers';
+import * as isDev from 'electron-is-dev';
 import { userSettings } from './user-settings';
 
 const keys = require('../keys.json');
@@ -33,7 +33,7 @@ export function getVisitor() {
   visitor.set('an', app.getName());
   visitor.set('av', app.getVersion());
 
-  if (isDev() || !userSettings.get('telemetry')) {
+  if (isDev || !userSettings.get('telemetry')) {
     // @ts-ignore
     visitor.send = () => {};
   }

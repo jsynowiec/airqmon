@@ -1,7 +1,7 @@
 import { app, ipcMain, shell, powerMonitor } from 'electron';
 
 import { getCAQIMeta } from './caqi';
-import { isDev } from './helpers';
+import * as isDev from 'electron-is-dev';
 import IPC_EVENTS from './ipc-events';
 import TrayWindowManager from './tray-window-manager';
 import { IUserSettings } from './user-settings';
@@ -13,7 +13,7 @@ const keys = require('../keys.json');
 let trayWindowManager: TrayWindowManager;
 let preferencesWindowManager: PreferencesWindowManager;
 
-process.env.NODE_ENV = isDev() ? 'development' : 'production';
+process.env.NODE_ENV = isDev ? 'development' : 'production';
 
 if (keys.google) {
   process.env.GOOGLE_API_KEY = keys.google;
