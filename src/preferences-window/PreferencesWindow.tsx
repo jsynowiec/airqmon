@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { IUserSettings, userSettings, REFRESH_INTERVAL } from '../user-settings';
 import { ipcRenderer, remote } from 'electron';
-import IPC_EVENTS from '../ipc-events';
-import { getVisitor } from '../analytics';
+
+import { IUserSettings, userSettings, REFRESH_INTERVAL } from 'common/user-settings';
+import IPC_EVENTS from 'common/ipc-events';
+import { getVisitor } from 'common/analytics';
 
 interface IPreferencesWindowState extends IUserSettings {
   isDarkMode: boolean;

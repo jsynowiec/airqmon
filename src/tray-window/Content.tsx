@@ -7,7 +7,7 @@ import UpdateAlert from './UpdateAlert';
 import StationInfo from './StationInfo';
 import AirQualityInfo from './air-quality/AirQualityInfo';
 import MeasurementPane from './measurement/MeasurementPane';
-import IPC_EVENTS from '../ipc-events';
+import IPC_EVENTS from 'common/ipc-events';
 import { SensorStation, ApiError } from '../airqmon-api';
 
 interface IContentProps {

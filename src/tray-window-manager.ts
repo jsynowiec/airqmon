@@ -1,7 +1,7 @@
 import { BrowserWindow, BrowserWindowConstructorOptions, screen, Tray, Point } from 'electron';
 import * as path from 'path';
 
-import { getVisitor } from './analytics';
+import { getVisitor } from 'common/analytics';
 import * as isDev from 'electron-is-dev';
 
 const assetsDirectory = path.join(__dirname, '../assets');

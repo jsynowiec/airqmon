@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 
-import { getVisitor } from '../analytics';
+import { getVisitor } from 'common/analytics';
 import PreferencesWindow from './PreferencesWindow';
 
 getVisitor()

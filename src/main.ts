@@ -1,10 +1,10 @@
 import { app, ipcMain, shell, powerMonitor } from 'electron';
 
-import { getCAQIMeta } from './caqi';
+import { getCAQIMeta } from 'common/caqi';
 import * as isDev from 'electron-is-dev';
-import IPC_EVENTS from './ipc-events';
+import IPC_EVENTS from 'common/ipc-events';
 import TrayWindowManager from './tray-window-manager';
-import { IUserSettings } from './user-settings';
+import { IUserSettings } from 'common/user-settings';
 import PreferencesWindowManager from './preferences-window-manager';
 import { Measurements } from './airqmon-api';
 

@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron';
 import ElectronStore = require('electron-store');
-import IPC_EVENTS from './ipc-events';
+
+import IPC_EVENTS from 'common/ipc-events';
 
 interface INotificationsEvents {
   caqiChanged: boolean;

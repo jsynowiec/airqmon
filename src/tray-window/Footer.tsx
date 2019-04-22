@@ -1,7 +1,7 @@
 import { ipcRenderer, remote } from 'electron';
 import * as React from 'react';
-import IPC_EVENTS from '../ipc-events';
-import { userSettings } from '../user-settings';
+import IPC_EVENTS from 'common/ipc-events';
+import { userSettings } from 'common/user-settings';
 
 interface IFooterProps {
   isAutoRefreshEnabled: boolean;

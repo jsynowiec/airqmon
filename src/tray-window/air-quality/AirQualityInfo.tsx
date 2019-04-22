@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { getCAQIMeta } from '../../caqi';
+import { getCAQIMeta } from 'common/caqi';
 
 import AirQualityValueBar from './AirQualityValueBar';
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Contaminants } from '../../contamination';
+import { Contaminants } from 'common/contamination';
 import { formatters, Measurement } from './Measurement';
 import { Unit } from './MeasurementReadingUnit';
 import { MeasurementValue, MeasurementValueNames } from '../../airqmon-api';

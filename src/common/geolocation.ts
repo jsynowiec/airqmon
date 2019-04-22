@@ -2,7 +2,7 @@ import { promisify } from 'util';
 import { execFile as _execFile } from 'child_process';
 import axios from 'axios';
 import { omit } from 'lodash';
-import getLogger from './logger';
+import getLogger from 'common/logger';
 
 const execFile = promisify(_execFile);
 

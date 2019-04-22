@@ -4,7 +4,7 @@ import { EventEmitter } from 'events';
 import * as semver from 'semver';
 import { setTimeout, clearTimeout } from 'timers';
 
-import IPC_EVENTS from './ipc-events';
+import IPC_EVENTS from 'common/ipc-events';
 
 const CHECK_INTERVAL = 2 * 60 * 60 * 1000; // 2 hours
 const GITHUB_BASE_URL = 'https://api.github.com';

@@ -1,6 +1,6 @@
 import ApolloClient, { InMemoryCache, ApolloError, ApolloQueryResult } from 'apollo-boost';
 import { getNearestLocationQuery, getStationMeasurementsQuery } from './qgl-queries';
-import getLogger from './logger';
+import getLogger from 'common/logger';
 
 export const GQL_API_URL = 'https://airqmon.herokuapp.com/graphql';
 

@@ -5,7 +5,7 @@ import {
   CONTAMINATION_NORM_VALUES,
   CONTAMINATION_THRESHOLDS,
   getContaminationThresholdIndex,
-} from '../../contamination';
+} from 'common/contamination';
 
 import { MeasurementReading, IMeasurementReadingProps } from './MeasurementReading';
 import { Unit } from './MeasurementReadingUnit';

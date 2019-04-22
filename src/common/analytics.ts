@@ -3,7 +3,7 @@ import { existsSync, readFileSync, writeFileSync } from 'fs';
 import * as ua from 'universal-analytics';
 import * as uuid from 'uuid';
 import * as isDev from 'electron-is-dev';
-import { userSettings } from './user-settings';
+import { userSettings } from 'common/user-settings';
 
 const keys = require('../keys.json');
 

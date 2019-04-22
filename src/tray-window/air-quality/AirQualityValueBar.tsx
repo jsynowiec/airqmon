@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { CAQI_MIN_VAL, CAQI_MAX_VAL, CAQI_INDEX, ICAQIMetadata, getCAQIMeta } from '../../caqi';
+import { CAQI_MIN_VAL, CAQI_MAX_VAL, CAQI_INDEX, ICAQIMetadata, getCAQIMeta } from 'common/caqi';
 
 interface IAirQualityValueBarProps {
   airQualityIndex: number;
@@ -59,8 +59,8 @@ class AirQualityValueBar extends React.Component<
       left =
         this.props.airQualityIndex >= 125
           ? this.state.elBoundingBox.width - this.state.overlayElBoundingBox.width
-          : (this.state.elBoundingBox.width * ratio - this.state.overlayElBoundingBox.width) *
-            this.props.airQualityIndex /
+          : ((this.state.elBoundingBox.width * ratio - this.state.overlayElBoundingBox.width) *
+              this.props.airQualityIndex) /
             100;
     }
 
