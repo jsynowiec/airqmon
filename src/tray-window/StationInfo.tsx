@@ -1,8 +1,7 @@
 import { ipcRenderer } from 'electron';
-
 import * as React from 'react';
-import { SensorStation } from '../airqmon-api';
 
+import { SensorStation } from 'data/airqmon-api';
 import IPC_EVENTS from 'common/ipc-events';
 
 const StationInfo = ({ station, distance }: { station: SensorStation; distance: number }) => {

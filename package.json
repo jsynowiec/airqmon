@@ -80,6 +80,7 @@
   },
   "_moduleAliases": {
     "@root": "out",
-    "common": "out/src/common"
+    "common": "out/src/common",
+    "data": "out/src/data"
   }
 }

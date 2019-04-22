@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { ipcRenderer } from 'electron';
 
+import IPC_EVENTS from 'common/ipc-events';
+import { SensorStation, ApiError } from 'data/airqmon-api';
+
 import Loader from './Loader';
 import ErrorMessage from './ErrorMessage';
 import UpdateAlert from './UpdateAlert';
 import StationInfo from './StationInfo';
 import AirQualityInfo from './air-quality/AirQualityInfo';
 import MeasurementPane from './measurement/MeasurementPane';
-import IPC_EVENTS from 'common/ipc-events';
-import { SensorStation, ApiError } from '../airqmon-api';
 
 interface IContentProps {
   availableAppUpdate?: { version: string; url: string };

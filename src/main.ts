@@ -1,12 +1,13 @@
 import { app, ipcMain, shell, powerMonitor } from 'electron';
+import * as isDev from 'electron-is-dev';
 
 import { getCAQIMeta } from 'common/caqi';
-import * as isDev from 'electron-is-dev';
 import IPC_EVENTS from 'common/ipc-events';
+import { Measurements } from 'data/airqmon-api';
+
 import TrayWindowManager from './tray-window-manager';
 import { IUserSettings } from 'common/user-settings';
 import PreferencesWindowManager from './preferences-window-manager';
-import { Measurements } from './airqmon-api';
 
 const keys = require('../keys.json');
 

@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { ApiError, SensorStation } from '../airqmon-api';
+
+import { ApiError, SensorStation } from 'data/airqmon-api';
+
 import Content from './Content';
 import ErrorBoundary from './ErrorBoundary';
 import Footer from './Footer';

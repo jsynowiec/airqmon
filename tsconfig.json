@@ -8,7 +8,8 @@
     "outDir": "build",
     "baseUrl": "./src",
     "paths": {
-      "common/*": ["common/*"]
+      "common/*": ["common/*"],
+      "data/*": ["data/*"]
     },
     "jsx": "react",
     "allowSyntheticDefaultImports": true,

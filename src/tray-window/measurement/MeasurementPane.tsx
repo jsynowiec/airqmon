@@ -1,9 +1,10 @@
 import * as React from 'react';
 
 import { Contaminants } from 'common/contamination';
+import { MeasurementValue, MeasurementValueNames } from 'data/airqmon-api';
+
 import { formatters, Measurement } from './Measurement';
 import { Unit } from './MeasurementReadingUnit';
-import { MeasurementValue, MeasurementValueNames } from '../../airqmon-api';
 
 interface IMeasurementPaneProps {
   measurement?: MeasurementValue[];

@@ -4,14 +4,14 @@ import * as React from 'react';
 import { getVisitor } from 'common/analytics';
 import { getLocation, Location } from 'common/geolocation';
 import { TrayWindow } from '../tray-window';
-import updateChecker from '../update-checker';
+import updateChecker from 'data/update-checker';
 
 import {
   SensorStation,
   findNearestStation,
   getStationMeasurements,
   ApiError,
-} from '../airqmon-api';
+} from 'data/airqmon-api';
 import { getCAQIMeta } from 'common/caqi';
 import IPC_EVENTS from 'common/ipc-events';
 import {
