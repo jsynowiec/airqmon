@@ -1,4 +1,4 @@
-import { withLeadingZero, isEmptyObject, formatDateTo24Time } from '../src/helpers';
+import { withLeadingZero, isEmptyObject, formatDateTo24Time } from '../src/common/helpers';
 
 describe('helper functions', () => {
   describe('withLeadingZero', () => {
@@ -10,7 +10,7 @@ describe('helper functions', () => {
     it('returns a string representation of given value for values >9', () => {
       expect(withLeadingZero(10)).toBe('10');
       expect(withLeadingZero(33)).toBe('33');
-    })
+    });
   });
 
   describe('formatDateTo24Time', () => {
@@ -20,7 +20,7 @@ describe('helper functions', () => {
       date.setMinutes(31);
 
       expect(formatDateTo24Time(date)).toBe('09:31');
-    })
+    });
   });
 
   describe('isEmptyObject', () => {
@@ -30,7 +30,7 @@ describe('helper functions', () => {
     it('returns false if give object has keys', () => {
       expect(isEmptyObject({ someKey: 'someValue' })).toBe(false);
     });
-    it('returns false if passed values\' constructor is not Object', () => {
+    it("returns false if passed values' constructor is not Object", () => {
       expect(isEmptyObject(new Array())).toBe(false);
       expect(isEmptyObject(new Date())).toBe(false);
       expect(isEmptyObject(new String())).toBe(false);

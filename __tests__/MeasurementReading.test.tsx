@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
-import { MeasurementReading } from '../src/tray-window/measurement/MeasurementReading';
-import { Unit } from '../src/tray-window/measurement/MeasurementReadingUnit';
+import { MeasurementReading } from '../src/app/tray-window/measurement/MeasurementReading';
+import { Unit } from '../src/app/tray-window/measurement/MeasurementReadingUnit';
 
-jest.mock('../src/tray-window/measurement/MeasurementReadingUnit', () => ({
-  ...require.requireActual('../src/tray-window/measurement/MeasurementReadingUnit'),
+jest.mock('../src/app/tray-window/measurement/MeasurementReadingUnit', () => ({
+  ...require.requireActual('../src/app/tray-window/measurement/MeasurementReadingUnit'),
   MeasurementReadingUnit: 'MeasurementReadingUnit',
 }));
 
@@ -39,9 +39,7 @@ describe('MeasurementReading', () => {
   });
 
   it('Renders MeasurementReadingUnit if unit is provided', () => {
-    const wrapper = shallow(
-      <MeasurementReading reading={reading} unit={Unit.PRESSURE_PA} />,
-    );
+    const wrapper = shallow(<MeasurementReading reading={reading} unit={Unit.PRESSURE_PA} />);
     expect(wrapper).toMatchSnapshot();
   });
 });

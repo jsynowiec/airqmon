@@ -1,4 +1,4 @@
-import { getContaminationThresholdIndex, Contaminants } from '../src/contamination';
+import { getContaminationThresholdIndex, Contaminants } from '../src/common/contamination';
 
 const getContaminationThresholdIndexForPM10 = (value: number) => {
   return getContaminationThresholdIndex(Contaminants.PM10, value);

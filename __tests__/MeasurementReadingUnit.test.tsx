@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
-import { Unit, MeasurementReadingUnit } from '../src/tray-window/measurement/MeasurementReadingUnit'
+import {
+  Unit,
+  MeasurementReadingUnit,
+} from '../src/app/tray-window/measurement/MeasurementReadingUnit';
 
 describe('MeasurementReadingUnit', () => {
   it('renders correctly', () => {
@@ -29,5 +32,3 @@ describe('MeasurementReadingUnit', () => {
     expect(wrapper.text()).toMatchSnapshot();
   });
 });
-
-

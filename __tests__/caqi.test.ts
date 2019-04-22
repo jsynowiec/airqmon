@@ -1,4 +1,4 @@
-import { getCAQIMeta } from '../src/caqi';
+import { getCAQIMeta } from '../src/common/caqi';
 
 describe('test getCAQIMeta helper', () => {
   it('returns caqi == 0 for values <0, 25>', () => {
