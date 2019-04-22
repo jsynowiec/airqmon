@@ -10,8 +10,8 @@ const CHECK_INTERVAL = 2 * 60 * 60 * 1000; // 2 hours
 const GITHUB_BASE_URL = 'https://api.github.com';
 const GITHUB_REPO = 'jsynowiec/airqmon';
 
-const currentVer: string = require('../package.json').version;
-const appName: string = require('../package.json').name;
+const currentVer: string = require('@root/package.json').version;
+const appName: string = require('@root/package.json').name;
 
 interface IGitHubRelease {
   // https://developer.github.com/v3/repos/releases/

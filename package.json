@@ -80,9 +80,9 @@
     "winston": "~3.2.1"
   },
   "_moduleAliases": {
-    "@root": "out",
-    "app": "out/src/app",
-    "common": "out/src/common",
-    "data": "out/src/data"
+    "@root": ".",
+    "app": "build/app",
+    "common": "build/common",
+    "data": "build/data"
   }
 }

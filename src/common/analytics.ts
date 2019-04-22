@@ -5,7 +5,7 @@ import * as uuid from 'uuid';
 import * as isDev from 'electron-is-dev';
 import { userSettings } from 'common/user-settings';
 
-const keys = require('../keys.json');
+const keys = require('@root/keys.json');
 
 let clientID: string = null;
 let visitor: ua.Visitor = null;

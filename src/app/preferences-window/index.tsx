@@ -1,3 +1,5 @@
+import 'module-alias/register';
+
 import * as React from 'react';
 import { render } from 'react-dom';
 

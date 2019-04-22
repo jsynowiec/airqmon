@@ -1,7 +1,7 @@
 import { ipcRenderer, remote } from 'electron';
 import * as React from 'react';
 
-import { TrayWindow } from 'app/tray-window';
+import TrayWindow from 'app/tray-window/TrayWindow';
 import { getVisitor } from 'common/analytics';
 import { getCAQIMeta } from 'common/caqi';
 import { getLocation, Location } from 'common/geolocation';

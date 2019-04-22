@@ -70,7 +70,7 @@ gulp.task('build:html:release', () => {
 
 gulp.task('build:styles', () => {
   return gulp
-    .src('src/index.less')
+    .src('src/**/index.less')
     .pipe(less())
     .pipe(gulp.dest('build'));
 });

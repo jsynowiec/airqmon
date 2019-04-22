@@ -8,6 +8,7 @@
     "outDir": "build",
     "baseUrl": "./src",
     "paths": {
+      "@root": ["../*"],
       "app/*": ["app/*"],
       "common/*": ["common/*"],
       "data/*": ["data/*"]

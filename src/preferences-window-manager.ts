@@ -17,7 +17,7 @@ export default class PreferencesWindowManager {
       maximizable: false,
     });
 
-    this._window.loadURL(`file://${path.join(__dirname, 'preferences-window/index.html')}`);
+    this._window.loadURL(`file://${path.join(__dirname, 'app/preferences-window/index.html')}`);
 
     if (isDev) {
       this._window.webContents.openDevTools({ mode: 'detach' });

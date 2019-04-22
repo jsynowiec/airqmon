@@ -1,3 +1,5 @@
+import 'module-alias/register';
+
 import { app, ipcMain, shell, powerMonitor } from 'electron';
 import * as isDev from 'electron-is-dev';
 
@@ -9,7 +11,7 @@ import { Measurements } from 'data/airqmon-api';
 import TrayWindowManager from './tray-window-manager';
 import PreferencesWindowManager from './preferences-window-manager';
 
-const keys = require('../keys.json');
+const keys = require('@root/keys.json');
 
 let trayWindowManager: TrayWindowManager;
 let preferencesWindowManager: PreferencesWindowManager;

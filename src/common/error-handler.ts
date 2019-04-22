@@ -1,8 +1,8 @@
 import * as Rollbar from 'rollbar';
 
-const keys = require('../keys.json');
+const keys = require('@root/keys.json');
 
-const version: string = require('../package.json').version;
+const version: string = require('@root/package.json').version;
 
 const errorHandler: Rollbar = new Rollbar({
   accessToken: keys.rollbar,
