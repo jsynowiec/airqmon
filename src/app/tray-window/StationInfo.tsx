@@ -1,8 +1,8 @@
 import { ipcRenderer } from 'electron';
 import * as React from 'react';
 
-import { SensorStation } from 'data/airqmon-api';
 import IPC_EVENTS from 'common/ipc-events';
+import { SensorStation } from 'data/airqmon-api';
 
 const StationInfo = ({ station, distance }: { station: SensorStation; distance: number }) => {
   function handleExtLinkClick(url: string, event: MouseEvent) {

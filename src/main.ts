@@ -3,10 +3,10 @@ import * as isDev from 'electron-is-dev';
 
 import { getCAQIMeta } from 'common/caqi';
 import IPC_EVENTS from 'common/ipc-events';
+import { IUserSettings } from 'common/user-settings';
 import { Measurements } from 'data/airqmon-api';
 
 import TrayWindowManager from './tray-window-manager';
-import { IUserSettings } from 'common/user-settings';
 import PreferencesWindowManager from './preferences-window-manager';
 
 const keys = require('../keys.json');

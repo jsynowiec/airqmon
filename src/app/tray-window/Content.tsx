@@ -4,12 +4,12 @@ import { ipcRenderer } from 'electron';
 import IPC_EVENTS from 'common/ipc-events';
 import { SensorStation, ApiError } from 'data/airqmon-api';
 
-import Loader from './Loader';
-import ErrorMessage from './ErrorMessage';
-import UpdateAlert from './UpdateAlert';
-import StationInfo from './StationInfo';
-import AirQualityInfo from './air-quality/AirQualityInfo';
-import MeasurementPane from './measurement/MeasurementPane';
+import Loader from 'app/tray-window/Loader';
+import ErrorMessage from 'app/tray-window/ErrorMessage';
+import UpdateAlert from 'app/tray-window/UpdateAlert';
+import StationInfo from 'app/tray-window/StationInfo';
+import AirQualityInfo from 'app/tray-window/air-quality/AirQualityInfo';
+import MeasurementPane from 'app/tray-window/measurement/MeasurementPane';
 
 interface IContentProps {
   availableAppUpdate?: { version: string; url: string };

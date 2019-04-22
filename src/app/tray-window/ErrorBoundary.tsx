@@ -1,7 +1,7 @@
 import * as React from 'react';
-
 import * as isDev from 'electron-is-dev';
-import errorHandler from '../error-handler';
+
+import errorHandler from 'common/error-handler';
 
 interface IErrorBoundaryState {
   hasError: boolean;

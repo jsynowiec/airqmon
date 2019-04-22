@@ -3,8 +3,8 @@ import * as React from 'react';
 import { Contaminants } from 'common/contamination';
 import { MeasurementValue, MeasurementValueNames } from 'data/airqmon-api';
 
-import { formatters, Measurement } from './Measurement';
-import { Unit } from './MeasurementReadingUnit';
+import { formatters, Measurement } from 'app/tray-window/measurement/Measurement';
+import { Unit } from 'app/tray-window/measurement/MeasurementReadingUnit';
 
 interface IMeasurementPaneProps {
   measurement?: MeasurementValue[];

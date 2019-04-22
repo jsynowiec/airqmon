@@ -1,18 +1,10 @@
 import { ipcRenderer, remote } from 'electron';
 import * as React from 'react';
 
+import { TrayWindow } from 'app/tray-window';
 import { getVisitor } from 'common/analytics';
-import { getLocation, Location } from 'common/geolocation';
-import { TrayWindow } from '../tray-window';
-import updateChecker from 'data/update-checker';
-
-import {
-  SensorStation,
-  findNearestStation,
-  getStationMeasurements,
-  ApiError,
-} from 'data/airqmon-api';
 import { getCAQIMeta } from 'common/caqi';
+import { getLocation, Location } from 'common/geolocation';
 import IPC_EVENTS from 'common/ipc-events';
 import {
   shouldNotifyAbout,
@@ -21,6 +13,13 @@ import {
   IRefreshIntervalMeta,
   IUserSettings,
 } from 'common/user-settings';
+import {
+  SensorStation,
+  findNearestStation,
+  getStationMeasurements,
+  ApiError,
+} from 'data/airqmon-api';
+import updateChecker from 'data/update-checker';
 
 interface IBaseAppState {
   appUpdate?: {

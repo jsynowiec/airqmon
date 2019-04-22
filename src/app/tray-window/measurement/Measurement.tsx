@@ -7,8 +7,11 @@ import {
   getContaminationThresholdIndex,
 } from 'common/contamination';
 
-import { MeasurementReading, IMeasurementReadingProps } from './MeasurementReading';
-import { Unit } from './MeasurementReadingUnit';
+import {
+  MeasurementReading,
+  IMeasurementReadingProps,
+} from 'app/tray-window/measurement/MeasurementReading';
+import { Unit } from 'app/tray-window/measurement/MeasurementReadingUnit';
 
 export const formatters: { [key: string]: (val: number) => string } = {
   significant: (val) => val.toFixed(0),
@@ -56,7 +59,7 @@ export const Measurement: React.SFC<IMeasurementProps> = ({
     )}`;
     normContent =
       reading && norm ? (
-        <div className={normContentClassName}>{((reading / norm) * 100).toFixed(0)}%</div>
+        <div className={normContentClassName}>{(reading / norm * 100).toFixed(0)}%</div>
       ) : null;
   }
 

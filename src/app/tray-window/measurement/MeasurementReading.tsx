@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Unit, MeasurementReadingUnit } from './MeasurementReadingUnit';
+import { Unit, MeasurementReadingUnit } from 'app/tray-window/measurement/MeasurementReadingUnit';
 
 export interface IMeasurementReadingProps {
   reading?: number;

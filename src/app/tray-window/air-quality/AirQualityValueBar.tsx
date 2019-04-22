@@ -59,8 +59,8 @@ class AirQualityValueBar extends React.Component<
       left =
         this.props.airQualityIndex >= 125
           ? this.state.elBoundingBox.width - this.state.overlayElBoundingBox.width
-          : ((this.state.elBoundingBox.width * ratio - this.state.overlayElBoundingBox.width) *
-              this.props.airQualityIndex) /
+          : (this.state.elBoundingBox.width * ratio - this.state.overlayElBoundingBox.width) *
+            this.props.airQualityIndex /
             100;
     }
 
