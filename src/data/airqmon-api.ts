@@ -2,7 +2,7 @@ import ApolloClient, { InMemoryCache, ApolloError, ApolloQueryResult } from 'apo
 import { getNearestLocationQuery, getStationMeasurementsQuery } from 'data/qgl-queries';
 import getLogger from 'common/logger';
 
-export const GQL_API_URL = 'https://airqmon.herokuapp.com/graphql';
+export const GQL_API_URL = 'https://api.airqmon.app/graphql';
 
 export type Location = {
   latitude: number;
