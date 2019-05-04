@@ -55,18 +55,29 @@ Airqmon tracks some usage data, like window displays or CAQI index changes, and 
 
 You can opt-out from sending the telemetry, but not from sending error reports.
 
-## License
-
-Copyright 2019 Jakub Synowiec
-
-Licensed under the [Apache License, Version 2.0 (the "License")][license]
-
 ## Sponsors & donations
 
-My sincere thanks to the following individuals and companies for helping to keep this project running and free.
+If you would like to show your appreciation, feel free to use the link below.
 
-* [thymikee](https://github.com/thymikee),
-* [kdzwinel](https://github.com/kdzwinel),
+[![Donate][badge-donate]][donate]
+
+### Credits
+
+<p>This project is supported by:</p>
+<p>
+  <a href="https://m.do.co/c/38582030d6df">
+    <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_horizontal_blue.svg" width="201px">
+  </a>
+</p>
+
+My sincere thanks to the following individuals for helping to keep this project running and free.
+
+- [thymikee](https://github.com/thymikee),
+- [kdzwinel](https://github.com/kdzwinel),
+
+## License
+
+This app is an open-source software licensed under the [Apache License, Version 2.0][license]
 
 [license]: https://raw.githubusercontent.com/jsynowiec/airqmon/master/LICENSE
 [airqmon-latest-release]: https://github.com/jsynowiec/airqmon/releases/latest
