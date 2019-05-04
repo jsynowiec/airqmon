@@ -3,3 +3,4 @@ npm-debug.log
 build
 out
 .vscode
+keys.json
