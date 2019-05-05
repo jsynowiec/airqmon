@@ -10,6 +10,7 @@ interface ITrayWindowProps {
   apiError?: ApiError;
   availableAppUpdate?: { version: string; url: string };
   connectionStatus: boolean;
+  isDarkMode: boolean;
   distanceToStation?: number;
   geolocationError?: PositionError;
   isAutoRefreshEnabled: boolean;
@@ -22,6 +23,7 @@ const TrayWindow = (props: ITrayWindowProps) => {
     apiError,
     availableAppUpdate,
     connectionStatus,
+    isDarkMode,
     distanceToStation,
     geolocationError,
     isAutoRefreshEnabled,
@@ -29,8 +31,13 @@ const TrayWindow = (props: ITrayWindowProps) => {
     sensorStation,
   } = props;
 
+  let windowClassName = 'window tray-window';
+  if (isDarkMode) {
+    windowClassName += ' dark-theme';
+  }
+
   return (
-    <>
+    <div className={windowClassName}>
       <ErrorBoundary>
         <Content
           apiError={apiError}
@@ -43,7 +50,7 @@ const TrayWindow = (props: ITrayWindowProps) => {
         />
       </ErrorBoundary>
       <Footer isAutoRefreshEnabled={isAutoRefreshEnabled} />
-    </>
+    </div>
   );
 };
 

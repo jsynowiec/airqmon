@@ -328,26 +328,18 @@ class App extends React.Component<{}, IAppState> {
   }
 
   render() {
-    let windowClassName = 'window tray-window';
-    if (this.state.isDarkMode) {
-      windowClassName += ' dark-theme';
-    }
-
     return (
-      <>
-        <div className={windowClassName}>
-          <TrayWindow
-            connectionStatus={this.state.connectionStatus}
-            loadingMessage={this.state.loadingMessage}
-            apiError={this.state.apiError}
-            geolocationError={this.state.geolocationError}
-            distanceToStation={this.state.distanceToStation}
-            sensorStation={this.state.sensorStation}
-            isAutoRefreshEnabled={this.state.isAutoRefreshEnabled}
-            availableAppUpdate={this.state.appUpdate}
-          />
-        </div>
-      </>
+      <TrayWindow
+        connectionStatus={this.state.connectionStatus}
+        isDarkMode={this.state.isDarkMode}
+        loadingMessage={this.state.loadingMessage}
+        apiError={this.state.apiError}
+        geolocationError={this.state.geolocationError}
+        distanceToStation={this.state.distanceToStation}
+        sensorStation={this.state.sensorStation}
+        isAutoRefreshEnabled={this.state.isAutoRefreshEnabled}
+        availableAppUpdate={this.state.appUpdate}
+      />
     );
   }
 }
