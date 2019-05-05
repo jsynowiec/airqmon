@@ -17,7 +17,7 @@ const UpdateAlert: React.FunctionComponent = () => {
   if (!url) return null;
 
   return (
-    <div className="available-update">
+    <div className="available-update animated slideInUp">
       <a className="link" href="#" onClick={onClickHandler}>
         <strong>Heads up!</strong> A new version is available to download.
       </a>
