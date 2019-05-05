@@ -56,7 +56,6 @@ class App extends React.Component<{}, IAppState> {
       refreshMeasurementsIntervalMeta: getRefreshIntervalMeta(
         userSettings.get('refreshMeasurementsInterval'),
       ),
-      connectionStatus: false,
     };
   }
 
