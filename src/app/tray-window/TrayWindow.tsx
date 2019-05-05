@@ -1,16 +1,17 @@
 import * as React from 'react';
+import { useContext } from 'react';
 
 import { ApiError, SensorStation } from 'data/airqmon-api';
 
 import Content from 'app/tray-window/Content';
 import ErrorBoundary from 'app/tray-window/ErrorBoundary';
 import Footer from 'app/tray-window/Footer';
+import { ThemeContext } from 'app/ThemeContext';
 
 interface ITrayWindowProps {
   apiError?: ApiError;
   availableAppUpdate?: { version: string; url: string };
   connectionStatus: boolean;
-  isDarkMode: boolean;
   distanceToStation?: number;
   geolocationError?: PositionError;
   isAutoRefreshEnabled: boolean;
@@ -18,12 +19,13 @@ interface ITrayWindowProps {
   sensorStation?: SensorStation;
 }
 
-const TrayWindow = (props: ITrayWindowProps) => {
+const TrayWindow: React.FunctionComponent<ITrayWindowProps> = (props) => {
+  const theme = useContext(ThemeContext);
+
   const {
     apiError,
     availableAppUpdate,
     connectionStatus,
-    isDarkMode,
     distanceToStation,
     geolocationError,
     isAutoRefreshEnabled,
@@ -31,13 +33,8 @@ const TrayWindow = (props: ITrayWindowProps) => {
     sensorStation,
   } = props;
 
-  let windowClassName = 'window tray-window';
-  if (isDarkMode) {
-    windowClassName += ' dark-theme';
-  }
-
   return (
-    <div className={windowClassName}>
+    <div className={`window tray-window ${theme}-theme`}>
       <ErrorBoundary>
         <Content
           apiError={apiError}

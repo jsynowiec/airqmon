@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { ipcRenderer, remote } from 'electron';
+import { useContext } from 'react';
+import { ipcRenderer } from 'electron';
 
 import { getVisitor } from 'common/analytics';
 import IPC_EVENTS from 'common/ipc-events';
 import { IUserSettings, userSettings, REFRESH_INTERVAL } from 'common/user-settings';
+import { ThemeContext } from 'app/ThemeContext';
 
-interface IPreferencesWindowState extends IUserSettings {
-  isDarkMode: boolean;
-}
+interface IPreferencesWindowState extends IUserSettings {}
 
 class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
   constructor(props) {
@@ -15,7 +15,6 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
 
     this.state = {
       ...userSettings.store,
-      isDarkMode: remote.systemPreferences.isDarkMode(),
     };
 
     this.handleOpenAtLoginChange = this.handleOpenAtLoginChange.bind(this);
@@ -25,14 +24,6 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
     this.handleShowNotificationsChange = this.handleShowNotificationsChange.bind(this);
     this.handleNotificationEventsChange = this.handleNotificationEventsChange.bind(this);
     this.handleTelemetryChange = this.handleTelemetryChange.bind(this);
-  }
-
-  componentDidMount() {
-    remote.systemPreferences.subscribeNotification('AppleInterfaceThemeChangedNotification', () => {
-      this.setState({
-        isDarkMode: remote.systemPreferences.isDarkMode(),
-      });
-    });
   }
 
   private setValue<K extends keyof IUserSettings>(key: K, value: IUserSettings[K]): void {
@@ -77,6 +68,8 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
   }
 
   render() {
+    const theme = useContext(ThemeContext);
+
     const refreshIntervalOptions: JSX.Element[] = REFRESH_INTERVAL.reduce((acc, val) => {
       return [
         ...acc,
@@ -86,13 +79,8 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
       ];
     }, []);
 
-    let windowClassName = 'window preferences-window';
-    if (this.state.isDarkMode) {
-      windowClassName += ' dark-theme';
-    }
-
     return (
-      <div className={windowClassName}>
+      <div className={`window preferences-window ${theme}-theme`}>
         <div className="window-content preferences-window__grid">
           <div className="preferences-window__grid__section-label">Launch Behavior:</div>
           <div className="preferences-window__grid__section-content">

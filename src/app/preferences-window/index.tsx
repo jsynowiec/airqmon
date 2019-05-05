@@ -5,9 +5,15 @@ import { render } from 'react-dom';
 
 import PreferencesWindow from 'app/preferences-window/PreferencesWindow';
 import { getVisitor } from 'common/analytics';
+import ThemeStore from 'app/ThemeContext';
 
 getVisitor()
   .screenview('Preferences window', 'Airqmon')
   .send();
 
-render(<PreferencesWindow />, document.getElementById('preferences'));
+render(
+  <ThemeStore>
+    <PreferencesWindow />
+  </ThemeStore>,
+  document.getElementById('preferences'),
+);

@@ -1,4 +1,4 @@
-import { ipcRenderer, remote } from 'electron';
+import { ipcRenderer } from 'electron';
 import * as React from 'react';
 
 import TrayWindow from 'app/tray-window/TrayWindow';
@@ -22,6 +22,7 @@ import {
   ApiError,
 } from 'data/airqmon-api';
 import updateChecker from 'data/update-checker';
+import ThemeStore from './ThemeContext';
 
 const ERROR_RETRY_TIMEOUT: number = 15 * 1000;
 
@@ -40,7 +41,6 @@ interface IDataAppState {
 }
 
 interface IAppState extends IBaseAppState, IDataAppState {
-  isDarkMode: boolean;
   loadingMessage?: string;
   apiError?: ApiError;
   geolocationError?: PositionError;
@@ -59,7 +59,6 @@ class App extends React.Component<{}, IAppState> {
     super(props);
 
     this.state = {
-      isDarkMode: remote.systemPreferences.isDarkMode(),
       isAutoRefreshEnabled: userSettings.get('refreshMeasurements'),
       refreshMeasurementsIntervalMeta: getRefreshIntervalMeta(
         userSettings.get('refreshMeasurementsInterval'),
@@ -161,12 +160,6 @@ class App extends React.Component<{}, IAppState> {
       } as IAppState);
 
       this.notifyAboutAvailableUpdate(version, url);
-    });
-
-    remote.systemPreferences.subscribeNotification('AppleInterfaceThemeChangedNotification', () => {
-      this.setState({
-        isDarkMode: remote.systemPreferences.isDarkMode(),
-      });
     });
   }
 
@@ -329,17 +322,18 @@ class App extends React.Component<{}, IAppState> {
 
   render() {
     return (
-      <TrayWindow
-        connectionStatus={this.state.connectionStatus}
-        isDarkMode={this.state.isDarkMode}
-        loadingMessage={this.state.loadingMessage}
-        apiError={this.state.apiError}
-        geolocationError={this.state.geolocationError}
-        distanceToStation={this.state.distanceToStation}
-        sensorStation={this.state.sensorStation}
-        isAutoRefreshEnabled={this.state.isAutoRefreshEnabled}
-        availableAppUpdate={this.state.appUpdate}
-      />
+      <ThemeStore>
+        <TrayWindow
+          connectionStatus={this.state.connectionStatus}
+          loadingMessage={this.state.loadingMessage}
+          apiError={this.state.apiError}
+          geolocationError={this.state.geolocationError}
+          distanceToStation={this.state.distanceToStation}
+          sensorStation={this.state.sensorStation}
+          isAutoRefreshEnabled={this.state.isAutoRefreshEnabled}
+          availableAppUpdate={this.state.appUpdate}
+        />
+      </ThemeStore>
     );
   }
 }
