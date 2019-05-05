@@ -16,16 +16,20 @@
   font-size: @font-size - 2pt;
 
   margin-top: 0px;
-  padding-top: 2px;
-  padding-bottom: 2px;
+  padding-top: @base-spacing / 2;
+  padding-bottom: @base-spacing / 2;
   background-color: #dff0d8;
+  cursor: pointer;
 
-  a {
-    font-weight: 300;
+  b,
+  strong {
+    cursor: pointer;
   }
 }
 
 .station-info {
+  flex-grow: 2;
+
   .summary;
   font-size: @font-size - 3pt;
   color: #theme.light.text.color() [secondary];
@@ -63,6 +67,11 @@
 
 .tray-window {
   &.window {
+    .pane {
+      display: flex;
+      flex-direction: column;
+    }
+
     .toolbar {
       box-shadow: none;
 

@@ -21,17 +21,10 @@ import {
   getStationMeasurements,
   ApiError,
 } from 'data/airqmon-api';
-import updateChecker from 'data/update-checker';
 import ThemeStore from './ThemeContext';
+import UpdaterStore from './UpdaterContext';
 
 const ERROR_RETRY_TIMEOUT: number = 15 * 1000;
-
-interface IBaseAppState {
-  appUpdate?: {
-    version: string;
-    url: string;
-  };
-}
 
 interface IDataAppState {
   connectionStatus?: boolean;
@@ -40,7 +33,7 @@ interface IDataAppState {
   sensorStation?: SensorStation;
 }
 
-interface IAppState extends IBaseAppState, IDataAppState {
+interface IAppState extends IDataAppState {
   loadingMessage?: string;
   apiError?: ApiError;
   geolocationError?: PositionError;
@@ -150,17 +143,6 @@ class App extends React.Component<{}, IAppState> {
         }
       },
     );
-
-    updateChecker.on('update-available', (version, url) => {
-      this.setState({
-        appUpdate: {
-          version,
-          url,
-        },
-      } as IAppState);
-
-      this.notifyAboutAvailableUpdate(version, url);
-    });
   }
 
   async setLocation() {
@@ -308,32 +290,21 @@ class App extends React.Component<{}, IAppState> {
     }, this.state.refreshMeasurementsIntervalMeta.value);
   }
 
-  notifyAboutAvailableUpdate(version, url) {
-    new Notification('Update available', {
-      body: `Version ${version} is available to download.`,
-    }).addEventListener('click', () => {
-      getVisitor()
-        .event('App updates', 'Clicked on notification body.')
-        .send();
-
-      ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
-    });
-  }
-
   render() {
     return (
-      <ThemeStore>
-        <TrayWindow
-          connectionStatus={this.state.connectionStatus}
-          loadingMessage={this.state.loadingMessage}
-          apiError={this.state.apiError}
-          geolocationError={this.state.geolocationError}
-          distanceToStation={this.state.distanceToStation}
-          sensorStation={this.state.sensorStation}
-          isAutoRefreshEnabled={this.state.isAutoRefreshEnabled}
-          availableAppUpdate={this.state.appUpdate}
-        />
-      </ThemeStore>
+      <UpdaterStore>
+        <ThemeStore>
+          <TrayWindow
+            connectionStatus={this.state.connectionStatus}
+            loadingMessage={this.state.loadingMessage}
+            apiError={this.state.apiError}
+            geolocationError={this.state.geolocationError}
+            distanceToStation={this.state.distanceToStation}
+            sensorStation={this.state.sensorStation}
+            isAutoRefreshEnabled={this.state.isAutoRefreshEnabled}
+          />
+        </ThemeStore>
+      </UpdaterStore>
     );
   }
 }

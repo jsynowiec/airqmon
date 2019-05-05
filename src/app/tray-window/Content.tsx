@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { ipcRenderer } from 'electron';
 
-import IPC_EVENTS from 'common/ipc-events';
 import { SensorStation, ApiError } from 'data/airqmon-api';
 
 import Loader from 'app/tray-window/Loader';
@@ -12,7 +10,6 @@ import AirQualityInfo from 'app/tray-window/air-quality/AirQualityInfo';
 import MeasurementPane from 'app/tray-window/measurement/MeasurementPane';
 
 interface IContentProps {
-  availableAppUpdate?: { version: string; url: string };
   loadingMessage?: string;
   distanceToStation?: number;
   sensorStation?: SensorStation;
@@ -24,11 +21,6 @@ interface IContentProps {
 class Content extends React.Component<IContentProps> {
   constructor(props: IContentProps) {
     super(props);
-  }
-
-  handleExtLinkClick(url: string, event: MouseEvent) {
-    event.preventDefault();
-    ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
   }
 
   render() {
@@ -88,19 +80,13 @@ class Content extends React.Component<IContentProps> {
     if (this.props.sensorStation && this.props.sensorStation.measurements) {
       const { sensorStation: station, distanceToStation: distance } = this.props;
 
-      const updateAlert = this.props.availableAppUpdate ? (
-        <UpdateAlert
-          onClickHandler={this.handleExtLinkClick.bind(this, this.props.availableAppUpdate.url)}
-        />
-      ) : null;
-
       return (
         <>
-          {updateAlert}
           <AirQualityInfo airQualityIndex={station.measurements.caqi} />
           <MeasurementPane measurement={station.measurements.values} />
           <div className="section-line" />
           <StationInfo distance={distance} station={station} />
+          <UpdateAlert />
         </>
       );
     }

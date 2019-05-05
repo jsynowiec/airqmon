@@ -9,7 +9,6 @@ import ThemedWindow from 'app/ThemedWindow';
 
 interface ITrayWindowProps {
   apiError?: ApiError;
-  availableAppUpdate?: { version: string; url: string };
   connectionStatus: boolean;
   distanceToStation?: number;
   geolocationError?: PositionError;
@@ -21,7 +20,6 @@ interface ITrayWindowProps {
 const TrayWindow: React.FunctionComponent<ITrayWindowProps> = (props) => {
   const {
     apiError,
-    availableAppUpdate,
     connectionStatus,
     distanceToStation,
     geolocationError,
@@ -37,7 +35,6 @@ const TrayWindow: React.FunctionComponent<ITrayWindowProps> = (props) => {
           apiError={apiError}
           loadingMessage={loadingMessage}
           geolocationError={geolocationError}
-          availableAppUpdate={availableAppUpdate}
           connectionStatus={connectionStatus}
           distanceToStation={distanceToStation}
           sensorStation={sensorStation}
