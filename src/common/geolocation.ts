@@ -99,7 +99,10 @@ export async function getLocation(): Promise<Location> {
     const wifiAccessPoints = await getwifiAccessPoints();
 
     if (wifiAccessPoints.length > 0) {
-      const { location: { lat: latitude, lng: longitude }, accuracy } = await geolocate(
+      const {
+        location: { lat: latitude, lng: longitude },
+        accuracy,
+      } = await geolocate(
         wifiAccessPoints.reduce((acc, wifi) => [...acc, omit(wifi, ['ssid'])], []),
       );
 

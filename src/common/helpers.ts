@@ -12,3 +12,13 @@ export function formatDateTo24Time(date: Date): string {
 export function isEmptyObject(obj: Object): boolean {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
+
+export function catcher<T = any, E = Error>(
+  promise: Promise<T>,
+): Promise<[T | undefined, E | null]> {
+  return promise
+    .then<[T, null]>((data: T) => [data, null])
+    .catch<[undefined, E]>((err: E) => {
+      return [undefined, err];
+    });
+}

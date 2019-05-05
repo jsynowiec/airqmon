@@ -1,6 +1,7 @@
-import ApolloClient, { InMemoryCache, ApolloError, ApolloQueryResult } from 'apollo-boost';
+import ApolloClient, { InMemoryCache, ApolloError } from 'apollo-boost';
 import { getNearestLocationQuery, getStationMeasurementsQuery } from 'data/qgl-queries';
 import getLogger from 'common/logger';
+import { catcher } from 'common/helpers';
 
 export const GQL_API_URL = 'https://api.airqmon.app/graphql';
 
@@ -76,15 +77,15 @@ const logApolloErrors = (reason: ApolloError) => {
 export async function findNearestStation(
   location: Location,
 ): Promise<{ distance: number; station: SensorStation }> {
-  let queryResult: ApolloQueryResult<NearestSensorStationQueryResult>;
-
-  try {
-    queryResult = await apolloClient.query<NearestSensorStationQueryResult>({
+  const [queryResult, err] = await catcher(
+    apolloClient.query<NearestSensorStationQueryResult>({
       query: getNearestLocationQuery(location),
       fetchPolicy: 'cache-first',
-    });
-  } catch (reason) {
-    logApolloErrors(reason);
+    }),
+  );
+
+  if (err) {
+    logApolloErrors(err);
     throw ApiError.CONNECTION_ERROR;
   }
 
@@ -98,14 +99,15 @@ export async function findNearestStation(
 }
 
 export async function getStationMeasurements(id: string): Promise<Measurements> {
-  let queryResult: ApolloQueryResult<StationMeasurementQueryResult>;
-  try {
-    queryResult = await apolloClient.query<StationMeasurementQueryResult>({
+  const [queryResult, err] = await catcher(
+    apolloClient.query<StationMeasurementQueryResult>({
       query: getStationMeasurementsQuery(id),
       fetchPolicy: 'network-only',
-    });
-  } catch (reason) {
-    logApolloErrors(reason);
+    }),
+  );
+
+  if (err) {
+    logApolloErrors(err);
     throw ApiError.CONNECTION_ERROR;
   }
 
