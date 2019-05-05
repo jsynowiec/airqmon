@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { useContext } from 'react';
 
 import { ApiError, SensorStation } from 'data/airqmon-api';
 
 import Content from 'app/tray-window/Content';
 import ErrorBoundary from 'app/tray-window/ErrorBoundary';
 import Footer from 'app/tray-window/Footer';
-import { ThemeContext } from 'app/ThemeContext';
+import ThemedWindow from 'app/ThemedWindow';
 
 interface ITrayWindowProps {
   apiError?: ApiError;
@@ -20,8 +19,6 @@ interface ITrayWindowProps {
 }
 
 const TrayWindow: React.FunctionComponent<ITrayWindowProps> = (props) => {
-  const theme = useContext(ThemeContext);
-
   const {
     apiError,
     availableAppUpdate,
@@ -34,7 +31,7 @@ const TrayWindow: React.FunctionComponent<ITrayWindowProps> = (props) => {
   } = props;
 
   return (
-    <div className={`window tray-window ${theme}-theme`}>
+    <ThemedWindow name="tray">
       <ErrorBoundary>
         <Content
           apiError={apiError}
@@ -47,7 +44,7 @@ const TrayWindow: React.FunctionComponent<ITrayWindowProps> = (props) => {
         />
       </ErrorBoundary>
       <Footer isAutoRefreshEnabled={isAutoRefreshEnabled} />
-    </div>
+    </ThemedWindow>
   );
 };
 

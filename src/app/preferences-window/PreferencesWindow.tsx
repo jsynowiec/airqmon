@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { useContext } from 'react';
 import { ipcRenderer } from 'electron';
 
 import { getVisitor } from 'common/analytics';
 import IPC_EVENTS from 'common/ipc-events';
 import { IUserSettings, userSettings, REFRESH_INTERVAL } from 'common/user-settings';
-import { ThemeContext } from 'app/ThemeContext';
+import ThemedWindow from 'app/ThemedWindow';
 
 interface IPreferencesWindowState extends IUserSettings {}
 
@@ -68,8 +67,6 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
   }
 
   render() {
-    const theme = useContext(ThemeContext);
-
     const refreshIntervalOptions: JSX.Element[] = REFRESH_INTERVAL.reduce((acc, val) => {
       return [
         ...acc,
@@ -80,7 +77,7 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
     }, []);
 
     return (
-      <div className={`window preferences-window ${theme}-theme`}>
+      <ThemedWindow name="preferences">
         <div className="window-content preferences-window__grid">
           <div className="preferences-window__grid__section-label">Launch Behavior:</div>
           <div className="preferences-window__grid__section-content">
@@ -160,7 +157,7 @@ class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
             </div>
           </div>
         </div>
-      </div>
+      </ThemedWindow>
     );
   }
 }
