@@ -1,10 +1,10 @@
-# <img src="https://user-images.githubusercontent.com/1029142/32918679-7336704a-cb23-11e7-92b2-d8a7f2588055.png" width="60px" align="center" alt="Airqmon icon" /> Airqmon [![GitHub release][badge-github-release]][airqmon-latest-release]
-
+[![GitHub release][badge-github-release]][airqmon-latest-release]
 [![Build Status][travis-badge]][travis-ci]
 [![David][badge-david-deps]][david]
 [![License][badge-license]][license]
-
 [![Donate][badge-donate]][donate]
+
+# <img src="https://user-images.githubusercontent.com/1029142/32918679-7336704a-cb23-11e7-92b2-d8a7f2588055.png" width="60px" align="center" alt="Airqmon icon" /> Airqmon
 
 A menu bar app that displays live air quality informations from the nearest sensor station. It also notifies you when the air quality changes or when a new station that is closer to your current location was found.
 
@@ -22,7 +22,7 @@ A menu bar app that displays live air quality informations from the nearest sens
 
 Supported data providers:
 
-- [Airly][airly],
+- [Airly][airly] (Poland and a few sensors in different countries),
 
 ## Installation
 
