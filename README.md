@@ -9,11 +9,7 @@
 A macOS menu bar application that displays live air quality data from the nearest sensor station. It can also notify you when the air quality index changes or when a new, closer station is found.
 
 <p align="center">
-  <img width="140" alt="screen shot 2018-01-07 at 19 09 45" src="https://user-images.githubusercontent.com/1029142/34652449-7721515a-f3de-11e7-82e0-3af878ff3d58.png">
-</p>
-
-<p align="center">
-  <img width="412" align="center" alt="Airqmon window with measurement details, light apperance" src="https://user-images.githubusercontent.com/1029142/55006266-be43ec80-4fdd-11e9-8a44-624c8e32cb2f.png" /><img width="412" align="center" alt="Airqmon window with measurement details, dark apperance" src="https://user-images.githubusercontent.com/1029142/55006267-be43ec80-4fdd-11e9-82f4-d4f4e254e4bc.png" />
+  <img width="492" align="center" alt="Airqmon window with measurement details" src="https://airqmon.app/assets/airqmon-overview@2x.png" />
 </p>
 
 <p align="center">
