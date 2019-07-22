@@ -66,7 +66,7 @@
     "electron-is-dev": "~1.1.0",
     "electron-store": "~3.0.0",
     "graphql": "~14.2.1",
-    "lodash": "~4.17.11",
+    "lodash": "~4.17.13",
     "module-alias": "~2.2.0",
     "photon": "https://github.com/connors/photon.git#v0.1.2-alpha",
     "react": "~16.8.6",
