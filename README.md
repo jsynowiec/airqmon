@@ -1,5 +1,4 @@
 [![GitHub release][badge-github-release]][airqmon-latest-release]
-[![Build Status][travis-badge]][travis-ci]
 [![David][badge-david-deps]][david]
 [![License][badge-license]][license]
 [![Donate][badge-donate]][donate]
@@ -83,6 +82,4 @@ This app is an open-source software licensed under the [Apache License, Version 
 [badge-license]: https://img.shields.io/github/license/airqmon/airqmon.svg
 [badge-david-deps]: https://img.shields.io/david/airqmon/airqmon.svg
 [badge-donate]: https://img.shields.io/badge/☕-buy%20me%20a%20coffee-46b798.svg
-[travis-badge]: https://travis-ci.org/airqmon/airqmon.svg?branch=master
-[travis-ci]: https://travis-ci.org/airqmon/airqmon
 [airly]: https://airly.eu/
