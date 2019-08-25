@@ -74,12 +74,12 @@ My sincere thanks to the following individuals for helping to keep this project 
 
 This app is an open-source software licensed under the [Apache License, Version 2.0][license]
 
-[license]: https://raw.githubusercontent.com/airqmon/airqmon/master/LICENSE
-[airqmon-latest-release]: https://github.com/airqmon/airqmon/releases/latest
-[david]: http://david-dm.org/airqmon/airqmon
+[license]: https://raw.githubusercontent.com/jsynowiec/airqmon/master/LICENSE
+[airqmon-latest-release]: https://github.com/jsynowiec/airqmon/releases/latest
+[david]: http://david-dm.org/jsynowiec/airqmon
 [donate]: https://paypal.me/jaqb/5eur
-[badge-github-release]: https://img.shields.io/github/release/airqmon/airqmon.svg
-[badge-license]: https://img.shields.io/github/license/airqmon/airqmon.svg
-[badge-david-deps]: https://img.shields.io/david/airqmon/airqmon.svg
+[badge-github-release]: https://img.shields.io/github/release/jsynowiec/airqmon.svg
+[badge-license]: https://img.shields.io/github/license/jsynowiec/airqmon.svg
+[badge-david-deps]: https://img.shields.io/david/jsynowiec/airqmon.svg
 [badge-donate]: https://img.shields.io/badge/☕-buy%20me%20a%20coffee-46b798.svg
 [airly]: https://airly.eu/
