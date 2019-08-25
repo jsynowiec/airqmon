@@ -8,7 +8,7 @@ import IPC_EVENTS from 'common/ipc-events';
 
 const CHECK_INTERVAL = 2 * 60 * 60 * 1000; // 2 hours
 const GITHUB_BASE_URL = 'https://api.github.com';
-const GITHUB_REPO = 'jsynowiec/airqmon';
+const GITHUB_REPO = 'airqmon/airqmon';
 
 const currentVer: string = require('@root/package.json').version;
 const appName: string = require('@root/package.json').name;

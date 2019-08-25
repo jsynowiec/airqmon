@@ -20,12 +20,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jsynowiec/airqmon"
+    "url": "https://github.com/airqmon/airqmon"
   },
   "bugs": {
-    "url": "https://github.com/jsynowiec/airqmon/issues"
+    "url": "https://github.com/airqmon/airqmon/issues"
   },
-  "homepage": "https://github.com/jsynowiec/airqmon",
+  "homepage": "https://github.com/airqmon/airqmon",
   "devDependencies": {
     "@types/enzyme-adapter-react-16": "~1.0.1",
     "@types/graphql": "~14.2.0",
