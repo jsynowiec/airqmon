@@ -322,11 +322,11 @@ header .nav a {
 }
 
 header .nav a span {
-    border-bottom: 2px solid #FFF;
+    border-bottom: 1px solid #FFF;
 }
 
 header .nav a:hover span {
-    border-bottom: 2px solid rgb(38, 120, 219);
+    border-bottom: 1px solid rgb(38, 120, 219);
 }
 
 header .nav img {
@@ -495,4 +495,48 @@ footer a {
     .sidebar {
         width: 100%;
     }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: rgb(56, 56, 56);
+    color: rgb(36, 36, 36);
+  }
+
+  header {
+    background-color: rgb(56, 56, 56);
+    color: rgb(224, 224, 224);
+  }
+
+  header .nav a {
+    color: rgb(224, 224, 224);
+  }
+
+  header .nav a span {
+      border-color:  rgb(56, 56, 56);
+  }
+
+  #intro {
+    background-color: rgb(56, 56, 56);
+    color: rgb(224, 224, 224);
+  }
+
+  .more {
+    background-color: rgb(36, 36, 36);
+    color: rgb(200, 200, 200);
+  }
+
+  .more a:hover {
+    color: rgb(200, 200, 200);
+}
+
+  footer {
+    background-color: rgb(36, 36, 36);
+    border-color: rgb(56, 56, 56);
+    color: rgb(121, 121, 121);
+  }
+
+  footer a {
+    color: rgb(121, 121, 121);
+  }
 }
