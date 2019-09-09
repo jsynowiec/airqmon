@@ -26,6 +26,9 @@
     "url": "https://github.com/jsynowiec/airqmon/issues"
   },
   "homepage": "https://github.com/jsynowiec/airqmon",
+  "resolutions": {
+    "@types/react": "~16.9.0"
+  },
   "devDependencies": {
     "@types/enzyme-adapter-react-16": "~1.0.1",
     "@types/jest": "~24.0.18",
