@@ -509,10 +509,10 @@
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
   integrity sha512-l42BggppR6zLmpfU6fq9HEa2oGPEI8yrSPL3GITjfRInppYFahObbIQOQK3UGxEnyQpltZLaPe75046NOZQikw==
 
-"@types/universal-analytics@~0.4.2":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@types/universal-analytics/-/universal-analytics-0.4.2.tgz#d21a122a984bf8261eb206bcb7ccb1c0e8353d04"
-  integrity sha512-ndv0aYA5tNPdl4KYUperlswuiSj49+o7Pwx8hrCiE9x2oeiMrn7A2jXFDdTLFIymiYZImDX02ycq0i6uQ3TL0A==
+"@types/universal-analytics@~0.4.3":
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/@types/universal-analytics/-/universal-analytics-0.4.3.tgz#8cc5e9a69df0e3c9714bdcf101d8d93df2a6d247"
+  integrity sha512-CCM1yPGAAg/WRlBEUIzRAqEE0G84n1btOVRybHgQ+AdA6+LgM0DeDH8yBWtcpg3HcrLHA9JWiHwPpySlo5GtZA==
 
 "@types/uuid@~3.4.4":
   version "3.4.5"
