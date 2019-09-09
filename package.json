@@ -70,7 +70,7 @@
     "photon": "https://github.com/connors/photon.git#v0.1.2-alpha",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
-    "rollbar": "~2.6.1",
+    "rollbar": "~2.12.3",
     "semver": "~6.3.0",
     "universal-analytics": "~0.4.16",
     "uuid": "~3.3.2",
