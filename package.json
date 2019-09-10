@@ -16,7 +16,7 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
-    "start": "gulp build && (gulp watch & gulp start & wait)"
+    "start": "gulp build && gulp watch"
   },
   "repository": {
     "type": "git",

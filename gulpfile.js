@@ -10,11 +10,21 @@ const gulpTslint = require('gulp-tslint');
 const tslint = require('tslint');
 const useref = require('gulp-useref');
 
-gulp.task('clean', () => {
-  return del(['out', 'build', 'coverage', '*.log']);
-});
+function restartElectron() {
+  electron.restart();
+  done();
+}
 
-gulp.task('lint', () => {
+function reloadElectron(done) {
+  electron.reload();
+  done();
+}
+
+function clean() {
+  return del(['out', 'build', 'coverage', '*.log']);
+}
+
+function lint() {
   const program = tslint.Linter.createProgram('tsconfig.release.json');
 
   return gulp
@@ -29,12 +39,25 @@ gulp.task('lint', () => {
         summarizeFailureOutput: true,
       }),
     );
-});
+}
 
-gulp.task('build:scripts', () => {
+gulp.task('build:scripts:renderer', () => {
   const tsProject = ts.createProject('tsconfig.json');
   const tsResult = gulp
-    .src(['src/**/*.{ts,tsx}', '!**/*.d.ts'])
+    .src(['src/**/*.{ts,tsx}', '!src/main.ts', '!**/*.d.ts'])
+    .pipe(cache('scripts'))
+    .pipe(sourcemaps.init())
+    .pipe(tsProject());
+
+  return tsResult.js
+    .pipe(sourcemaps.write('.', { includeContent: false, sourceRoot: '../src' }))
+    .pipe(gulp.dest('build'));
+});
+
+gulp.task('build:scripts:main', () => {
+  const tsProject = ts.createProject('tsconfig.json');
+  const tsResult = gulp
+    .src(['src/main.ts'])
     .pipe(cache('scripts'))
     .pipe(sourcemaps.init())
     .pipe(tsProject());
@@ -72,58 +95,54 @@ gulp.task('build:styles', () => {
     .pipe(gulp.dest('build'));
 });
 
-gulp.task(
-  'build',
-  gulp.series('clean', 'lint', gulp.parallel('build:scripts', 'build:html', 'build:styles')),
+function package() {
+  return electronPackager({
+    name: 'Airqmon',
+    appCategoryType: 'public.app-category.weather',
+    dir: './',
+    ignore: ['^/src', '^/__tests__', '^/coverage'],
+    asar: true,
+    icon: './assets/airqmon.icns',
+    overwrite: true,
+    packageManager: 'yarn',
+    out: './out',
+    arch: 'x64',
+    platform: 'darwin',
+    darwinDarkModeSupport: true,
+  });
+}
+
+exports.clean = clean;
+
+exports.lint = lint;
+
+exports.build = gulp.series(
+  clean,
+  lint,
+  gulp.parallel('build:scripts:main', 'build:scripts:renderer', 'build:html', 'build:styles'),
 );
 
-gulp.task(
-  'release',
-  gulp.series(
-    gulp.series(
-      'clean',
-      'lint',
-      gulp.parallel('build:scripts:release', 'build:html:release', 'build:styles'),
-    ),
-    () => {
-      return electronPackager({
-        name: 'Airqmon',
-        appCategoryType: 'public.app-category.weather',
-        dir: './',
-        ignore: ['^/src', '^/__tests__', '^/coverage'],
-        asar: true,
-        icon: './assets/airqmon.icns',
-        overwrite: true,
-        packageManager: 'yarn',
-        out: './out',
-        arch: 'x64',
-        platform: 'darwin',
-        darwinDarkModeSupport: true,
-      });
-    },
-  ),
+exports.release = gulp.series(
+  clean,
+  lint,
+  gulp.parallel('build:scripts:release', 'build:html:release', 'build:styles'),
+  package,
 );
 
-exports.start = (done) => {
+exports.watch = () => {
   electron.start();
-};
 
-function restartElectron(done) {
-  electron.restart();
-  done();
-}
+  gulp.watch(
+    ['src/**/*.{ts,tsx}', '!src/main.ts', '!src/**/*.d.ts'],
+    gulp.series('build:scripts:renderer'),
+  );
+  gulp.watch(['src/main.ts', '!src/**/*.d.ts'], gulp.series('build:scripts:main'));
+  gulp.watch('src/**/*.html', gulp.series('build:html'));
+  gulp.watch('src/**/*.less', gulp.series('build:styles'));
 
-function reloadElectron(done) {
-  electron.reload();
-  done();
-}
-
-exports.watch = (done) => {
-  gulp.watch(['./src/**/*.{ts,tsx}', '!./src/**/*.d.ts'], gulp.series('build:scripts'));
-  gulp.watch('./src/**/*.html', gulp.series('build:html'));
-  gulp.watch('./src/**/*.less', gulp.series('build:styles'));
-
-  gulp.watch('./build/**/*.js', restartElectron);
-  gulp.watch('./build/index.css', reloadElectron);
-  gulp.watch('./build/**/*.html', reloadElectron);
+  gulp.watch('build/main.js', restartElectron);
+  gulp.watch(
+    ['build/**/*.js', '!build/main.js', 'build/**/*.html', 'build/**/*.css'],
+    reloadElectron,
+  );
 };
