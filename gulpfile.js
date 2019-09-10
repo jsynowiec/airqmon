@@ -108,14 +108,22 @@ exports.start = (done) => {
   electron.start();
 };
 
-exports.watch = (done) => {
-  gulp.watch(['src/**/*.{ts,tsx}', '!**/*.d.ts'], gulp.series('build:scripts'));
-  gulp.watch('src/**/*.html', gulp.series('build:html'));
-  gulp.watch('src/**/*.less', gulp.series('build:styles'));
-
-  gulp.watch('build/**/*.js', electron.restart);
-  gulp.watch('build/index.css', electron.reload);
-  gulp.watch('build/**/*.html', electron.reload);
-
+function restartElectron(done) {
+  electron.restart();
   done();
+}
+
+function reloadElectron(done) {
+  electron.reload();
+  done();
+}
+
+exports.watch = (done) => {
+  gulp.watch(['./src/**/*.{ts,tsx}', '!./src/**/*.d.ts'], gulp.series('build:scripts'));
+  gulp.watch('./src/**/*.html', gulp.series('build:html'));
+  gulp.watch('./src/**/*.less', gulp.series('build:styles'));
+
+  gulp.watch('./build/**/*.js', restartElectron);
+  gulp.watch('./build/index.css', reloadElectron);
+  gulp.watch('./build/**/*.html', reloadElectron);
 };
