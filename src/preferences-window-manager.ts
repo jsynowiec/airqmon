@@ -15,6 +15,9 @@ export default class PreferencesWindowManager {
       fullscreenable: false,
       resizable: false,
       maximizable: false,
+      webPreferences: {
+        nodeIntegration: true,
+      },
     });
 
     this._window.loadURL(`file://${path.join(__dirname, 'app/preferences-window/index.html')}`);
