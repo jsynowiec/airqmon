@@ -8,7 +8,7 @@ import ThemedWindow from 'app/ThemedWindow';
 
 interface IPreferencesWindowState extends IUserSettings {}
 
-class PreferencesWindow extends React.Component<{}, IPreferencesWindowState> {
+class PreferencesWindow extends React.Component<{}, Partial<IPreferencesWindowState>> {
   constructor(props) {
     super(props);
 

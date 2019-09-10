@@ -61,7 +61,7 @@ class ConfigStore<T> {
     });
   }
 
-  get store(): T {
+  get store(): Partial<T> {
     return this._store.store;
   }
 
