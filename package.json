@@ -4,7 +4,7 @@
   "version": "2.0.0",
   "main": "build/main.js",
   "engines": {
-    "node": ">=10.13 <11"
+    "node": "12.0.0"
   },
   "license": "Apache-2.0",
   "author": "Jakub Synowiec <github@jakubsynowiec.info>",
@@ -16,7 +16,7 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
-    "start": "gulp start"
+    "start": "gulp build && (gulp watch & gulp start & wait)"
   },
   "repository": {
     "type": "git",
@@ -33,7 +33,7 @@
     "@types/enzyme-adapter-react-16": "~1.0.1",
     "@types/jest": "~24.0.18",
     "@types/lodash": "~4.14.123",
-    "@types/node": "~10.14.17",
+    "@types/node": "~12.0.0",
     "@types/react": "~16.9.2",
     "@types/react-dom": "~16.9.0",
     "@types/semver": "~6.0.0",
@@ -46,10 +46,10 @@
     "enzyme": "~3.10.0",
     "enzyme-adapter-react-16": "~1.14.0",
     "enzyme-to-json": "~3.4.0",
-    "gulp": "~3.9.1",
+    "gulp": "~4.0.0",
     "gulp-cached": "~1.1.1",
+    "gulp-cli": "~2.2.0",
     "gulp-less": "~4.0.0",
-    "gulp-sequence": "~1.0.0",
     "gulp-sourcemaps": "~2.6.4",
     "gulp-tslint": "~8.1.2",
     "gulp-typescript": "~5.0.1",

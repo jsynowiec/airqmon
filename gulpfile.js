@@ -1,10 +1,7 @@
-const { promisify } = require('util');
-
+const gulp = require('gulp');
 const cache = require('gulp-cached');
 const electron = require('electron-connect').server.create();
 const electronPackager = require('electron-packager');
-const gulp = require('gulp');
-const gulpSequence = require('gulp-sequence');
 const less = require('gulp-less');
 const del = require('del');
 const ts = require('gulp-typescript');
@@ -13,11 +10,11 @@ const gulpTslint = require('gulp-tslint');
 const tslint = require('tslint');
 const useref = require('gulp-useref');
 
-gulp.task('clean', (cb) => {
+gulp.task('clean', () => {
   return del(['out', 'build', 'coverage', '*.log']);
 });
 
-gulp.task('tslint', () => {
+gulp.task('lint', () => {
   const program = tslint.Linter.createProgram('tsconfig.release.json');
 
   return gulp
@@ -75,41 +72,50 @@ gulp.task('build:styles', () => {
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('watch', ['build'], () => {
-  gulp.watch(['src/**/*.{ts,tsx}', '!**/*.d.ts'], ['build:scripts']);
-  gulp.watch(['src/**/*.html'], ['build:html']);
-  gulp.watch(['src/**/*.less'], ['build:styles']);
-
-  gulp.watch(['build/**/*.js'], electron.restart);
-  gulp.watch(['build/index.css'], electron.reload);
-  gulp.watch(['build/**/*.html'], electron.reload);
-});
-
-gulp.task('electron:start', () => {
-  electron.start();
-});
-
-gulp.task('electron:package', () => {
-  return electronPackager({
-    name: 'Airqmon',
-    appCategoryType: 'public.app-category.weather',
-    dir: './',
-    ignore: ['^/src', '^/__tests__', '^/coverage'],
-    asar: true,
-    icon: './assets/airqmon.icns',
-    overwrite: true,
-    packageManager: 'yarn',
-    out: './out',
-    arch: 'x64',
-    platform: 'darwin',
-    darwinDarkModeSupport: true,
-  });
-});
-
-gulp.task('build', gulpSequence('clean', ['build:scripts', 'build:html', 'build:styles']));
 gulp.task(
-  'build:release',
-  gulpSequence('clean', ['build:scripts:release', 'build:html:release', 'build:styles']),
+  'build',
+  gulp.series('clean', 'lint', gulp.parallel('build:scripts', 'build:html', 'build:styles')),
 );
-gulp.task('start', gulpSequence('watch', 'electron:start'));
-gulp.task('package', gulpSequence('build:release', 'electron:package'));
+
+gulp.task(
+  'release',
+  gulp.series(
+    gulp.series(
+      'clean',
+      'lint',
+      gulp.parallel('build:scripts:release', 'build:html:release', 'build:styles'),
+    ),
+    () => {
+      return electronPackager({
+        name: 'Airqmon',
+        appCategoryType: 'public.app-category.weather',
+        dir: './',
+        ignore: ['^/src', '^/__tests__', '^/coverage'],
+        asar: true,
+        icon: './assets/airqmon.icns',
+        overwrite: true,
+        packageManager: 'yarn',
+        out: './out',
+        arch: 'x64',
+        platform: 'darwin',
+        darwinDarkModeSupport: true,
+      });
+    },
+  ),
+);
+
+exports.start = (done) => {
+  electron.start();
+};
+
+exports.watch = (done) => {
+  gulp.watch(['src/**/*.{ts,tsx}', '!**/*.d.ts'], gulp.series('build:scripts'));
+  gulp.watch('src/**/*.html', gulp.series('build:html'));
+  gulp.watch('src/**/*.less', gulp.series('build:styles'));
+
+  gulp.watch('build/**/*.js', electron.restart);
+  gulp.watch('build/index.css', electron.reload);
+  gulp.watch('build/**/*.html', electron.reload);
+
+  done();
+};
