@@ -7,9 +7,13 @@ interface IThemedWindowProps {
 }
 
 const ThemedWindow: React.FunctionComponent<IThemedWindowProps> = (props) => {
-  const theme = useContext(ThemeContext);
+  const themeContext = useContext(ThemeContext);
 
-  return <div className={`window ${props.name}-window ${theme}-theme`}>{props.children}</div>;
+  return (
+    <div className={`window ${props.name}-window ${themeContext.theme}-theme`}>
+      {props.children}
+    </div>
+  );
 };
 
 export default ThemedWindow;

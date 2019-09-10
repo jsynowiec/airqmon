@@ -1,8 +1,10 @@
 import { ipcRenderer } from 'electron';
 import * as React from 'react';
+import { useContext } from 'react';
 
 import IPC_EVENTS from 'common/ipc-events';
 import { SensorStation } from 'data/airqmon-api';
+import { ThemeContext } from '../ThemeContext';
 
 const StationInfo = ({ station, distance }: { station: SensorStation; distance: number }) => {
   function handleExtLinkClick(url: string, event: MouseEvent) {
@@ -10,9 +12,12 @@ const StationInfo = ({ station, distance }: { station: SensorStation; distance: 
     ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
   }
 
+  const themeContext = useContext(ThemeContext);
+
   const providerLink = station.provider.url ? (
     <a
       className="link data-provider"
+      style={{ color: `#${themeContext.accentColor}` }}
       href="#"
       onClick={handleExtLinkClick.bind(this, station.provider.url)}
     >
