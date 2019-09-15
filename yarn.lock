@@ -2168,10 +2168,10 @@ electron-store@~5.0.0:
     conf "^6.0.0"
     type-fest "^0.7.1"
 
-electron@~5.0.10:
-  version "5.0.10"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-5.0.10.tgz#a3819c3ff8d05ee57315bfabe2d61d3529f5659c"
-  integrity sha512-OSyxTlJ+7Yf0B+6pTdHdxY9RvI4U+mVKAbn+CkAOWxlCPMg3K+jt5UHKSPRRLnXQhQ0Tulg4vupbC0k27aukVw==
+electron@~6.0.8:
+  version "6.0.8"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-6.0.8.tgz#355c3281b0b7d6e6291c624b4122fd3c5d452c04"
+  integrity sha512-RbGDT0kySEvUFvk1nEw/theCGIVRhUcwZdtShm81r3gz1Z1qQZuL+XxVObygCBtNOQmn0CJZAjRDGOK5XKuIMA==
   dependencies:
     "@types/node" "^10.12.18"
     electron-download "^4.1.0"
