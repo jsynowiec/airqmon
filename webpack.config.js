@@ -1,0 +1,118 @@
+const path = require('path');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require('webpack');
+
+const pkg = require('./package.json');
+
+const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
+const watch = process.env.WEBPACK_WATCH === 'true';
+
+const buildPath = path.resolve(__dirname, 'build');
+
+function srcPath(subdir) {
+  return path.join(__dirname, 'src', subdir);
+}
+
+const base = {
+  mode,
+  watch,
+  devtool: mode == 'development' ? 'source-map' : false,
+  output: {
+    path: buildPath,
+    chunkFilename: '[name].chunk.js',
+    filename: '[name].js',
+  },
+  node: {
+    Buffer: false,
+    buffer: false,
+    __dirname: false,
+    __filename: false,
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    alias: {
+      '@root': __dirname,
+      app: srcPath('app'),
+      common: srcPath('common'),
+      data: srcPath('data'),
+    },
+  },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              configFile: `tsconfig${mode == 'production' ? '.release' : ''}.json`,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.less$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
+      },
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
+        test: /\.(png|jpg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
+      },
+      {
+        test: /\.(eot|woff|ttf)$/,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
+      },
+    ],
+  },
+};
+
+const renderPlugins = [
+  new HtmlWebpackPlugin({ title: 'Airqmon', chunks: ['main'], filename: 'main.html' }),
+  new HtmlWebpackPlugin({
+    title: 'Preferences',
+    chunks: ['preferencesWindow'],
+    filename: 'preferencesWindow.html',
+  }),
+  new MiniCssExtractPlugin({ filename: '[name].css' }),
+  new webpack.ProvidePlugin({ React: 'react' }),
+];
+if (mode === 'production') {
+  renderPlugins.push(new BundleAnalyzerPlugin());
+}
+const renderer = {
+  ...base,
+  target: 'electron-renderer',
+  output: {
+    ...base.output,
+    path: path.resolve(base.output.path, 'renderer'),
+  },
+  entry: {
+    main: path.resolve(__dirname, 'src/app/entry.tsx'),
+    preferencesWindow: path.resolve(__dirname, 'src/app/preferences-window/entry.tsx'),
+  },
+  plugins: renderPlugins,
+};
+
+const main = {
+  ...base,
+  target: 'electron-main',
+  entry: {
+    main: path.resolve(__dirname, 'src/main.ts'),
+  },
+};
+
+module.exports = [main, renderer];

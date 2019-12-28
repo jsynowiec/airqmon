@@ -1,4 +1,4 @@
-import 'module-alias/register';
+import './PreferencesWindow.less';
 
 import * as React from 'react';
 import { render } from 'react-dom';
@@ -15,5 +15,5 @@ render(
   <ThemeStore>
     <PreferencesWindow />
   </ThemeStore>,
-  document.getElementById('preferences'),
+  document.body.appendChild(document.createElement('div')),
 );

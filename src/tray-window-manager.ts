@@ -30,7 +30,7 @@ class TrayWindowManager {
       transparent: true,
       ...config,
     });
-    this._window.loadURL(`file://${path.join(__dirname, 'app/index.html')}`);
+    this._window.loadFile(path.resolve(__dirname, 'renderer', 'main.html'));
 
     if (isDev) {
       this._window.webContents.openDevTools({ mode: 'detach' });

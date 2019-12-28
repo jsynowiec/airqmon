@@ -4,19 +4,19 @@
   "version": "2.0.0",
   "main": "build/main.js",
   "engines": {
-    "node": "12.4.0"
+    "node": ">=12.4.0 <13"
   },
   "license": "Apache-2.0",
   "author": "Jakub Synowiec <github@jakubsynowiec.info>",
   "scripts": {
-    "clean": "gulp clean",
-    "build:watch": "gulp watch",
-    "build": "gulp build",
-    "package": "gulp package",
+    "clean": "node bin/clean.js",
+    "build": "yarn run clean && webpack",
+    "build:watch": "WEBPACK_WATCH=true yarn run build",
+    "package": "NODE_ENV=production yarn run build && node bin/pack.js",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
-    "start": "gulp build && gulp watch"
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
@@ -39,29 +39,30 @@
     "@types/semver": "~6.0.0",
     "@types/universal-analytics": "~0.4.3",
     "@types/uuid": "~3.4.4",
+    "css-loader": "~3.4.0",
     "del": "~5.1.0",
     "electron": "~6.0.8",
-    "electron-connect": "~0.6.3",
     "electron-packager": "~14.0.6",
     "enzyme": "~3.10.0",
     "enzyme-adapter-react-16": "~1.14.0",
     "enzyme-to-json": "~3.4.0",
-    "gulp": "~4.0.0",
-    "gulp-cached": "~1.1.1",
-    "gulp-cli": "~2.2.0",
-    "gulp-less": "~4.0.0",
-    "gulp-sourcemaps": "~2.6.4",
-    "gulp-tslint": "~8.1.2",
-    "gulp-typescript": "~5.0.1",
-    "gulp-useref": "~3.1.3",
+    "file-loader": "~5.0.2",
+    "html-webpack-plugin": "~3.2.0",
     "jest": "~24.9.0",
+    "less": "~3.10.3",
+    "less-loader": "~5.0.0",
+    "mini-css-extract-plugin": "~0.9.0",
     "prettier": "~1.18.2",
     "ts-jest": "~24.0.2",
+    "ts-loader": "~6.2.1",
     "tslint": "~5.19.0",
     "tslint-config-prettier": "~1.18.0",
     "tslint-eslint-rules": "~5.4.0",
     "tslint-react": "~4.0.0",
-    "typescript": "~3.5.2"
+    "typescript": "~3.5.2",
+    "webpack": "~4.41.5",
+    "webpack-bundle-analyzer": "~3.6.0",
+    "webpack-cli": "~3.3.10"
   },
   "dependencies": {
     "apollo-boost": "~0.4.4",
@@ -70,7 +71,6 @@
     "electron-store": "~5.0.0",
     "graphql": "~14.5.4",
     "lodash": "~4.17.13",
-    "module-alias": "~2.2.0",
     "photon": "https://github.com/connors/photon.git#v0.1.2-alpha",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
@@ -79,11 +79,5 @@
     "universal-analytics": "~0.4.16",
     "uuid": "~3.3.2",
     "winston": "~3.2.1"
-  },
-  "_moduleAliases": {
-    "@root": ".",
-    "app": "build/app",
-    "common": "build/common",
-    "data": "build/data"
   }
 }

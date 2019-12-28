@@ -1,5 +1,3 @@
-import 'module-alias/register';
-
 import * as React from 'react';
 import { render } from 'react-dom';
 
@@ -22,4 +20,4 @@ getVisitor()
   .screenview('Tray window', 'Airqmon')
   .send();
 
-render(<App />, document.getElementById('app'));
+render(<App />, document.body.appendChild(document.createElement('div')));

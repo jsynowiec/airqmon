@@ -20,7 +20,7 @@ export default class PreferencesWindowManager {
       },
     });
 
-    this._window.loadURL(`file://${path.join(__dirname, 'app/preferences-window/index.html')}`);
+    this._window.loadFile(path.resolve(__dirname, 'renderer', 'preferencesWindow.html'));
 
     if (isDev) {
       this._window.webContents.openDevTools({ mode: 'detach' });

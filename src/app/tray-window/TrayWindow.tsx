@@ -1,3 +1,5 @@
+import './TrayWindow.less';
+
 import * as React from 'react';
 
 import { ApiError, SensorStation } from 'data/airqmon-api';
