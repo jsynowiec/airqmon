@@ -1,9 +1,8 @@
 [![GitHub release][badge-github-release]][airqmon-latest-release]
 [![David][badge-david-deps]][david]
 [![License][badge-license]][license]
-[![Donate][badge-donate]][donate]
 
-# <img src="https://user-images.githubusercontent.com/1029142/32918679-7336704a-cb23-11e7-92b2-d8a7f2588055.png" width="60px" align="center" alt="Airqmon icon" /> Airqmon
+# <img src="https://user-images.githubusercontent.com/1029142/32918679-7336704a-cb23-11e7-92b2-d8a7f2588055.png" width="38px" alt="Airqmon icon" align="top" /> Airqmon
 
 A macOS menu bar application that displays live air quality data from the nearest sensor station. It can also notify you when the air quality index changes or when a new, closer station is found.
 
@@ -50,13 +49,7 @@ Airqmon tracks some usage data, like window displays or CAQI index changes, and 
 
 You can opt-out from sending the telemetry, but not from sending error reports.
 
-## Sponsors & donations
-
-If you would like to show your appreciation, feel free to use the link below.
-
-[![Donate][badge-donate]][donate]
-
-### Credits
+## Sponsors
 
 <p>This project is supported by:</p>
 <p>
@@ -65,10 +58,13 @@ If you would like to show your appreciation, feel free to use the link below.
   </a>
 </p>
 
-My sincere thanks to the following individuals for helping to keep this project running and free.
+### Credits
 
-- [thymikee](https://github.com/thymikee),
-- [kdzwinel](https://github.com/kdzwinel),
+My sincere thanks to the following individuals for helping me with beta testing and for donating 🙏
+
+[![Michał Pierzchała](https://github.com/thymikee.png?size=50)](https://github.com/thymikee) | [![Konrad Dzwinel](https://github.com/kdzwinel.png?size=50)](https://github.com/kdzwinel)
+---|---
+[Michał Pierzchała](https://github.com/thymikee) | [Konrad Dzwinel](https://github.com/kdzwinel)
 
 ## License
 
@@ -77,9 +73,7 @@ This app is an open-source software licensed under the [Apache License, Version 
 [license]: https://raw.githubusercontent.com/jsynowiec/airqmon/master/LICENSE
 [airqmon-latest-release]: https://github.com/jsynowiec/airqmon/releases/latest
 [david]: http://david-dm.org/jsynowiec/airqmon
-[donate]: https://paypal.me/jaqb/5eur
 [badge-github-release]: https://img.shields.io/github/release/jsynowiec/airqmon.svg
 [badge-license]: https://img.shields.io/github/license/jsynowiec/airqmon.svg
 [badge-david-deps]: https://img.shields.io/david/jsynowiec/airqmon.svg
-[badge-donate]: https://img.shields.io/badge/☕-buy%20me%20a%20coffee-46b798.svg
 [airly]: https://airly.eu/
