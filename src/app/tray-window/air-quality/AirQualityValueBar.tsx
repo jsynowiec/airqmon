@@ -71,7 +71,7 @@ class AirQualityValueBar extends React.Component<
     };
   }
 
-  render() {
+  render(): JSX.Element {
     const airQualityMeta = getCAQIMeta(Math.round(this.props.airQualityIndex));
 
     const caqiValueBlocks = CAQI_INDEX.reduce((acc, currentValue, currentIndex) => {
@@ -88,7 +88,7 @@ class AirQualityValueBar extends React.Component<
       <div className="air-quality__value-bar">
         <div
           className="air-quality__value-bar__values"
-          ref={(node) => {
+          ref={(node): void => {
             this.valueBarNode = node;
           }}
         >
@@ -102,7 +102,7 @@ class AirQualityValueBar extends React.Component<
         <div
           className={`air-quality__value-bar__overlay quality-${airQualityMeta.index}`}
           style={this.getOverlayStyle()}
-          ref={(node) => {
+          ref={(node): void => {
             this.overlayNode = node;
           }}
         >

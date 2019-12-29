@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql, DocumentNode } from 'apollo-boost';
 
 export const getNearestLocationQuery = ({
   latitude,
@@ -6,7 +6,7 @@ export const getNearestLocationQuery = ({
 }: {
   latitude: number;
   longitude: number;
-}) => gql`
+}): DocumentNode => gql`
 {
   nearestSensorStation(location: {latitude: ${latitude}, longitude: ${longitude}}) {
     distance
@@ -27,7 +27,7 @@ export const getNearestLocationQuery = ({
 }
 `;
 
-export const getStationMeasurementsQuery = (id: string) => gql`
+export const getStationMeasurementsQuery = (id: string): DocumentNode => gql`
 {
   sensorStation(id: "${id}") {
     measurements {

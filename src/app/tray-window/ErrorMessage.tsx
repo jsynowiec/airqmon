@@ -5,7 +5,7 @@ interface IErrorMessageProps {
   children: JSX.Element;
 }
 
-const ErrorMessage = ({ header = null, children }: IErrorMessageProps) => {
+const ErrorMessage = ({ header = null, children }: IErrorMessageProps): JSX.Element => {
   const messageHeader =
     header === null ? null : <div className="error-message__header">{header}</div>;
 

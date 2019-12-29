@@ -23,7 +23,7 @@ class Content extends React.Component<IContentProps> {
     super(props);
   }
 
-  render() {
+  render(): JSX.Element {
     if (this.props.connectionStatus === false) {
       return (
         <ErrorMessage header="There is no Internet connection">

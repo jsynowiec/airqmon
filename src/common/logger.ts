@@ -1,4 +1,4 @@
-import { createLogger, format, transports } from 'winston';
+import { createLogger, format, transports, Logger } from 'winston';
 const { combine, timestamp, label, printf } = format;
 
 import { remote } from 'electron';
@@ -30,7 +30,7 @@ if (isDev) {
   logger.add(new transports.Console());
 }
 
-export default function getLogger(label?: string) {
+export default function getLogger(label?: string): Logger {
   if (!label) {
     return logger;
   }

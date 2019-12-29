@@ -14,7 +14,7 @@ class ErrorBoundary extends React.Component<{}, IErrorBoundaryState> {
     this.state = { hasError: false };
   }
 
-  componentDidCatch(error) {
+  componentDidCatch(error): void {
     this.setState({ hasError: true });
     if (!isDev) {
       errorHandler.error(error);
@@ -23,7 +23,7 @@ class ErrorBoundary extends React.Component<{}, IErrorBoundaryState> {
     }
   }
 
-  render() {
+  render(): JSX.Element {
     let content = this.props.children;
 
     if (this.state.hasError) {

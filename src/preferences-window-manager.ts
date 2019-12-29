@@ -32,11 +32,11 @@ export default class PreferencesWindowManager {
     });
   }
 
-  get window() {
+  get window(): BrowserWindow {
     return this._window;
   }
 
-  showWindow() {
+  showWindow(): void {
     this._window.setVisibleOnAllWorkspaces(true);
     this._window.center();
     this._window.show();
@@ -44,7 +44,7 @@ export default class PreferencesWindowManager {
     this._window.setVisibleOnAllWorkspaces(false);
   }
 
-  closeWindow() {
+  closeWindow(): void {
     this._window.destroy();
   }
 }

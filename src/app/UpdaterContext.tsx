@@ -24,7 +24,7 @@ class UpdaterStore extends React.Component<{}, IUpdaterContextState> {
     this.state = DEFAULT_STATE;
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     updateChecker.on('update-available', (version, url) => {
       this.setState({
         version,
@@ -35,7 +35,7 @@ class UpdaterStore extends React.Component<{}, IUpdaterContextState> {
     });
   }
 
-  private notify() {
+  private notify(): void {
     const { version, url } = this.state;
 
     new Notification('Update available', {
@@ -49,7 +49,7 @@ class UpdaterStore extends React.Component<{}, IUpdaterContextState> {
     });
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <UpdaterContext.Provider
         value={{

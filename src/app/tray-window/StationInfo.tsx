@@ -6,12 +6,18 @@ import IPC_EVENTS from 'common/ipc-events';
 import { SensorStation } from 'data/airqmon-api';
 import { ThemeContext } from '../ThemeContext';
 
-const StationInfo = ({ station, distance }: { station: SensorStation; distance: number }) => {
-  function handleExtLinkClick(url: string, event: MouseEvent) {
-    event.preventDefault();
-    ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
-  }
+function handleExtLinkClick(url: string, event: MouseEvent): void {
+  event.preventDefault();
+  ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
+}
 
+const StationInfo = ({
+  station,
+  distance,
+}: {
+  station: SensorStation;
+  distance: number;
+}): JSX.Element => {
   const themeContext = useContext(ThemeContext);
 
   const providerLink = station.provider.url ? (

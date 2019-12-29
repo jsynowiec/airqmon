@@ -62,7 +62,7 @@ const apolloClient: ApolloClient<InMemoryCache> = new ApolloClient({
   uri: GQL_API_URL,
 });
 
-const logApolloErrors = (reason: ApolloError) => {
+const logApolloErrors = (reason: ApolloError): void => {
   if (reason.graphQLErrors) {
     reason.graphQLErrors.forEach((err) => {
       logger.error(err);

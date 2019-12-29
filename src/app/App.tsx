@@ -74,7 +74,7 @@ class App extends React.Component<{}, IAppState> {
     });
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     ipcRenderer.on(IPC_EVENTS.CONN_STATUS_CHANGED, async (_, status: 'online' | 'offline') => {
       let newState: IDataAppState = {
         connectionStatus: status === 'online',
@@ -144,7 +144,7 @@ class App extends React.Component<{}, IAppState> {
     );
   }
 
-  async setLocation() {
+  async setLocation(): Promise<void> {
     this.clearLocationTimer();
 
     await this.setState({
@@ -168,7 +168,7 @@ class App extends React.Component<{}, IAppState> {
     }
   }
 
-  async init() {
+  async init(): Promise<void> {
     this.clearInitTimer();
 
     await this.setState({
@@ -218,7 +218,7 @@ class App extends React.Component<{}, IAppState> {
     }
   }
 
-  async refreshData() {
+  async refreshData(): Promise<void> {
     const { id } = this.state.sensorStation;
     const [measurements, apiError] = await catcher(getStationMeasurements(id));
 
@@ -246,7 +246,7 @@ class App extends React.Component<{}, IAppState> {
           const aqchangeNotif = new Notification('Air quality changed', {
             body: label,
           });
-          aqchangeNotif.onclick = () => {
+          aqchangeNotif.onclick = (): void => {
             ipcRenderer.send(IPC_EVENTS.SHOW_WINDOW);
           };
         }
@@ -281,7 +281,7 @@ class App extends React.Component<{}, IAppState> {
     }
   }
 
-  enableRefreshTimer() {
+  enableRefreshTimer(): void {
     this.clearRefreshTimer();
 
     this.refreshTimer = new Interval(() => {
@@ -289,7 +289,7 @@ class App extends React.Component<{}, IAppState> {
     }, this.state.refreshMeasurementsIntervalMeta.value);
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <UpdaterStore>
         <ThemeStore>

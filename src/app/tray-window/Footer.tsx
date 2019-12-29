@@ -7,16 +7,16 @@ interface IFooterProps {
   isAutoRefreshEnabled: boolean;
 }
 
-const Footer = ({ isAutoRefreshEnabled }: IFooterProps) => {
-  const handlePreferencesClick = () => {
+const Footer = ({ isAutoRefreshEnabled }: IFooterProps): JSX.Element => {
+  const handlePreferencesClick: HTMLButtonElementMouseEventHandler = () => {
     ipcRenderer.send(IPC_EVENTS.SHOW_PREFERENCES_WINDOW);
   };
 
-  const handleQuitClick = () => {
+  const handleQuitClick: HTMLButtonElementMouseEventHandler = () => {
     ipcRenderer.send(IPC_EVENTS.CLOSE_WINDOW);
   };
 
-  const handleRefreshClick = () => {
+  const handleRefreshClick: HTMLButtonElementMouseEventHandler = () => {
     userSettings.set('refreshMeasurements', !isAutoRefreshEnabled);
   };
 

@@ -4,7 +4,7 @@ interface ILoaderProps {
   message?: string;
 }
 
-const Loader = ({ message }: ILoaderProps = { message: 'Loading data' }) => {
+const Loader = ({ message }: ILoaderProps = { message: 'Loading data' }): JSX.Element => {
   return (
     <div className="centered-content">
       <div className="loader">

@@ -4,7 +4,7 @@ import { getCAQIMeta } from 'common/caqi';
 
 import AirQualityValueBar from 'app/tray-window/air-quality/AirQualityValueBar';
 
-const AirQualityInfo = ({ airQualityIndex }: { airQualityIndex: number }) => {
+const AirQualityInfo = ({ airQualityIndex }: { airQualityIndex: number }): JSX.Element => {
   const airQualityMeta = getCAQIMeta(Math.round(airQualityIndex));
 
   return (

@@ -47,7 +47,7 @@ export const REFRESH_INTERVAL: IRefreshIntervalMeta[] = [
   },
 ];
 
-export function getRefreshIntervalMeta(interval: Intervals) {
+export function getRefreshIntervalMeta(interval: Intervals): IRefreshIntervalMeta {
   return REFRESH_INTERVAL.find((value) => value.id === interval);
 }
 

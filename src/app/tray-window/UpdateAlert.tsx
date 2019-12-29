@@ -5,14 +5,15 @@ import { useContext, MouseEvent } from 'react';
 import { UpdaterContext } from 'app/UpdaterContext';
 import IPC_EVENTS from 'common/ipc-events';
 
-function handleExtLinkClick(url: string, event: MouseEvent) {
+function handleExtLinkClick(url: string, event: MouseEvent): void {
   event.preventDefault();
   ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
 }
 
 const UpdateAlert: React.FunctionComponent = () => {
   const { url } = useContext(UpdaterContext);
-  const onClickHandler = (event: MouseEvent) => handleExtLinkClick(url, event);
+  const onClickHandler: HTMLAnchorElementMouseEventHandler = (event) =>
+    handleExtLinkClick(url, event);
 
   if (!url) return null;
 
