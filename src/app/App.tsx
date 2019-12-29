@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import TrayWindow from 'app/tray-window/TrayWindow';
 import { getVisitor } from 'common/analytics';
-import { getCAQIMeta } from 'common/caqi';
+import { getAQIndexMetadataForValue, DEFAULT_AQ_INDEX } from 'common/air-quality';
 import { getLocation, Location } from 'common/geolocation';
 import { catcher } from 'common/helpers';
 import IPC_EVENTS from 'common/ipc-events';
@@ -231,8 +231,14 @@ class App extends React.Component<{}, IAppState> {
     }
 
     if (this.state.sensorStation.measurements) {
-      const oldCAQIMeta = getCAQIMeta(Math.round(this.state.sensorStation.measurements.caqi));
-      const newCAQIMeta = getCAQIMeta(Math.round(measurements.caqi));
+      const oldCAQIMeta = getAQIndexMetadataForValue(
+        DEFAULT_AQ_INDEX,
+        Math.round(this.state.sensorStation.measurements.caqi),
+      );
+      const newCAQIMeta = getAQIndexMetadataForValue(
+        DEFAULT_AQ_INDEX,
+        Math.round(measurements.caqi),
+      );
 
       const label = `Air quality changed from ${oldCAQIMeta.labels.airQuality.toLowerCase()} to ${newCAQIMeta.labels.airQuality.toLowerCase()}. ${
         newCAQIMeta.advisory

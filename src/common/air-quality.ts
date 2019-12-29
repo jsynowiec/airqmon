@@ -1,6 +1,6 @@
 // tslint:disable:max-line-length
 
-export interface ICAQIMetadata {
+export type AQIndexMetadata = {
   index: number;
   values: {
     min: number;
@@ -12,18 +12,20 @@ export interface ICAQIMetadata {
   };
   advisory: string;
   description: string;
+};
+
+export enum AQIndex {
+  CAQI = 'CAQI',
 }
 
-export const CAQI_MIN_VAL = 0;
-export const CAQI_MAX_VAL = 100;
-export const CAQI_STEP = 25;
+export const DEFAULT_AQ_INDEX = AQIndex.CAQI;
 
-export const CAQI_INDEX: ICAQIMetadata[] = [
+export const CAQI_INDEX: AQIndexMetadata[] = [
   {
     index: 0,
     values: {
-      min: CAQI_MIN_VAL,
-      max: CAQI_MIN_VAL + CAQI_STEP,
+      min: 0,
+      max: 25,
     },
     labels: {
       pollution: 'Very low',
@@ -36,8 +38,8 @@ export const CAQI_INDEX: ICAQIMetadata[] = [
   {
     index: 1,
     values: {
-      min: CAQI_MIN_VAL + CAQI_STEP,
-      max: CAQI_MIN_VAL + CAQI_STEP * 2,
+      min: 25,
+      max: 50,
     },
     labels: {
       pollution: 'Low',
@@ -50,8 +52,8 @@ export const CAQI_INDEX: ICAQIMetadata[] = [
   {
     index: 2,
     values: {
-      min: CAQI_MIN_VAL + CAQI_STEP * 2,
-      max: CAQI_MIN_VAL + CAQI_STEP * 3,
+      min: 50,
+      max: 75,
     },
     labels: {
       pollution: 'Medium',
@@ -64,8 +66,8 @@ export const CAQI_INDEX: ICAQIMetadata[] = [
   {
     index: 3,
     values: {
-      min: CAQI_MIN_VAL + CAQI_STEP * 3,
-      max: CAQI_MAX_VAL,
+      min: 75,
+      max: 100,
     },
     labels: {
       pollution: 'High',
@@ -78,7 +80,7 @@ export const CAQI_INDEX: ICAQIMetadata[] = [
   {
     index: 4,
     values: {
-      min: CAQI_MAX_VAL,
+      min: 100,
       max: Number.MAX_VALUE,
     },
     labels: {
@@ -91,8 +93,15 @@ export const CAQI_INDEX: ICAQIMetadata[] = [
   },
 ];
 
-export function getCAQIMeta(val: number): ICAQIMetadata {
-  return CAQI_INDEX.find((elem) => {
+export function getAQIndexMetadata(index: AQIndex): AQIndexMetadata[] {
+  return {
+    [AQIndex.CAQI]: CAQI_INDEX,
+  }[index];
+}
+
+export function getAQIndexMetadataForValue(index: AQIndex, val: number): AQIndexMetadata {
+  const indexMetadata = getAQIndexMetadata(index);
+  return indexMetadata.find((elem) => {
     return val >= elem.values.min && val <= elem.values.max;
   });
 }

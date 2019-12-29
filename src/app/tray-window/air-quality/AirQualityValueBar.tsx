@@ -1,6 +1,11 @@
 import * as React from 'react';
 
-import { CAQI_MIN_VAL, CAQI_MAX_VAL, CAQI_INDEX, ICAQIMetadata, getCAQIMeta } from 'common/caqi';
+import {
+  AQIndexMetadata,
+  DEFAULT_AQ_INDEX,
+  getAQIndexMetadata,
+  getAQIndexMetadataForValue,
+} from 'common/air-quality';
 
 interface IAirQualityValueBarProps {
   airQualityIndex: number;
@@ -10,9 +15,9 @@ interface IAirQualityValueBarState {
   hasRefs: boolean;
   elBoundingBox?: ClientRect;
   overlayElBoundingBox?: ClientRect;
-  minCAQI: ICAQIMetadata;
-  medCAQI: ICAQIMetadata;
-  maxCAQI: ICAQIMetadata;
+  minAQIndex: AQIndexMetadata;
+  medAQIndex: AQIndexMetadata;
+  maxAQIndex: AQIndexMetadata;
 }
 
 class AirQualityValueBar extends React.Component<
@@ -25,11 +30,18 @@ class AirQualityValueBar extends React.Component<
   constructor(props: IAirQualityValueBarProps) {
     super(props);
 
+    const indexMetadata = getAQIndexMetadata(DEFAULT_AQ_INDEX);
+    const AQIndexMinVal = indexMetadata[0].values.min;
+    const AQIndexMaxVal = indexMetadata[indexMetadata.length - 1].values.min;
+
     this.state = {
       hasRefs: false,
-      minCAQI: getCAQIMeta(CAQI_MIN_VAL),
-      medCAQI: getCAQIMeta((CAQI_MIN_VAL + CAQI_MAX_VAL) / 2 + 1),
-      maxCAQI: getCAQIMeta(CAQI_MAX_VAL + 1),
+      minAQIndex: getAQIndexMetadataForValue(DEFAULT_AQ_INDEX, AQIndexMinVal),
+      medAQIndex: getAQIndexMetadataForValue(
+        DEFAULT_AQ_INDEX,
+        (AQIndexMinVal + AQIndexMaxVal) / 2 + 1,
+      ),
+      maxAQIndex: getAQIndexMetadataForValue(DEFAULT_AQ_INDEX, AQIndexMaxVal + 1),
     };
   }
 
@@ -72,14 +84,18 @@ class AirQualityValueBar extends React.Component<
   }
 
   render(): JSX.Element {
-    const airQualityMeta = getCAQIMeta(Math.round(this.props.airQualityIndex));
+    const indexMetadata = getAQIndexMetadata(DEFAULT_AQ_INDEX);
+    const airQualityMeta = getAQIndexMetadataForValue(
+      DEFAULT_AQ_INDEX,
+      Math.round(this.props.airQualityIndex),
+    );
 
-    const caqiValueBlocks = CAQI_INDEX.reduce((acc, currentValue, currentIndex) => {
+    const AQIndexHTMLElements: JSX.Element[] = indexMetadata.reduce((acc, cVal, cIdx) => {
       return [
         ...acc,
-        <div key={currentValue.index} className={`quality-${currentValue.index}`}>
-          {currentIndex == 0 ? currentValue.values.min : null}
-          {currentIndex == CAQI_INDEX.length - 1 ? `${currentValue.values.min}+` : null}
+        <div key={cVal.index} className={`quality-${cVal.index}`}>
+          {cIdx == 0 ? cVal.values.min : null}
+          {cIdx == indexMetadata.length - 1 ? `${cVal.values.min}+` : null}
         </div>,
       ];
     }, []);
@@ -92,12 +108,12 @@ class AirQualityValueBar extends React.Component<
             this.valueBarNode = node;
           }}
         >
-          {caqiValueBlocks}
+          {AQIndexHTMLElements}
         </div>
         <div className="air-quality__value-bar__description">
-          <div>{this.state.minCAQI.labels.airQuality}</div>
-          <div>{this.state.medCAQI.labels.airQuality}</div>
-          <div>{this.state.maxCAQI.labels.airQuality}</div>
+          <div>{this.state.minAQIndex.labels.airQuality}</div>
+          <div>{this.state.medAQIndex.labels.airQuality}</div>
+          <div>{this.state.maxAQIndex.labels.airQuality}</div>
         </div>
         <div
           className={`air-quality__value-bar__overlay quality-${airQualityMeta.index}`}

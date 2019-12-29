@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import { getCAQIMeta } from 'common/caqi';
+import { getAQIndexMetadataForValue, DEFAULT_AQ_INDEX } from 'common/air-quality';
 
 import AirQualityValueBar from 'app/tray-window/air-quality/AirQualityValueBar';
 
 const AirQualityInfo = ({ airQualityIndex }: { airQualityIndex: number }): JSX.Element => {
-  const airQualityMeta = getCAQIMeta(Math.round(airQualityIndex));
+  const airQualityMeta = getAQIndexMetadataForValue(DEFAULT_AQ_INDEX, Math.round(airQualityIndex));
 
   return (
     <div className="air-quality">

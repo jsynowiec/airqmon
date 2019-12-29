@@ -1,6 +1,6 @@
 import { app, ipcMain, shell, powerMonitor } from 'electron';
 
-import { getCAQIMeta } from 'common/caqi';
+import { getAQIndexMetadataForValue, DEFAULT_AQ_INDEX } from 'common/air-quality';
 import IPC_EVENTS from 'common/ipc-events';
 import { IUserSettings } from 'common/user-settings';
 import { Measurements } from 'data/airqmon-api';
@@ -67,7 +67,10 @@ ipcMain.on(IPC_EVENTS.CONN_STATUS_CHANGED, (_, status: 'online' | 'offline') => 
 });
 
 ipcMain.on(IPC_EVENTS.AIR_Q_DATA_UPDATED, (_, measurements: Measurements) => {
-  const airQualityLabel = getCAQIMeta(Math.round(measurements.caqi)).labels.airQuality;
+  const airQualityLabel = getAQIndexMetadataForValue(
+    DEFAULT_AQ_INDEX,
+    Math.round(measurements.caqi),
+  ).labels.airQuality;
 
   trayWindowManager.updateTray({
     title: measurements.caqi.toFixed(0),
