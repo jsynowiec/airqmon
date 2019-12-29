@@ -16,7 +16,7 @@ A macOS menu bar application that displays live air quality data from the neares
 
 Supported data providers:
 
-- [Airly][airly] (Poland and a few sensors in different countries),
+- [Airly][airly] (lots of active sensors in 🇵🇱 and a few in main cities of 🇩🇪🇬🇧🇳🇱🇧🇪🇸🇮),
 
 ## Installation
 
@@ -62,9 +62,9 @@ You can opt-out from sending the telemetry, but not from sending error reports.
 
 My sincere thanks to the following individuals for helping me with beta testing and for donating 🙏
 
-[![Michał Pierzchała](https://github.com/thymikee.png?size=50)](https://github.com/thymikee) | [![Konrad Dzwinel](https://github.com/kdzwinel.png?size=50)](https://github.com/kdzwinel)
----|---
-[Michał Pierzchała](https://github.com/thymikee) | [Konrad Dzwinel](https://github.com/kdzwinel)
+| [![Michał Pierzchała](https://github.com/thymikee.png?size=50)](https://github.com/thymikee) | [![Konrad Dzwinel](https://github.com/kdzwinel.png?size=50)](https://github.com/kdzwinel) |
+| -------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| [Michał Pierzchała](https://github.com/thymikee)                                             | [Konrad Dzwinel](https://github.com/kdzwinel)                                             |
 
 ## License
 
