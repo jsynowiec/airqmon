@@ -1,0 +1,4 @@
+
+**/*.js
+/__tests__/**
+/custom.d.ts

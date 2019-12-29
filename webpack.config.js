@@ -54,6 +54,7 @@ const base = {
               configFile: `tsconfig${mode == 'production' ? '.release' : ''}.json`,
             },
           },
+          'eslint-loader',
         ],
       },
       {
