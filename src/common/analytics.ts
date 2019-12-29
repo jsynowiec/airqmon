@@ -5,12 +5,13 @@ import * as uuid from 'uuid';
 import * as isDev from 'electron-is-dev';
 import { userSettings } from 'common/user-settings';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const keys = require('@root/keys.json');
 
 let clientID: string = null;
 let visitor: ua.Visitor = null;
 
-export function getVisitor() {
+export function getVisitor(): ua.Visitor {
   if (visitor != null) {
     return visitor;
   }
@@ -34,8 +35,9 @@ export function getVisitor() {
   visitor.set('av', app.getVersion());
 
   if (isDev || !userSettings.get('telemetry')) {
-    // @ts-ignore
-    visitor.send = () => {};
+    visitor.send = (): void => {
+      return;
+    };
   }
 
   return visitor;

@@ -73,6 +73,7 @@ class TrayWindowManager {
     this._window.setPosition(position.x, position.y, false);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ipcSend(channel: string, ...args: any[]): void {
     this._window.webContents.send(channel, ...args);
   }

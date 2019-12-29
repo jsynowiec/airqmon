@@ -6,9 +6,7 @@ import IPC_EVENTS from 'common/ipc-events';
 import { IUserSettings, userSettings, REFRESH_INTERVAL } from 'common/user-settings';
 import ThemedWindow from 'app/ThemedWindow';
 
-interface IPreferencesWindowState extends IUserSettings {}
-
-class PreferencesWindow extends React.Component<{}, Partial<IPreferencesWindowState>> {
+class PreferencesWindow extends React.Component<{}, Partial<IUserSettings>> {
   constructor(props) {
     super(props);
 
@@ -30,7 +28,7 @@ class PreferencesWindow extends React.Component<{}, Partial<IPreferencesWindowSt
     this.setState(
       {
         [key]: value,
-      } as Pick<IPreferencesWindowState, K>,
+      } as Pick<IUserSettings, K>,
       () => {
         userSettings.set(key, value);
       },
@@ -61,12 +59,12 @@ class PreferencesWindow extends React.Component<{}, Partial<IPreferencesWindowSt
     this.setValue('telemetry', event.target.checked);
   }
 
-  handleExtLinkClick(url: string, event: MouseEvent) {
+  handleExtLinkClick(url: string, event: MouseEvent): void {
     event.preventDefault();
     ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
   }
 
-  render() {
+  render(): JSX.Element {
     const refreshIntervalOptions: JSX.Element[] = REFRESH_INTERVAL.reduce((acc, val) => {
       return [
         ...acc,

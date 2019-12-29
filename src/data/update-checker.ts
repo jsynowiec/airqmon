@@ -44,9 +44,9 @@ interface IUpdateChecker extends EventEmitter {
 class UpdateChecker extends EventEmitter implements IUpdateChecker {
   private checkTimer: NodeJS.Timer;
   private latestKnownVersion: string = currentVer;
-  private retries: number = 0;
+  private retries = 0;
 
-  protected updateAvailable: boolean = false;
+  protected updateAvailable = false;
 
   protected updateUrl?: string;
 

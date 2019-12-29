@@ -6,11 +6,19 @@ import getLogger from 'common/logger';
 
 const execFile = promisify(_execFile);
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const keys = require('@root/keys.json');
 
 const logger = getLogger('geolocation');
 
-function parseAirportAccessPoints(str: string) {
+type AirportAccessPoint = {
+  ssid: string;
+  macAddress: string;
+  signalStrength: number;
+  channel: number;
+};
+
+function parseAirportAccessPoints(str: string): AirportAccessPoint[] {
   const MAC_RE = /(?:[\da-f]{2}[:]{1}){5}[\da-f]{2}/i;
 
   return str.split('\n').reduce((acc, line) => {
@@ -38,7 +46,7 @@ function parseAirportAccessPoints(str: string) {
   }, []);
 }
 
-async function getwifiAccessPoints() {
+async function getwifiAccessPoints(): Promise<AirportAccessPoint[]> {
   const { stdout } = await execFile(
     '/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport',
     ['-s'],

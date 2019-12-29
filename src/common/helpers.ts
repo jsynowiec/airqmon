@@ -9,10 +9,12 @@ export function formatDateTo24Time(date: Date): string {
   return `${withLeadingZero(hours)}:${withLeadingZero(minutes)}`;
 }
 
-export function isEmptyObject(obj: Object): boolean {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isEmptyObject(obj: Record<string, any>): boolean {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function catcher<T = any, E = Error>(
   promise: Promise<T>,
 ): Promise<[T | undefined, E | null]> {

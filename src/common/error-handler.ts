@@ -1,5 +1,6 @@
 import * as Rollbar from 'rollbar';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const keys = require('@root/keys.json');
 
 const version: string = require('@root/package.json').version;
@@ -10,6 +11,7 @@ const errorHandler: Rollbar = new Rollbar({
   captureUncaught: false,
   captureUnhandledRejections: false,
   payload: {
+    // eslint-disable-next-line @typescript-eslint/camelcase
     code_version: version,
   },
 });

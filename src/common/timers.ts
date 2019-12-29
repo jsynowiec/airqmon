@@ -6,15 +6,16 @@ export interface ITimer {
 export class Interval {
   private timer: NodeJS.Timer = null;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(callback: (...args: any[]) => void, ms: number) {
     this.timer = setInterval(callback, ms);
   }
 
-  get isRunning() {
+  get isRunning(): boolean {
     return this.timer !== null;
   }
 
-  clear() {
+  clear(): void {
     if (this.isRunning) {
       clearInterval(this.timer);
       this.timer = null;
@@ -23,9 +24,10 @@ export class Interval {
 }
 
 export class Timeout {
-  private active: boolean = false;
+  private active = false;
   private timer: NodeJS.Timer = null;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(callback: (...args: any[]) => void, ms: number) {
     this.active = true;
     this.timer = setTimeout(() => {
@@ -34,11 +36,11 @@ export class Timeout {
     }, ms);
   }
 
-  get isRunning() {
+  get isRunning(): boolean {
     return this.timer != null && this.active == true;
   }
 
-  clear() {
+  clear(): void {
     if (this.isRunning) {
       clearTimeout(this.timer);
       this.timer = null;

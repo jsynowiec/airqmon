@@ -48,8 +48,8 @@ class AirQualityValueBar extends React.Component<
     top: number;
     left: number;
   } {
-    let top: number = 0;
-    let left: number = 0;
+    let top = 0;
+    let left = 0;
 
     if (this.state.hasRefs) {
       const ratio: number =
@@ -59,8 +59,8 @@ class AirQualityValueBar extends React.Component<
       left =
         this.props.airQualityIndex >= 125
           ? this.state.elBoundingBox.width - this.state.overlayElBoundingBox.width
-          : (this.state.elBoundingBox.width * ratio - this.state.overlayElBoundingBox.width) *
-            this.props.airQualityIndex /
+          : ((this.state.elBoundingBox.width * ratio - this.state.overlayElBoundingBox.width) *
+              this.props.airQualityIndex) /
             100;
     }
 

@@ -8,6 +8,7 @@ import { Measurements } from 'data/airqmon-api';
 import TrayWindowManager from './tray-window-manager';
 import PreferencesWindowManager from './preferences-window-manager';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const keys = require('@root/keys.json');
 
 let trayWindowManager: TrayWindowManager;
