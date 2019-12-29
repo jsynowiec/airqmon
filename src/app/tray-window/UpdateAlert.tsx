@@ -1,25 +1,16 @@
-import { ipcRenderer } from 'electron';
 import * as React from 'react';
-import { useContext, MouseEvent } from 'react';
+import { useContext } from 'react';
 
 import { UpdaterContext } from 'app/UpdaterContext';
-import IPC_EVENTS from 'common/ipc-events';
-
-function handleExtLinkClick(url: string, event: MouseEvent): void {
-  event.preventDefault();
-  ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
-}
+import { handleExtLinkClick } from 'common/helpers';
 
 const UpdateAlert: React.FunctionComponent = () => {
   const { url } = useContext(UpdaterContext);
-  const onClickHandler: HTMLAnchorElementMouseEventHandler = (event) =>
-    handleExtLinkClick(url, event);
-
   if (!url) return null;
 
   return (
     <div className="available-update animated slideInUp">
-      <a className="link" href="#" onClick={onClickHandler}>
+      <a className="link" href="#" onClick={handleExtLinkClick.bind(this, url)}>
         <strong>Heads up!</strong> A new version is available to download.
       </a>
     </div>

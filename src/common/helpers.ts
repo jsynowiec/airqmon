@@ -1,3 +1,6 @@
+import { ipcRenderer } from 'electron';
+import IPC_EVENTS from './ipc-events';
+
 export function withLeadingZero(val: number): string {
   return `${val >= 0 && val < 10 ? '0' : ''}${val}`; // don't care about negative values
 }
@@ -23,4 +26,9 @@ export function catcher<T = any, E = Error>(
     .catch<[undefined, E]>((err: E) => {
       return [undefined, err];
     });
+}
+
+export function handleExtLinkClick(url: string, event: MouseEvent): void {
+  event.preventDefault();
+  ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
 }

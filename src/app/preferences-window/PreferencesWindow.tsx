@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { ipcRenderer } from 'electron';
 
 import { getVisitor } from 'common/analytics';
-import IPC_EVENTS from 'common/ipc-events';
 import { IUserSettings, userSettings, REFRESH_INTERVAL } from 'common/user-settings';
 import ThemedWindow from 'app/ThemedWindow';
 
@@ -57,11 +55,6 @@ class PreferencesWindow extends React.Component<{}, Partial<IUserSettings>> {
 
   handleTelemetryChange(event: React.ChangeEvent<HTMLInputElement>): void {
     this.setValue('telemetry', event.target.checked);
-  }
-
-  handleExtLinkClick(url: string, event: MouseEvent): void {
-    event.preventDefault();
-    ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
   }
 
   render(): JSX.Element {

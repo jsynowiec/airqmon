@@ -1,15 +1,9 @@
-import { ipcRenderer } from 'electron';
 import * as React from 'react';
 import { useContext } from 'react';
 
-import IPC_EVENTS from 'common/ipc-events';
 import { SensorStation } from 'data/airqmon-api';
 import { ThemeContext } from '../ThemeContext';
-
-function handleExtLinkClick(url: string, event: MouseEvent): void {
-  event.preventDefault();
-  ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
-}
+import { handleExtLinkClick } from 'common/helpers';
 
 const StationInfo = ({
   station,
