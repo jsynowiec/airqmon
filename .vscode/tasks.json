@@ -2,9 +2,25 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "build",
-      "type": "gulp",
-      "task": "build",
+      "label": "Lint source",
+      "command": "yarn",
+      "args": [
+        "-s",
+        "lint"
+      ],
+      "problemMatcher": [
+        "$eslint-stylish"
+      ],
+      "presentation": {
+        "reveal": "never"
+      }
+    },
+    {
+      "label": "Build source",
+      "command": "yarn",
+      "args": [
+        "build"
+      ],
       "group": {
         "kind": "build",
         "isDefault": true
