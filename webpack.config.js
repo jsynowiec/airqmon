@@ -1,10 +1,12 @@
 const path = require('path');
+
+const webpack = require('webpack');
+
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const webpack = require('webpack');
 
-const pkg = require('./package.json');
+const { dependencies: externals } = require('./package.json');
 
 const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 const watch = process.env.WEBPACK_WATCH === 'true';
@@ -19,10 +21,12 @@ const base = {
   mode,
   watch,
   devtool: mode == 'development' ? 'source-map' : false,
+  externals: [...Object.keys(externals || {})],
   output: {
     path: buildPath,
     chunkFilename: '[name].chunk.js',
     filename: '[name].js',
+    libraryTarget: 'commonjs2',
   },
   node: {
     Buffer: false,
@@ -78,6 +82,7 @@ const base = {
       },
     ],
   },
+  plugins: [],
 };
 
 const renderPlugins = [
@@ -104,7 +109,7 @@ const renderer = {
     main: path.resolve(__dirname, 'src/app/entry.tsx'),
     preferencesWindow: path.resolve(__dirname, 'src/app/preferences-window/entry.tsx'),
   },
-  plugins: renderPlugins,
+  plugins: [...base.plugins, ...renderPlugins],
 };
 
 const main = {
