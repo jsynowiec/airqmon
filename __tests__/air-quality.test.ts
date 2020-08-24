@@ -1,9 +1,4 @@
-import {
-  getAQIndexMetadata,
-  getAQIndexMetadataForValue,
-  DEFAULT_AQ_INDEX,
-  AQIndex,
-} from '../src/common/air-quality';
+import { getAQIndexMetadataForValue, DEFAULT_AQ_INDEX, AQIndex } from '../src/common/air-quality';
 
 describe('test default AQ index', () => {
   it('should be eq CAQI', () => {
