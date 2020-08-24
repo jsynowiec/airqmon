@@ -4,7 +4,7 @@
   "version": "2.0.0",
   "main": "build/main.js",
   "engines": {
-    "node": ">=12.4.0 <13"
+    "node": "12.4.0"
   },
   "license": "Apache-2.0",
   "author": "Jakub Synowiec <github@jakubsynowiec.info>",
@@ -82,5 +82,8 @@
     "universal-analytics": "~0.4.16",
     "uuid": "~3.3.2",
     "winston": "~3.2.1"
+  },
+  "volta": {
+    "node": "12.4.0"
   }
 }
