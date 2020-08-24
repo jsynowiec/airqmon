@@ -2,7 +2,6 @@
 [![GitHub release][badge-github-release]][airqmon-latest-release]
 [![David][badge-david-deps]][david]
 [![GitHub Actions][badge-gh-actions]][gh-actions]
-[![Travis CI][badge-travis]][travis]
 [![License][badge-license]][license]
 
 # <img src="https://user-images.githubusercontent.com/1029142/32918679-7336704a-cb23-11e7-92b2-d8a7f2588055.png" width="38px" alt="Airqmon icon" align="top" /> Airqmon
@@ -77,12 +76,10 @@ This app is an open-source software licensed under the [Apache License, Version 
 [airqmon-latest-release]: https://github.com/jsynowiec/airqmon/releases/latest
 [david]: http://david-dm.org/jsynowiec/airqmon
 [gh-actions]: https://actions-badge.atrox.dev/jsynowiec/airqmon/goto?ref=master
-[travis]: https://travis-ci.org/jsynowiec/airqmon
 [badge-github-release]: https://img.shields.io/github/release/jsynowiec/airqmon.svg
 [badge-license]: https://img.shields.io/github/license/jsynowiec/airqmon.svg
 [badge-david-deps]: https://img.shields.io/david/jsynowiec/airqmon.svg
 [badge-gh-actions]: https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fjsynowiec%2Fairqmon%2Fbadge%3Fref%3Dmaster&style=flat
-[badge-travis]: https://travis-ci.org/jsynowiec/airqmon.svg?branch=master
 [airly]: https://airly.eu/
 [sponsor-badge]: https://img.shields.io/badge/♥-Sponsor-fc0fb5.svg
 [sponsor]: https://github.com/sponsors/jsynowiec
