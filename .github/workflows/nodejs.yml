@@ -1,27 +1,20 @@
-name: Node CI
+name: Node.js CI
 
 on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.4.x]
-
+    runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: npm install yarn
+      - uses: actions/checkout@v2
+      - uses: volta-cli/action@v1
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Lint and run test
         run: |
-          npm install -g yarn
-      - name: yarn install, build, and test
-        run: |
-          yarn
-          yarn test
+          yarn run lint
+          yarn run test
+      - name: Build
+        run: yarn run build
         env:
           CI: true

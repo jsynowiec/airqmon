@@ -1,5 +1,22 @@
 os: osx
-language: node_js
-node_js:
-  - '12'
-cache: yarn
+
+cache:
+  npm: true
+  directories:
+    - /home/travis/.volta
+
+env:
+  - CI=true
+
+before_install:
+  - curl https://get.volta.sh | bash
+  - export VOLTA_HOME=$HOME/.volta
+  - export PATH=$VOLTA_HOME:$PATH
+
+install:
+  - yarn --frozen-lockfile
+
+script:
+  - yarn run lint
+  - yarn run test
+  - yarn run build
