@@ -20,6 +20,8 @@ import {
   findNearestStation,
   getStationMeasurements,
   ApiError,
+  NearestSensorStation,
+  Measurements,
 } from 'data/airqmon-api';
 import ThemeStore from './ThemeContext';
 import UpdaterStore from './UpdaterContext';
@@ -36,19 +38,19 @@ interface IDataAppState {
 interface IAppState extends IDataAppState {
   loadingMessage?: string;
   apiError?: ApiError;
-  geolocationError?: PositionError;
+  geolocationError?: GeolocationPositionError;
   isAutoRefreshEnabled: boolean;
   refreshMeasurementsIntervalMeta: IRefreshIntervalMeta;
 }
 
-class App extends React.Component<{}, IAppState> {
+class App extends React.Component<Record<string, unknown>, IAppState> {
   private lastUsedStationId?: string | null = null;
 
   private refreshTimer: ITimer | null = null;
   private initTimer: ITimer | null = null;
   private locationTimer: ITimer | null = null;
 
-  constructor(props: {}) {
+  constructor(props: Record<string, unknown>) {
     super(props);
 
     this.state = {
@@ -59,7 +61,7 @@ class App extends React.Component<{}, IAppState> {
     };
   }
 
-  setState<K extends keyof IAppState, S extends IAppState, P extends {}>(
+  setState<K extends keyof IAppState, S extends IAppState, P extends Record<string, unknown>>(
     state:
       | ((prevState: Readonly<S>, props: Readonly<P>) => Pick<S, K> | S | null)
       | (Pick<S, K> | S | null),
@@ -151,7 +153,7 @@ class App extends React.Component<{}, IAppState> {
       loadingMessage: 'Acquiring location',
     });
 
-    const [location, geolocationError] = await catcher(getLocation());
+    const [location, geolocationError] = await catcher<Location, GeolocationPositionError>(getLocation());
     if (geolocationError) {
       await this.setState({
         geolocationError,
@@ -175,7 +177,7 @@ class App extends React.Component<{}, IAppState> {
       loadingMessage: 'Looking for the closest sensor station',
     });
 
-    const [response, apiError] = await catcher(findNearestStation(this.state.currentLocation));
+    const [response, apiError] = await catcher<NearestSensorStation, ApiError>(findNearestStation(this.state.currentLocation));
 
     if (apiError) {
       await this.setState({
@@ -220,7 +222,7 @@ class App extends React.Component<{}, IAppState> {
 
   async refreshData(): Promise<void> {
     const { id } = this.state.sensorStation;
-    const [measurements, apiError] = await catcher(getStationMeasurements(id));
+    const [measurements, apiError] = await catcher<Measurements, ApiError>(getStationMeasurements(id));
 
     if (apiError) {
       await this.setState({

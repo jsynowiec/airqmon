@@ -17,8 +17,8 @@ const DEFAULT_STATE: IUpdaterContextState = {
 
 export const UpdaterContext = React.createContext<IUpdaterContextState>(DEFAULT_STATE);
 
-class UpdaterStore extends React.Component<{}, IUpdaterContextState> {
-  constructor(props) {
+class UpdaterStore extends React.Component<Record<string, unknown>, IUpdaterContextState> {
+  constructor(props: Record<string, unknown>) {
     super(props);
 
     this.state = DEFAULT_STATE;

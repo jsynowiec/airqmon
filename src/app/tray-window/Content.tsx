@@ -14,7 +14,7 @@ interface IContentProps {
   distanceToStation?: number;
   sensorStation?: SensorStation;
   apiError?: ApiError;
-  geolocationError?: PositionError;
+  geolocationError?: GeolocationPositionError;
   connectionStatus: boolean;
 }
 

@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 const { dependencies: externals } = require('./package.json');
 
@@ -24,13 +25,12 @@ const base = {
   externals: [...Object.keys(externals || {})],
   output: {
     path: buildPath,
+    publicPath: '',
     chunkFilename: '[name].chunk.js',
     filename: '[name].js',
     libraryTarget: 'commonjs2',
   },
   node: {
-    Buffer: false,
-    buffer: false,
     __dirname: false,
     __filename: false,
   },
@@ -54,7 +54,6 @@ const base = {
               configFile: `tsconfig${mode == 'production' ? '.release' : ''}.json`,
             },
           },
-          'eslint-loader',
         ],
       },
       {
@@ -83,7 +82,9 @@ const base = {
       },
     ],
   },
-  plugins: [],
+  plugins: [
+    new ESLintPlugin(),
+  ],
 };
 
 const renderPlugins = [

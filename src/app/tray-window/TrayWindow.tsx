@@ -13,7 +13,7 @@ interface ITrayWindowProps {
   apiError?: ApiError;
   connectionStatus: boolean;
   distanceToStation?: number;
-  geolocationError?: PositionError;
+  geolocationError?: GeolocationPositionError;
   isAutoRefreshEnabled: boolean;
   loadingMessage?: string;
   sensorStation?: SensorStation;

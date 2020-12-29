@@ -1,4 +1,4 @@
-import ApolloClient, { InMemoryCache, ApolloError } from 'apollo-boost';
+import ApolloClient, { InMemoryCache, ApolloError, ApolloQueryResult } from 'apollo-boost';
 import { getNearestLocationQuery, getStationMeasurementsQuery } from 'data/qgl-queries';
 import getLogger from 'common/logger';
 import { catcher } from 'common/helpers';
@@ -48,8 +48,13 @@ export type Measurements = {
   values: MeasurementValue[];
 };
 
+export type NearestSensorStation = {
+  distance: number;
+  station: SensorStation
+}
+
 type NearestSensorStationQueryResult = {
-  nearestSensorStation: { distance: number; station: SensorStation } | null;
+  nearestSensorStation: NearestSensorStation | null;
 };
 
 type StationMeasurementQueryResult = {
@@ -76,8 +81,8 @@ const logApolloErrors = (reason: ApolloError): void => {
 
 export async function findNearestStation(
   location: Location,
-): Promise<{ distance: number; station: SensorStation }> {
-  const [queryResult, err] = await catcher(
+): Promise<NearestSensorStation> {
+  const [queryResult, err] = await catcher<ApolloQueryResult<NearestSensorStationQueryResult>, ApolloError>(
     apolloClient.query<NearestSensorStationQueryResult>({
       query: getNearestLocationQuery(location),
       fetchPolicy: 'cache-first',
@@ -99,7 +104,7 @@ export async function findNearestStation(
 }
 
 export async function getStationMeasurements(id: string): Promise<Measurements> {
-  const [queryResult, err] = await catcher(
+  const [queryResult, err] = await catcher<ApolloQueryResult<StationMeasurementQueryResult>, ApolloError>(
     apolloClient.query<StationMeasurementQueryResult>({
       query: getStationMeasurementsQuery(id),
       fetchPolicy: 'network-only',

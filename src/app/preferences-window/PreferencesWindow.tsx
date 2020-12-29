@@ -4,8 +4,8 @@ import { getVisitor } from 'common/analytics';
 import { IUserSettings, userSettings, REFRESH_INTERVAL } from 'common/user-settings';
 import ThemedWindow from 'app/ThemedWindow';
 
-class PreferencesWindow extends React.Component<{}, Partial<IUserSettings>> {
-  constructor(props) {
+class PreferencesWindow extends React.Component<Record<string, unknown>, Partial<IUserSettings>> {
+  constructor(props: Record<string, unknown>) {
     super(props);
 
     this.state = {

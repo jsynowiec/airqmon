@@ -10,7 +10,9 @@ const CHECK_INTERVAL = 2 * 60 * 60 * 1000; // 2 hours
 const GITHUB_BASE_URL = 'https://api.github.com';
 const GITHUB_REPO = 'jsynowiec/airqmon';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const currentVer: string = require('@root/package.json').version;
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const appName: string = require('@root/package.json').name;
 
 interface IGitHubRelease {

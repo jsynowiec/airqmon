@@ -7,14 +7,14 @@ interface IErrorBoundaryState {
   hasError: boolean;
 }
 
-class ErrorBoundary extends React.Component<{}, IErrorBoundaryState> {
-  constructor(props) {
+class ErrorBoundary extends React.Component<Record<string, unknown>, IErrorBoundaryState> {
+  constructor(props: Record<string, unknown>) {
     super(props);
 
     this.state = { hasError: false };
   }
 
-  componentDidCatch(error): void {
+  componentDidCatch(error: Error): void {
     this.setState({ hasError: true });
     if (!isDev) {
       errorHandler.error(error);

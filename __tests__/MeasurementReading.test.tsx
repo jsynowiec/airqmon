@@ -4,7 +4,7 @@ import { MeasurementReading } from '../src/app/tray-window/measurement/Measureme
 import { Unit } from '../src/app/tray-window/measurement/MeasurementReadingUnit';
 
 jest.mock('../src/app/tray-window/measurement/MeasurementReadingUnit', () => ({
-  ...require.requireActual('../src/app/tray-window/measurement/MeasurementReadingUnit'),
+  ...jest.requireActual('../src/app/tray-window/measurement/MeasurementReadingUnit'),
   MeasurementReadingUnit: 'MeasurementReadingUnit',
 }));
 

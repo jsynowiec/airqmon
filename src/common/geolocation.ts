@@ -81,8 +81,8 @@ export type Location = {
   longitude: number;
 };
 
-async function getCurrentPosition(): Promise<Position> {
-  const position = await new Promise<Position>((resolve, reject) => {
+async function getCurrentPosition(): Promise<GeolocationPosition> {
+  const position = await new Promise<GeolocationPosition>((resolve, reject) => {
     return navigator.geolocation.getCurrentPosition(resolve, reject);
   });
 

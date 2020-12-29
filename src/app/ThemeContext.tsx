@@ -15,8 +15,8 @@ const DEFAULT_STATE: IThemeContextState = {
 
 export const ThemeContext = React.createContext<IThemeContextState>(DEFAULT_STATE);
 
-class ThemeStore extends React.Component<{}, IThemeContextState> {
-  constructor(props) {
+class ThemeStore extends React.Component<Record<string, unknown>, IThemeContextState> {
+  constructor(props: Record<string, unknown>) {
     super(props);
 
     this.state = {
