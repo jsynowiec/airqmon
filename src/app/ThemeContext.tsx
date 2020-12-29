@@ -26,7 +26,7 @@ class ThemeStore extends React.Component<{}, IThemeContextState> {
   }
 
   componentDidMount(): void {
-    remote.systemPreferences.subscribeNotification('AppleInterfaceThemeChangedNotification', () => {
+    remote.nativeTheme.on('updated', () => {
       this.setState({
         theme: this.systemTheme,
       });
@@ -40,7 +40,7 @@ class ThemeStore extends React.Component<{}, IThemeContextState> {
   }
 
   private get systemTheme(): Theme {
-    return remote.systemPreferences.isDarkMode() ? 'dark' : 'light';
+    return remote.nativeTheme.shouldUseDarkColors ? 'dark' : 'light';
   }
 
   private get systemAccentColor(): string {

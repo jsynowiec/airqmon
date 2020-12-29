@@ -29,6 +29,7 @@ app.on('ready', () => {
       // Prevents renderer process code from not running when window is hidden
       backgroundThrottling: false,
       nodeIntegration: true,
+      enableRemoteModule: true
     },
   });
 
