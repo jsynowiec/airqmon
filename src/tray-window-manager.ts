@@ -126,7 +126,7 @@ class TrayWindowManager {
     title?: string;
     tooltip?: string;
   } = {}): void {
-    this._tray.setTitle(title);
+    this._tray.setTitle(title, { fontType: 'monospacedDigit' });
     this._tray.setToolTip(tooltip);
     this.setWindowPosition();
   }
