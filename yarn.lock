@@ -2424,7 +2424,7 @@ electron-store@~5.0.0:
     conf "^6.0.0"
     type-fest "^0.7.1"
 
-electron@^11.0.1:
+electron@11.0.1:
   version "11.0.1"
   resolved "https://registry.yarnpkg.com/electron/-/electron-11.0.1.tgz#e71195ff9abfbcfa0f4bf49ec9064e5e0f3f928c"
   integrity sha512-UefDvxeyTREL1FpC0BcXwzLjcYiQICFSZONbwarpoqTXQU5rzEguIegHPqg5AqwYH4FVYfEuigj/Vm94rtZOzg==
