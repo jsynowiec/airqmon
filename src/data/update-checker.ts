@@ -3,12 +3,15 @@ import { ipcRenderer } from 'electron';
 import { EventEmitter } from 'events';
 import * as semver from 'semver';
 import { setTimeout, clearTimeout } from 'timers';
+import getLogger from 'common/logger';
 
 import IPC_EVENTS from 'common/ipc-events';
 
 const CHECK_INTERVAL = 2 * 60 * 60 * 1000; // 2 hours
 const GITHUB_BASE_URL = 'https://api.github.com';
 const GITHUB_REPO = 'jsynowiec/airqmon';
+
+const logger = getLogger('update-checker');
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const currentVer: string = require('@root/package.json').version;
@@ -89,19 +92,25 @@ class UpdateChecker extends EventEmitter implements IUpdateChecker {
 
           if (availableUpdates.length > 0) {
             const { tag_name: version, assets } = availableUpdates.pop();
+            logger.debug(`Newer version found: ${version}`);
 
             // Notify only about newer updates
             if (semver.gt(version, this.latestKnownVersion)) {
-              this.latestKnownVersion = version;
+              // e.g. airqmon-v2.0.0-darwin-x64.zip
+              const updatePackage = `${appName}-${version}-${process.platform}-${process.arch}.zip`;
+              logger.debug(`Looking for ${updatePackage} asset`);
+              const updateUrl = assets.find((asset) => {
+                return asset.content_type === 'application/zip' && asset.name === updatePackage;
+              });
 
-              this.updateAvailable = true;
-              this.updateUrl = assets.find((asset) => {
-                return (
-                  asset.content_type === 'application/zip' && asset.name === `${appName}-mac.zip`
-                );
-              }).browser_download_url;
+              if (updateUrl) {
+                logger.debug(`Asset found: ${updateUrl}`);
 
-              this.emit('update-available', ...[version, this.updateUrl]);
+                this.latestKnownVersion = version;
+                this.updateAvailable = true;
+                this.updateUrl = updateUrl.browser_download_url;
+                this.emit('update-available', ...[version, this.updateUrl]);
+              }
             }
           }
 
@@ -112,7 +121,7 @@ class UpdateChecker extends EventEmitter implements IUpdateChecker {
         }
       })
       .catch((error) => {
-        console.log(error.message);
+        logger.error(error.message);
         // Check again with backoff on subsequent retries
         this.retryWithBackoff();
       });
