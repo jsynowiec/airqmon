@@ -17,6 +17,7 @@ export default class PreferencesWindowManager {
       maximizable: false,
       webPreferences: {
         nodeIntegration: true,
+        contextIsolation: false,
         enableRemoteModule: true,
       },
     });
