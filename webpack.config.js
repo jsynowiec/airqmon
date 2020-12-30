@@ -2,7 +2,6 @@ const path = require('path');
 
 const webpack = require('webpack');
 
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
@@ -82,9 +81,7 @@ const base = {
       },
     ],
   },
-  plugins: [
-    new ESLintPlugin(),
-  ],
+  plugins: [new ESLintPlugin()],
 };
 
 const renderPlugins = [
@@ -97,9 +94,6 @@ const renderPlugins = [
   new MiniCssExtractPlugin({ filename: '[name].css' }),
   new webpack.ProvidePlugin({ React: 'react' }),
 ];
-if (mode === 'production') {
-  renderPlugins.push(new BundleAnalyzerPlugin());
-}
 const renderer = {
   ...base,
   target: 'electron-renderer',
