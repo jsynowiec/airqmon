@@ -2,25 +2,18 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Lint source",
+      "label": "lint",
       "command": "yarn",
-      "args": [
-        "-s",
-        "lint"
-      ],
-      "problemMatcher": [
-        "$eslint-stylish"
-      ],
+      "args": ["-s", "lint"],
+      "problemMatcher": ["$eslint-stylish"],
       "presentation": {
         "reveal": "never"
       }
     },
     {
-      "label": "Build source",
+      "label": "build",
       "command": "yarn",
-      "args": [
-        "build"
-      ],
+      "args": ["build"],
       "group": {
         "kind": "build",
         "isDefault": true
