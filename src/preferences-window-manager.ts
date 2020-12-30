@@ -17,11 +17,15 @@ export default class PreferencesWindowManager {
       maximizable: false,
       webPreferences: {
         nodeIntegration: true,
-        enableRemoteModule: true
+        enableRemoteModule: true,
       },
     });
-
     this._window.loadFile(path.resolve(__dirname, 'renderer', 'preferencesWindow.html'));
+
+    // Electron 9.3.0 introduced a regression or intentional change: Dock icon is shown after calling win.setVisibleOnAllWorkspaces(true)
+    // https://github.com/electron/electron/issues/25368
+    // fixme: remove { visibleOnFullScreen: true }
+    this._window.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
 
     if (isDev) {
       this._window.webContents.openDevTools({ mode: 'detach' });
@@ -38,11 +42,9 @@ export default class PreferencesWindowManager {
   }
 
   showWindow(): void {
-    this._window.setVisibleOnAllWorkspaces(true);
     this._window.center();
     this._window.show();
     this._window.focus();
-    this._window.setVisibleOnAllWorkspaces(false);
   }
 
   closeWindow(): void {

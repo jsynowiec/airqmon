@@ -32,14 +32,22 @@ class TrayWindowManager {
     });
     this._window.loadFile(path.resolve(__dirname, 'renderer', 'main.html'));
 
+    // Electron 9.3.0 introduced a regression: Dock icon is shown after calling win.setVisibleOnAllWorkspaces(true)
+    // https://github.com/electron/electron/issues/25368
+    // fixme: remove { visibleOnFullScreen: true }
+    this._window.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+
     if (isDev) {
       this._window.webContents.openDevTools({ mode: 'detach' });
     }
 
+    // Hide window when clicked outside the window
     this._window.on('blur', () => {
-      if (!this._window.webContents.isDevToolsOpened()) {
-        this._window.hide();
+      if (isDev && this._window.webContents.isDevToolsOpened()) {
+        return;
       }
+
+      this._window.hide();
     });
   }
 
@@ -47,17 +55,13 @@ class TrayWindowManager {
     this._tray = new Tray(path.join(assetsDirectory, 'menu_iconTemplate.png'));
 
     this._tray.on('right-click', () => {
-      getVisitor()
-        .event('Tray icon clicks', 'User right-clicked the tray icon.')
-        .send();
+      getVisitor().event('Tray icon clicks', 'User right-clicked the tray icon.').send();
 
       this.toggleWindow();
     });
 
     this._tray.on('click', () => {
-      getVisitor()
-        .event('Tray icon clicks', 'User clicked the tray icon.')
-        .send();
+      getVisitor().event('Tray icon clicks', 'User clicked the tray icon.').send();
 
       this.toggleWindow();
     });
@@ -96,11 +100,9 @@ class TrayWindowManager {
   }
 
   showWindow(): void {
-    this._window.setVisibleOnAllWorkspaces(true);
     this.setWindowPosition();
     this._window.show();
     this._window.focus();
-    this._window.setVisibleOnAllWorkspaces(false);
   }
 
   closeWindow(): void {
