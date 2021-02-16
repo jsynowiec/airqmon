@@ -14,7 +14,6 @@ export interface IUserSettings {
   refreshMeasurementsInterval: Intervals;
   showNotifications: boolean;
   notificationEvents: INotificationsEvents;
-  telemetry: boolean;
 }
 
 enum Intervals {
@@ -94,7 +93,6 @@ export const userSettings = new ConfigStore<IUserSettings>({
     caqiChanged: true,
     stationChanged: true,
   },
-  telemetry: true,
 });
 
 export function shouldNotifyAbout(event: keyof INotificationsEvents): boolean {

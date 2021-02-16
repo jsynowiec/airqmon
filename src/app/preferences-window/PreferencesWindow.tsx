@@ -17,7 +17,6 @@ class PreferencesWindow extends React.Component<Record<string, unknown>, Partial
     );
     this.handleShowNotificationsChange = this.handleShowNotificationsChange.bind(this);
     this.handleNotificationEventsChange = this.handleNotificationEventsChange.bind(this);
-    this.handleTelemetryChange = this.handleTelemetryChange.bind(this);
   }
 
   private setValue<K extends keyof IUserSettings>(key: K, value: IUserSettings[K]): void {
@@ -49,10 +48,6 @@ class PreferencesWindow extends React.Component<Record<string, unknown>, Partial
       ...this.state.notificationEvents,
       [name]: value,
     });
-  }
-
-  handleTelemetryChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    this.setValue('telemetry', event.target.checked);
   }
 
   render(): JSX.Element {
@@ -130,19 +125,6 @@ class PreferencesWindow extends React.Component<Record<string, unknown>, Partial
                   when location changes
                 </label>
               </div>
-            </div>
-          </div>
-          <div className="preferences-window__grid__section-label">Analytics:</div>
-          <div className="preferences-window__grid__section-content">
-            <div className="checkbox">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={this.state.telemetry}
-                  onChange={this.handleTelemetryChange}
-                />{' '}
-                Send anonymous telemetry
-              </label>
             </div>
           </div>
         </div>
