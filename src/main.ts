@@ -2,6 +2,7 @@ import { app, ipcMain, shell, powerMonitor } from 'electron';
 
 import { getAQIndexMetadataForValue, DEFAULT_AQ_INDEX } from 'common/air-quality';
 import IPC_EVENTS from 'common/ipc-events';
+import ElectronStore = require('electron-store');
 import { IUserSettings } from 'common/user-settings';
 import { Measurements } from 'data/airqmon-api';
 
@@ -10,6 +11,8 @@ import PreferencesWindowManager from './preferences-window-manager';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const keys = require('@root/keys.json');
+
+ElectronStore.initRenderer();
 
 let trayWindowManager: TrayWindowManager;
 let preferencesWindowManager: PreferencesWindowManager;
