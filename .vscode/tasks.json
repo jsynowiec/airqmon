@@ -2,6 +2,14 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "format",
+      "command": "yarn",
+      "args": ["format"],
+      "presentation": {
+        "reveal": "silent"
+      }
+    },
+    {
       "label": "lint",
       "command": "yarn",
       "args": ["-s", "lint"],

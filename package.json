@@ -77,7 +77,6 @@
     "photon": "https://github.com/connors/photon.git#v0.1.2-alpha",
     "react": "~16.14.0",
     "react-dom": "~16.14.0",
-    "rollbar": "~2.19.4",
     "semver": "~7.3.4",
     "uuid": "~8.3.2",
     "winston": "~3.3.3"
