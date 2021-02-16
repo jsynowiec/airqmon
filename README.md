@@ -47,9 +47,7 @@ Read more: [PH25088](https://support.apple.com/kb/PH25088?locale=en_US)
 
 ## Privacy
 
-Airqmon tracks some usage data, like window displays or CAQI index changes, and reports errors using external services. No private data other than computer hostname is collected. The information that is collected is used to provide, maintain, protect and improve Airqmon. Collected data is not shared with anyone.
-
-You can opt-out from sending the telemetry, but not from sending error reports.
+Airqmon application does not track any personal identifiable information or usage analytics.
 
 ## Sponsors
 
