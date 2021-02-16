@@ -13,6 +13,7 @@
     "build": "yarn run clean && webpack",
     "build:watch": "WEBPACK_WATCH=true yarn run build",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "format": "prettier --write src/**/*.ts",
     "package": "NODE_ENV=production yarn run build && node bin/pack.js",
     "test": "jest",
     "test:coverage": "jest --coverage",
@@ -78,7 +79,6 @@
     "react-dom": "~16.14.0",
     "rollbar": "~2.19.4",
     "semver": "~7.3.4",
-    "universal-analytics": "~0.4.23",
     "uuid": "~8.3.2",
     "winston": "~3.3.3"
   },

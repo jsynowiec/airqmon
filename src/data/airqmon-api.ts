@@ -50,8 +50,8 @@ export type Measurements = {
 
 export type NearestSensorStation = {
   distance: number;
-  station: SensorStation
-}
+  station: SensorStation;
+};
 
 type NearestSensorStationQueryResult = {
   nearestSensorStation: NearestSensorStation | null;
@@ -79,10 +79,11 @@ const logApolloErrors = (reason: ApolloError): void => {
   }
 };
 
-export async function findNearestStation(
-  location: Location,
-): Promise<NearestSensorStation> {
-  const [queryResult, err] = await catcher<ApolloQueryResult<NearestSensorStationQueryResult>, ApolloError>(
+export async function findNearestStation(location: Location): Promise<NearestSensorStation> {
+  const [queryResult, err] = await catcher<
+    ApolloQueryResult<NearestSensorStationQueryResult>,
+    ApolloError
+  >(
     apolloClient.query<NearestSensorStationQueryResult>({
       query: getNearestLocationQuery(location),
       fetchPolicy: 'cache-first',
@@ -104,7 +105,10 @@ export async function findNearestStation(
 }
 
 export async function getStationMeasurements(id: string): Promise<Measurements> {
-  const [queryResult, err] = await catcher<ApolloQueryResult<StationMeasurementQueryResult>, ApolloError>(
+  const [queryResult, err] = await catcher<
+    ApolloQueryResult<StationMeasurementQueryResult>,
+    ApolloError
+  >(
     apolloClient.query<StationMeasurementQueryResult>({
       query: getStationMeasurementsQuery(id),
       fetchPolicy: 'network-only',

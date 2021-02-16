@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import { getVisitor } from 'common/analytics';
 import { IUserSettings, userSettings, REFRESH_INTERVAL } from 'common/user-settings';
 import ThemedWindow from 'app/ThemedWindow';
 
@@ -22,7 +21,6 @@ class PreferencesWindow extends React.Component<Record<string, unknown>, Partial
   }
 
   private setValue<K extends keyof IUserSettings>(key: K, value: IUserSettings[K]): void {
-    getVisitor().event('Settings', 'User changed settings value.', `${key}`, `${value}`);
     this.setState(
       {
         [key]: value,

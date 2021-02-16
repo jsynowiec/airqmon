@@ -1,5 +1,4 @@
 {
   "google": "<your Google APIs token>",
-  "ganalytics": "<your Google Universal Analytics id>",
   "rollbar": "<your Rollbar token>"
 }

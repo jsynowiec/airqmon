@@ -1,7 +1,6 @@
 import { ipcRenderer } from 'electron';
 import * as React from 'react';
 
-import { getVisitor } from 'common/analytics';
 import IPC_EVENTS from 'common/ipc-events';
 import updateChecker from 'data/update-checker';
 
@@ -41,10 +40,6 @@ class UpdaterStore extends React.Component<Record<string, unknown>, IUpdaterCont
     new Notification('Update available', {
       body: `Version ${version} is available to download.`,
     }).addEventListener('click', () => {
-      getVisitor()
-        .event('App updates', 'Clicked on notification body.')
-        .send();
-
       ipcRenderer.send(IPC_EVENTS.OPEN_BROWSER_FOR_URL, url);
     });
   }

@@ -2,8 +2,6 @@ import { BrowserWindow, BrowserWindowConstructorOptions, screen, Tray, Point } f
 import * as isDev from 'electron-is-dev';
 import * as path from 'path';
 
-import { getVisitor } from 'common/analytics';
-
 const assetsDirectory = path.join(__dirname, '../assets');
 
 class TrayWindowManager {
@@ -55,14 +53,10 @@ class TrayWindowManager {
     this._tray = new Tray(path.join(assetsDirectory, 'menu_iconTemplate.png'));
 
     this._tray.on('right-click', () => {
-      getVisitor().event('Tray icon clicks', 'User right-clicked the tray icon.').send();
-
       this.toggleWindow();
     });
 
     this._tray.on('click', () => {
-      getVisitor().event('Tray icon clicks', 'User clicked the tray icon.').send();
-
       this.toggleWindow();
     });
   }

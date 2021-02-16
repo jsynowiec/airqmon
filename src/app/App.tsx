@@ -2,7 +2,6 @@ import { ipcRenderer } from 'electron';
 import * as React from 'react';
 
 import TrayWindow from 'app/tray-window/TrayWindow';
-import { getVisitor } from 'common/analytics';
 import { getAQIndexMetadataForValue, DEFAULT_AQ_INDEX } from 'common/air-quality';
 import { getLocation, Location } from 'common/geolocation';
 import { catcher } from 'common/helpers';
@@ -153,7 +152,9 @@ class App extends React.Component<Record<string, unknown>, IAppState> {
       loadingMessage: 'Acquiring location',
     });
 
-    const [location, geolocationError] = await catcher<Location, GeolocationPositionError>(getLocation());
+    const [location, geolocationError] = await catcher<Location, GeolocationPositionError>(
+      getLocation(),
+    );
     if (geolocationError) {
       await this.setState({
         geolocationError,
@@ -177,7 +178,9 @@ class App extends React.Component<Record<string, unknown>, IAppState> {
       loadingMessage: 'Looking for the closest sensor station',
     });
 
-    const [response, apiError] = await catcher<NearestSensorStation, ApiError>(findNearestStation(this.state.currentLocation));
+    const [response, apiError] = await catcher<NearestSensorStation, ApiError>(
+      findNearestStation(this.state.currentLocation),
+    );
 
     if (apiError) {
       await this.setState({
@@ -192,10 +195,6 @@ class App extends React.Component<Record<string, unknown>, IAppState> {
     if (this.lastUsedStationId != null) {
       if (this.lastUsedStationId != station.id) {
         if (shouldNotifyAbout('stationChanged') === true) {
-          getVisitor()
-            .event('Location', 'Station changed.', 'station.id', station.id)
-            .send();
-
           new Notification('Location changed', {
             body: `Found a new nearest sensor station ${distance.toFixed(2)} away located at ${
               station.displayAddress
@@ -222,7 +221,9 @@ class App extends React.Component<Record<string, unknown>, IAppState> {
 
   async refreshData(): Promise<void> {
     const { id } = this.state.sensorStation;
-    const [measurements, apiError] = await catcher<Measurements, ApiError>(getStationMeasurements(id));
+    const [measurements, apiError] = await catcher<Measurements, ApiError>(
+      getStationMeasurements(id),
+    );
 
     if (apiError) {
       await this.setState({
@@ -247,9 +248,6 @@ class App extends React.Component<Record<string, unknown>, IAppState> {
       }`;
 
       if (oldCAQIMeta.index !== newCAQIMeta.index) {
-        getVisitor()
-          .event('Air quality', 'Air quality changed.', 'caqi.label', label)
-          .send();
         if (shouldNotifyAbout('caqiChanged') === true) {
           const aqchangeNotif = new Notification('Air quality changed', {
             body: label,
