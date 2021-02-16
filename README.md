@@ -16,9 +16,11 @@ A macOS menu bar application that displays live air quality data from the neares
   <img src="https://user-images.githubusercontent.com/1029142/36537429-674931ba-17d0-11e8-88ee-c246226c1053.png" width="378px" align="center" alt="Airqmon notification about air quality" />
 </p>
 
-Supported data providers:
+## Supported data providers
 
-- [Airly][airly] (lots of active sensors in 🇵🇱 and a few in main cities of 🇩🇪🇬🇧🇳🇱🇧🇪🇸🇮),
+- [Airly][airly] - over 20k sensor stations in many cities around the world in addition to data provided from third-party services like PurpleAir. Check the [Airly map][airly-map] for full coverage.
+
+**Disclaimer:** Airqmon app builds available as a [precompiled packages][airqmon-latest-release] are using my own, personal [Airly][airly] API key which falls under the general [Airly free usage rate limits][airly-pricing]. When inquired about increasing the limits to sustain the rising number of Airqmon's users, Airly asked me in return to sign a legally binding contract. Due to the nature of this project, I am unable to comply with this demand. As a result, at certain user threshold, Airqmon will stop displaying air quality data.
 
 ## Installation
 
@@ -79,5 +81,7 @@ This app is an open-source software licensed under the [Apache License, Version 
 [badge-david-deps]: https://img.shields.io/david/jsynowiec/airqmon.svg
 [badge-gh-actions]: https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fjsynowiec%2Fairqmon%2Fbadge%3Fref%3Dmain&style=flat
 [airly]: https://airly.eu/
+[airly-map]: https://airly.org/map/en/
+[airly-pricing]: https://airly.org/en/pricing/airly-api/
 [sponsor-badge]: https://img.shields.io/badge/♥-Sponsor-fc0fb5.svg
 [sponsor]: https://github.com/sponsors/jsynowiec
