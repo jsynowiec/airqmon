@@ -40,6 +40,10 @@ There are a few options available to customize on the preferences window that yo
 
 Since macOS Sierra, if you try to open an app that is not registered with Apple by an identified developer you get a warning dialog. Airqmon is not signed nor was submitted to Apple for review.
 
+<p align="center">
+  <img width="372" alt="Screenshot 2021-03-02 at 10 02 17" src="https://user-images.githubusercontent.com/1029142/109624419-7cfbd600-7b3e-11eb-8651-3737b93d2641.png">
+</p>
+
 To override your security settings and open the app:
 
 1. In the Finder, locate the app you want to open.
