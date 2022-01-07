@@ -7,10 +7,8 @@ import { handleExtLinkClick } from 'common/helpers';
 
 const StationInfo = ({
   station,
-  distance,
 }: {
   station: SensorStation;
-  distance: number;
 }): JSX.Element => {
   const themeContext = useContext(ThemeContext);
 
@@ -47,7 +45,7 @@ const StationInfo = ({
 
   return (
     <div className="station-info">
-      Data provided by&nbsp;{providerLink}, distance to station {distance.toFixed(2)} km
+      Data provided by&nbsp;{providerLink}
       <div className="station-info__display-address">{stationDetails}</div>
     </div>
   );

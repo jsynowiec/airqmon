@@ -6,3 +6,4 @@ build
 out
 .vscode/settings.json
 keys.json
+.idea

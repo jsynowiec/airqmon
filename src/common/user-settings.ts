@@ -5,7 +5,6 @@ import IPC_EVENTS from 'common/ipc-events';
 
 interface INotificationsEvents {
   caqiChanged: boolean;
-  stationChanged: boolean;
 }
 
 export interface IUserSettings {
@@ -14,6 +13,8 @@ export interface IUserSettings {
   refreshMeasurementsInterval: Intervals;
   showNotifications: boolean;
   notificationEvents: INotificationsEvents;
+  stationId: number;
+  airlyApiKey: string;
 }
 
 enum Intervals {
@@ -90,9 +91,10 @@ export const userSettings = new ConfigStore<IUserSettings>({
   refreshMeasurementsInterval: Intervals.Short,
   showNotifications: true,
   notificationEvents: {
-    caqiChanged: true,
-    stationChanged: true,
+    caqiChanged: true
   },
+  airlyApiKey: '',
+  stationId: 8077
 });
 
 export function shouldNotifyAbout(event: keyof INotificationsEvents): boolean {

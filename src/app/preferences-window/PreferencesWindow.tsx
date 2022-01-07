@@ -17,6 +17,8 @@ class PreferencesWindow extends React.Component<Record<string, unknown>, Partial
     );
     this.handleShowNotificationsChange = this.handleShowNotificationsChange.bind(this);
     this.handleNotificationEventsChange = this.handleNotificationEventsChange.bind(this);
+    this.handleStationIdChange = this.handleStationIdChange.bind(this);
+    this.handleAirlyKeyChange = this.handleAirlyKeyChange.bind(this);
   }
 
   private setValue<K extends keyof IUserSettings>(key: K, value: IUserSettings[K]): void {
@@ -48,6 +50,14 @@ class PreferencesWindow extends React.Component<Record<string, unknown>, Partial
       ...this.state.notificationEvents,
       [name]: value,
     });
+  }
+
+  handleStationIdChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    this.setValue('stationId', parseInt(event.target.value))
+  }
+
+  handleAirlyKeyChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    this.setValue('airlyApiKey', event.target.value)
   }
 
   render(): JSX.Element {
@@ -113,18 +123,26 @@ class PreferencesWindow extends React.Component<Record<string, unknown>, Partial
                   when air quality index changes
                 </label>
               </div>
-              <div className="checkbox">
-                <label>
-                  <input
-                    type="checkbox"
-                    name="stationChanged"
-                    checked={this.state.notificationEvents.stationChanged}
-                    disabled={!this.state.showNotifications}
-                    onChange={this.handleNotificationEventsChange}
-                  />{' '}
-                  when location changes
-                </label>
-              </div>
+            </div>
+          </div>
+          <div className="preferences-window__grid__section-label">Station ID:</div>
+          <div className="preferences-window__grid__section-content">
+            <div className="text-input">
+              <input
+                type="text"
+                value={this.state.stationId}
+                onChange={this.handleStationIdChange}
+              />
+            </div>
+          </div>
+          <div className="preferences-window__grid__section-label">Airly API key:</div>
+          <div className="preferences-window__grid__section-content">
+            <div className="text-input">
+              <input
+                type="text"
+                value={this.state.airlyApiKey}
+                onChange={this.handleAirlyKeyChange}
+              />
             </div>
           </div>
         </div>

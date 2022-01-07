@@ -2,7 +2,7 @@ import './TrayWindow.less';
 
 import * as React from 'react';
 
-import { ApiError, SensorStation } from 'data/airqmon-api';
+import {ApiError, Measurements, SensorStation} from 'data/airqmon-api';
 
 import Content from 'app/tray-window/Content';
 import ErrorBoundary from 'app/tray-window/ErrorBoundary';
@@ -12,22 +12,20 @@ import ThemedWindow from 'app/ThemedWindow';
 interface ITrayWindowProps {
   apiError?: ApiError;
   connectionStatus: boolean;
-  distanceToStation?: number;
-  geolocationError?: GeolocationPositionError;
   isAutoRefreshEnabled: boolean;
   loadingMessage?: string;
   sensorStation?: SensorStation;
+  measurements: Measurements;
 }
 
 const TrayWindow: React.FunctionComponent<ITrayWindowProps> = (props) => {
   const {
     apiError,
     connectionStatus,
-    distanceToStation,
-    geolocationError,
     isAutoRefreshEnabled,
     loadingMessage,
     sensorStation,
+    measurements
   } = props;
 
   return (
@@ -36,10 +34,9 @@ const TrayWindow: React.FunctionComponent<ITrayWindowProps> = (props) => {
         <Content
           apiError={apiError}
           loadingMessage={loadingMessage}
-          geolocationError={geolocationError}
           connectionStatus={connectionStatus}
-          distanceToStation={distanceToStation}
           sensorStation={sensorStation}
+          measurements={measurements}
         />
       </ErrorBoundary>
       <Footer isAutoRefreshEnabled={isAutoRefreshEnabled} />

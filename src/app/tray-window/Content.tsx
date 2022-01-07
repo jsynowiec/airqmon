@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { SensorStation, ApiError } from 'data/airqmon-api';
+import { SensorStation, ApiError, Measurements } from 'data/airqmon-api';
 
 import Loader from 'app/tray-window/Loader';
 import ErrorMessage from 'app/tray-window/ErrorMessage';
@@ -8,14 +8,15 @@ import UpdateAlert from 'app/tray-window/UpdateAlert';
 import StationInfo from 'app/tray-window/StationInfo';
 import AirQualityInfo from 'app/tray-window/air-quality/AirQualityInfo';
 import MeasurementPane from 'app/tray-window/measurement/MeasurementPane';
+import { AirlyApiError } from 'data/airly-api';
+import { handleExtLinkClick } from 'common/helpers';
 
 interface IContentProps {
   loadingMessage?: string;
-  distanceToStation?: number;
   sensorStation?: SensorStation;
-  apiError?: ApiError;
-  geolocationError?: GeolocationPositionError;
+  apiError?: ApiError | AirlyApiError;
   connectionStatus: boolean;
+  measurements: Measurements
 }
 
 class Content extends React.Component<IContentProps> {
@@ -30,31 +31,6 @@ class Content extends React.Component<IContentProps> {
           <>Your computer is offline.</>
         </ErrorMessage>
       );
-    }
-
-    if (this.props.geolocationError) {
-      const error = this.props.geolocationError;
-      switch (error.code) {
-        case error.PERMISSION_DENIED:
-          return (
-            <ErrorMessage header="Location services unavailable">
-              <>
-                The application is not allowed to access Location Services or the Location Services
-                are disabled. Please allow Airqmon to use Location Services in the Security &
-                Privacy macOS preferences and then restart the application.
-              </>
-            </ErrorMessage>
-          );
-        case error.POSITION_UNAVAILABLE:
-          return (
-            <ErrorMessage header="Location unavailable">
-              <>
-                Your location could not be determined. Try again later or try restarting the app.
-                Make sure that you have access to the Internet.
-              </>
-            </ErrorMessage>
-          );
-      }
     }
 
     if (this.props.apiError) {
@@ -74,18 +50,35 @@ class Content extends React.Component<IContentProps> {
               <>Unfortunately, there is no available sensor station in the vicinity.</>
             </ErrorMessage>
           );
+        case AirlyApiError.UNAUTHORIZED:
+          return (
+            <ErrorMessage header="Wrong API key">
+              <>
+                <p>API key is wrong or missing. You can get API key from
+                  <a
+                    className="link"
+                    href="#"
+                    onClick={handleExtLinkClick.bind(this, 'https://developer.airly.org/pl/docs#introduction')}
+                  >Airly API docs</a>
+                </p>
+              </>
+            </ErrorMessage>
+          );
       }
     }
 
-    if (this.props.sensorStation && this.props.sensorStation.measurements) {
-      const { sensorStation: station, distanceToStation: distance } = this.props;
+    if (this.props.sensorStation && this.props.measurements) {
+      const {
+        sensorStation: station,
+        measurements
+      } = this.props;
 
       return (
         <>
-          <AirQualityInfo airQualityIndex={station.measurements.caqi} />
-          <MeasurementPane measurement={station.measurements.values} />
+          <AirQualityInfo airQualityIndex={measurements.caqi} />
+          <MeasurementPane measurement={measurements.values} />
           <div className="section-line" />
-          <StationInfo distance={distance} station={station} />
+          <StationInfo station={station} />
           <UpdateAlert />
         </>
       );

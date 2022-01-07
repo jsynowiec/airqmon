@@ -3,7 +3,6 @@ import * as React from 'react';
 
 import TrayWindow from 'app/tray-window/TrayWindow';
 import { getAQIndexMetadataForValue, DEFAULT_AQ_INDEX } from 'common/air-quality';
-import { getLocation, Location } from 'common/geolocation';
 import { catcher } from 'common/helpers';
 import IPC_EVENTS from 'common/ipc-events';
 import { ITimer, Interval, Timeout } from 'common/timers';
@@ -15,39 +14,33 @@ import {
   IUserSettings,
 } from 'common/user-settings';
 import {
-  SensorStation,
-  findNearestStation,
-  getStationMeasurements,
   ApiError,
-  NearestSensorStation,
   Measurements,
+  SensorStation,
 } from 'data/airqmon-api';
+import {
+  getInstallation,
+  getStationMeasurements
+} from 'data/airly-api';
 import ThemeStore from './ThemeContext';
 import UpdaterStore from './UpdaterContext';
 
-const ERROR_RETRY_TIMEOUT: number = 15 * 1000;
-
 interface IDataAppState {
   connectionStatus?: boolean;
-  currentLocation?: Location;
-  distanceToStation?: number;
+  measurements?: Measurements;
   sensorStation?: SensorStation;
 }
 
 interface IAppState extends IDataAppState {
   loadingMessage?: string;
   apiError?: ApiError;
-  geolocationError?: GeolocationPositionError;
   isAutoRefreshEnabled: boolean;
   refreshMeasurementsIntervalMeta: IRefreshIntervalMeta;
 }
 
 class App extends React.Component<Record<string, unknown>, IAppState> {
-  private lastUsedStationId?: string | null = null;
-
   private refreshTimer: ITimer | null = null;
   private initTimer: ITimer | null = null;
-  private locationTimer: ITimer | null = null;
 
   constructor(props: Record<string, unknown>) {
     super(props);
@@ -93,9 +86,8 @@ class App extends React.Component<Record<string, unknown>, IAppState> {
       if (status == 'offline') {
         this.clearRefreshTimer();
         this.clearInitTimer();
-        this.clearLocationTimer();
       } else {
-        await this.setLocation();
+        await this.init();
       }
     });
 
@@ -140,47 +132,22 @@ class App extends React.Component<Record<string, unknown>, IAppState> {
             });
             this.enableRefreshTimer();
             break;
+          case 'airlyApiKey':
+            this.init();
+            break;
+          case 'stationId':
+            this.init();
+            break;
         }
       },
     );
   }
 
-  async setLocation(): Promise<void> {
-    this.clearLocationTimer();
-
-    await this.setState({
-      loadingMessage: 'Acquiring location',
-    });
-
-    const [location, geolocationError] = await catcher<Location, GeolocationPositionError>(
-      getLocation(),
-    );
-    if (geolocationError) {
-      await this.setState({
-        geolocationError,
-      });
-      this.locationTimer = new Timeout(() => {
-        this.setLocation();
-      }, ERROR_RETRY_TIMEOUT);
-    } else {
-      await this.setState({
-        currentLocation: location,
-        geolocationError: null,
-      });
-      await this.init();
-    }
-  }
-
   async init(): Promise<void> {
     this.clearInitTimer();
 
-    await this.setState({
-      loadingMessage: 'Looking for the closest sensor station',
-    });
-
-    const [response, apiError] = await catcher<NearestSensorStation, ApiError>(
-      findNearestStation(this.state.currentLocation),
-    );
+    const stationId = userSettings.get('stationId');
+    const [response, apiError] = await catcher<SensorStation, ApiError>(getInstallation(stationId))
 
     if (apiError) {
       await this.setState({
@@ -190,27 +157,10 @@ class App extends React.Component<Record<string, unknown>, IAppState> {
       return;
     }
 
-    const { distance, station } = response;
-
-    if (this.lastUsedStationId != null) {
-      if (this.lastUsedStationId != station.id) {
-        if (shouldNotifyAbout('stationChanged') === true) {
-          new Notification('Location changed', {
-            body: `Found a new nearest sensor station ${distance.toFixed(2)} away located at ${
-              station.displayAddress
-            }.`,
-          });
-        }
-      }
-    }
-
-    this.lastUsedStationId = station.id;
-
     await this.setState({
-      distanceToStation: distance,
-      sensorStation: station,
-      apiError: null,
-    });
+      sensorStation: response,
+      apiError: null
+    })
 
     await this.refreshData();
 
@@ -220,9 +170,9 @@ class App extends React.Component<Record<string, unknown>, IAppState> {
   }
 
   async refreshData(): Promise<void> {
-    const { id } = this.state.sensorStation;
+    const stationId = userSettings.get('stationId');
     const [measurements, apiError] = await catcher<Measurements, ApiError>(
-      getStationMeasurements(id),
+      getStationMeasurements(stationId),
     );
 
     if (apiError) {
@@ -233,10 +183,10 @@ class App extends React.Component<Record<string, unknown>, IAppState> {
       return;
     }
 
-    if (this.state.sensorStation.measurements) {
+    if (this.state.measurements) {
       const oldCAQIMeta = getAQIndexMetadataForValue(
         DEFAULT_AQ_INDEX,
-        Math.round(this.state.sensorStation.measurements.caqi),
+        Math.round(this.state.measurements.caqi),
       );
       const newCAQIMeta = getAQIndexMetadataForValue(
         DEFAULT_AQ_INDEX,
@@ -260,13 +210,10 @@ class App extends React.Component<Record<string, unknown>, IAppState> {
     }
 
     await this.setState({
-      sensorStation: {
-        ...this.state.sensorStation,
-        measurements,
-      },
+      measurements,
       apiError: null,
     });
-    ipcRenderer.send(IPC_EVENTS.AIR_Q_DATA_UPDATED, this.state.sensorStation.measurements);
+    ipcRenderer.send(IPC_EVENTS.AIR_Q_DATA_UPDATED, this.state.measurements);
   }
 
   clearRefreshTimer(): void {
@@ -278,12 +225,6 @@ class App extends React.Component<Record<string, unknown>, IAppState> {
   clearInitTimer(): void {
     if (this.initTimer) {
       this.initTimer.clear();
-    }
-  }
-
-  clearLocationTimer(): void {
-    if (this.locationTimer !== null) {
-      this.locationTimer.clear();
     }
   }
 
@@ -303,9 +244,8 @@ class App extends React.Component<Record<string, unknown>, IAppState> {
             connectionStatus={this.state.connectionStatus}
             loadingMessage={this.state.loadingMessage}
             apiError={this.state.apiError}
-            geolocationError={this.state.geolocationError}
-            distanceToStation={this.state.distanceToStation}
             sensorStation={this.state.sensorStation}
+            measurements={this.state.measurements}
             isAutoRefreshEnabled={this.state.isAutoRefreshEnabled}
           />
         </ThemeStore>
