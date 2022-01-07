@@ -91,10 +91,10 @@ export const userSettings = new ConfigStore<IUserSettings>({
   refreshMeasurementsInterval: Intervals.Short,
   showNotifications: true,
   notificationEvents: {
-    caqiChanged: true
+    caqiChanged: true,
   },
   airlyApiKey: '',
-  stationId: 8077
+  stationId: 8077,
 });
 
 export function shouldNotifyAbout(event: keyof INotificationsEvents): boolean {

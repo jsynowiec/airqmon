@@ -3,12 +3,12 @@ import { ApiError, Measurements, SensorStation } from 'data/airqmon-api';
 import { userSettings } from 'common/user-settings';
 
 export enum AirlyApiError {
-  UNAUTHORIZED = 'UNAUTHORIZED'
+  UNAUTHORIZED = 'UNAUTHORIZED',
 }
 
 const request = axios.create({
   baseURL: 'https://airapi.airly.eu/v2',
-})
+});
 
 function errorHandler(code): void {
   switch (code) {
@@ -24,13 +24,13 @@ function errorHandler(code): void {
 export async function getInstallation(id: number): Promise<SensorStation> {
   let data;
   try {
-    ({data} = await request.get(`/installations/${id}`, {
+    ({ data } = await request.get(`/installations/${id}`, {
       headers: {
-        'apikey': userSettings.get('airlyApiKey')
-      }
+        apikey: userSettings.get('airlyApiKey'),
+      },
     }));
   } catch (error) {
-    errorHandler(error.response.status)
+    errorHandler(error.response.status);
   }
 
   return {
@@ -40,9 +40,9 @@ export async function getInstallation(id: number): Promise<SensorStation> {
     elevation: data.elevation,
     provider: {
       name: data.sponsor.name,
-      url: data.sponsor.link
-    }
-  }
+      url: data.sponsor.link,
+    },
+  };
 }
 
 export async function getStationMeasurements(id: number): Promise<Measurements> {
@@ -50,22 +50,21 @@ export async function getStationMeasurements(id: number): Promise<Measurements> 
 
   try {
     response = await request.get('/measurements/installation', {
-        params: {
-          'installationId': id
-        },
-        headers: {
-          'apikey': userSettings.get('airlyApiKey')
-        }
-      }
-    );
+      params: {
+        installationId: id,
+      },
+      headers: {
+        apikey: userSettings.get('airlyApiKey'),
+      },
+    });
   } catch (error) {
     errorHandler(error.response.status);
   }
 
-  const caqi = response.data.current.indexes.find(index => index.name === 'AIRLY_CAQI');
+  const caqi = response.data.current.indexes.find((index) => index.name === 'AIRLY_CAQI');
 
   return {
     caqi: caqi ? caqi.value : 0,
-    values: response.data.current.values
-  }
+    values: response.data.current.values,
+  };
 }
