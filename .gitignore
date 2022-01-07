@@ -7,3 +7,4 @@ out
 .vscode/settings.json
 keys.json
 .idea
+.DS_Store

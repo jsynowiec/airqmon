@@ -129,6 +129,7 @@ class PreferencesWindow extends React.Component<Record<string, unknown>, Partial
           <div className="preferences-window__grid__section-content">
             <div className="text-input">
               <input
+                className="form-control"
                 type="text"
                 value={this.state.stationId}
                 onChange={this.handleStationIdChange}
@@ -139,6 +140,7 @@ class PreferencesWindow extends React.Component<Record<string, unknown>, Partial
           <div className="preferences-window__grid__section-content">
             <div className="text-input">
               <input
+                className="form-control"
                 type="text"
                 value={this.state.airlyApiKey}
                 onChange={this.handleAirlyKeyChange}
