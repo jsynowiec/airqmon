@@ -27,7 +27,7 @@ A macOS menu bar application that displays live air quality data from the neares
 1. Clone the [latest release][airqmon-latest-release].
 2. Install the dependancies with `yarn install`.
 3. Build the binary with `yarn run package`.
-4. Drag the binary to your `Applications` folder.
+4. Drag the binary from the `out` directory to your `Applications` folder.
 
 ## Preferences
 
