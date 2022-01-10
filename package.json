@@ -1,13 +1,13 @@
 {
   "name": "airqmon",
   "description": "A menu bar app that displays live air quality informations from the nearest Airly sensor station.",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "main": "build/main.js",
   "engines": {
     "node": "12.18.3"
   },
   "license": "Apache-2.0",
-  "author": "Jakub Synowiec <github@jakubsynowiec.info>",
+  "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
   "scripts": {
     "clean": "node bin/clean.js",
     "build": "yarn run clean && webpack",
