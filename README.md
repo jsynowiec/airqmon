@@ -20,19 +20,23 @@ A macOS menu bar application that displays live air quality data from the neares
 
 - [Airly][airly] - over 20k sensor stations in many cities around the world in addition to data provided from third-party services like PurpleAir. Check the [Airly map][airly-map] for full coverage.
 
-**Disclaimer:** Airqmon app builds available as a [precompiled packages][airqmon-latest-release] are using my own, personal [Airly][airly] API key which falls under the general [Airly free usage rate limits][airly-pricing]. When inquired about increasing the limits to sustain the rising number of Airqmon's users, Airly asked me in return to sign a legally binding contract. Due to the nature of this project, I am unable to comply with this demand. As a result, at certain user threshold, Airqmon will stop displaying air quality data.
+**Disclaimer:** Airqmon API is using my own personal [Airly][airly] API key, which falls under the general [Airly free usage rate limits][airly-pricing]. When inquired about increasing the limits to sustain the rising number of Airqmon's users, Airly asked me in return to sign a legally binding contract. Due to the nature of this project, I am unable to comply with this demand. As a result, Airqmon will stop displaying air quality data at a certain user threshold, or the displayed data will be outdated.
 
-## Installation
+## Build & installation
 
-Download the [latest release][airqmon-latest-release], unzip and drag to your `Applications` folder.
-
-### Update
-
-Simply overwrite previous application in your `Applications` folder with a newer version of Airqmon.
+1. Clone the [latest release][airqmon-latest-release].
+2. Provide your own Google Geolocation API key in the `keys.json` file.
+3. Install the dependancies with `yarn install`.
+4. Build the binary with `yarn run package`.
+5. Drag the binary to your `Applications` folder.
 
 ## Preferences
 
 There are a few options available to customize on the preferences window that you can access by clicking on the button with a cog or by pressing the `⌘ + ,` shortcut.
+
+## Airqmon API
+
+From version 2, Airmoqn uses the Airmon API, a companion service, to find the nearest station and fetch measurements.
 
 ## FAQ
 
