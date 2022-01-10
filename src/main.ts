@@ -9,17 +9,10 @@ import { Measurements } from 'data/airqmon-api';
 import TrayWindowManager from './tray-window-manager';
 import PreferencesWindowManager from './preferences-window-manager';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const keys = require('@root/keys.json');
-
 ElectronStore.initRenderer();
 
 let trayWindowManager: TrayWindowManager;
 let preferencesWindowManager: PreferencesWindowManager;
-
-if (keys.google) {
-  process.env.GOOGLE_API_KEY = keys.google;
-}
 
 // Don't show the app in the doc
 app.dock.hide();

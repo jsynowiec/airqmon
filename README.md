@@ -25,10 +25,9 @@ A macOS menu bar application that displays live air quality data from the neares
 ## Build & installation
 
 1. Clone the [latest release][airqmon-latest-release].
-2. Provide your own Google Geolocation API key in the `keys.json` file.
-3. Install the dependancies with `yarn install`.
-4. Build the binary with `yarn run package`.
-5. Drag the binary to your `Applications` folder.
+2. Install the dependancies with `yarn install`.
+3. Build the binary with `yarn run package`.
+4. Drag the binary to your `Applications` folder.
 
 ## Preferences
 
