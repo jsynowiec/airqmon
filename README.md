@@ -5,7 +5,7 @@
 
 # <img src="https://user-images.githubusercontent.com/1029142/32918679-7336704a-cb23-11e7-92b2-d8a7f2588055.png" width="38px" alt="Airqmon icon" align="top" /> Airqmon
 
-A macOS menu bar application that displays live air quality data from the nearest sensor station. It can also notify you when the air quality index changes or when a new, closer station is found.
+Airqmon is a macOS menu bar application that displays live air quality data from the nearest sensor station. It can also notify you when the air quality index changes or when a new, closer station is found.
 
 <p align="center">
   <img width="492" align="center" alt="Airqmon window with measurement details" src="https://airqmon.app/assets/airqmon-overview@2x.png" />
@@ -19,7 +19,11 @@ A macOS menu bar application that displays live air quality data from the neares
 
 - [Airly][airly] - over 20k sensor stations in many cities around the world in addition to data provided from third-party services like PurpleAir. Check the [Airly map][airly-map] for full coverage.
 
-**Disclaimer:** Airqmon API is using my own personal [Airly][airly] API key, which falls under the general [Airly free usage rate limits][airly-pricing]. When inquired about increasing the limits to sustain the rising number of Airqmon's users, Airly asked me in return to sign a legally binding contract. Due to the nature of this project, I am unable to comply with this demand. As a result, Airqmon will stop displaying air quality data at a certain user threshold, or the displayed data will be outdated.
+## Source code-only
+
+Due to the reasons described in [this comment](https://github.com/jsynowiec/airqmon/issues/50#issuecomment-1008751034), I am no longer willing to cover the monthly costs associated with the Airqmon API and Google Geolocation.
+
+I have removed all binaries from the current and previous releases as they will no longer work. You can host the Airqmon API on your own and clone the latest release to build your version of the app.
 
 ## Build & installation
 
@@ -34,37 +38,15 @@ There are a few options available to customize on the preferences window that yo
 
 ## Airqmon API
 
-From version 2, Airmoqn uses the Airmon API, a companion service, to find the nearest station and fetch measurements.
+From version 2, Airqmon uses the [Airmon API][airqmon-api], a supplementary service, to find the nearest station and fetch measurements.
 
-## FAQ
+## Geolocation
 
-### macOS doesn't allow me to start the app
-
-Since macOS Sierra, if you try to open an app that is not registered with Apple by an identified developer you get a warning dialog. Airqmon is not signed nor was submitted to Apple for review.
-
-<p align="center">
-  <img width="372" alt="Screenshot 2021-03-02 at 10 02 17" src="https://user-images.githubusercontent.com/1029142/109624419-7cfbd600-7b3e-11eb-8651-3737b93d2641.png">
-</p>
-
-To override your security settings and open the app:
-
-1. In the Finder, locate the app you want to open.
-2. Control-click the app icon, then choose Open from the shortcut menu.
-
-Read more: [PH25088](https://support.apple.com/kb/PH25088?locale=en_US)
+From version 2.1.1, Airqmon uses the free ip-api.com for geolocation. If you want to switch back to the Google Geolocation API, revert the relevant changes from the [1fe51d](https://github.com/jsynowiec/airqmon/commit/1fe51d966f15caeeca1e6385d01b96c6e266210c) commit.
 
 ## Privacy
 
-Airqmon application does not track any personal identifiable information or usage analytics.
-
-## Sponsors
-
-<p>This project is supported by:</p>
-<p>
-  <a href="https://m.do.co/c/38582030d6df">
-    <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_horizontal_blue.svg" width="201px">
-  </a>
-</p>
+Airqmon application does not track any personally identifiable information or usage analytics.
 
 ### Credits
 
@@ -80,6 +62,7 @@ This app is an open-source software licensed under the [Apache License, Version 
 
 [license]: https://raw.githubusercontent.com/jsynowiec/airqmon/main/LICENSE
 [airqmon-latest-release]: https://github.com/jsynowiec/airqmon/releases/latest
+[airqmon-api]: https://github.com/jsynowiec/airqmon-api
 [gh-actions]: https://actions-badge.atrox.dev/jsynowiec/airqmon/goto?ref=main
 [badge-github-release]: https://img.shields.io/github/release/jsynowiec/airqmon.svg
 [badge-license]: https://img.shields.io/github/license/jsynowiec/airqmon.svg
